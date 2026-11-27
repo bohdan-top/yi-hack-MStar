@@ -92,8 +92,8 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 ## Acceptance Criteria
 
 - [x] WSL2 and Docker environment operational.
-- [ ] Compatible ARM GCC 4.8.3 toolchain and matching sysroot verified; full dependency audit completed, with any actually required vendor components identified, licensed and verified. No requirement to obtain an unused full SDK.
-- [ ] ARM cross-compilation smoke test passed.
+- [x] Compatible ARM GCC 4.8.3 toolchain and matching sysroot verified by signed package, ARM smoke and static stock ABI checks; full dependency audit completed, with any actually required vendor components identified, licensed and verified. No requirement to obtain an unused full SDK.
+- [x] ARM cross-compilation smoke test passed; static stock symbol-version compatibility verified, no target code executed.
 - [ ] All required build inputs verified.
 - [ ] Private input lock manifest complete and approved.
 - [ ] Local preflight passed.
@@ -132,3 +132,8 @@ A verified local environment can repeatedly build the baseline y203c firmware fr
 All acceptance criteria are satisfied, and the implementation and sanitized evidence are committed for independent review.
 
 Successful compilation does not authorize flashing. Security hardening and release approval remain within FW-002 and FW-012.
+
+
+## Minimum-input preparation continuation (2026-11-27)
+
+See the appended [execution report](../docs/fw-001-execution-report.md) and [minimum-input evidence](../docs/fw-001-minimum-input-evidence.json). The full SDK acquisition blocker is superseded. Candidate inputs remain unapproved; compilation/repeat/new-artifact acceptance boxes remain open.

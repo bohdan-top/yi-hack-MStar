@@ -137,3 +137,79 @@ The environment and compilation status above remains unchanged. The new
 runner revision supersedes the earlier entrypoint revision for future builds;
 the earlier evidence remains historical. Use an independently reviewed new
 entrypoint SHA when eventually executing the runner.
+
+
+## Minimum-input continuation — 2026-11-27
+
+**Current outcome: candidate inputs and an authenticated minimal amd64 builder
+are prepared; FW-001 is awaiting independent approval. Firmware compilation,
+the independent repeat and validation of newly built artifacts have NOT RUN.**
+This section supersedes the earlier unresolved-dependency/full-SDK blocker;
+earlier execution evidence remains historical.
+
+- Audited 25 modules, all nine recursive gitlinks, 2,615 tracked Git files and
+  181 build instruction files. No additional external vendor SDK component was
+  demonstrated as a build dependency. Snapshot's FFmpeg 8.1.1 and libjpeg-turbo
+  3.1.4.1 downloads were missing from the old inventory and are now included.
+- All 15 public module archives have provenance-backed SHA-256 evidence.
+  Rechecked all 15 cached byte streams; nine reused the earlier verified cache.
+  Git-archive verification compares every file and mode against separately
+  fetched source trees; it does not invent a published checksum. mdnsd's exact
+  historical moving-master contents remain an explicit review caveat.
+- Obtained the original Linaro GCC 4.8.3/sysroot package and verified its
+  historical detached signature without relaxed GPG options. Rejected the
+  community repack's unexplained termcap additions and retained original GNU
+  notices. Full provenance and signature limitations are documented separately.
+- Independently checked 99 exact Debian package archives against their saved
+  signed InRelease/package indexes and pinned the public closure. Assembled the
+  builder with networking disabled, exported/reloaded it, verified all saved
+  layer diff IDs and recorded immutable image/archive identities.
+- Real C and C++ ARM smoke compilation passed under shared FW-008 flags:
+  GCC 4.8.3, ARM ELF32/EABI5/hard float, expected loader, nproc=6,
+  MAKEFLAGS=-j6, 8 GiB memory, zero container swap and only loopback networking.
+  Required C/C++ symbol-version sets are provided by the reconstructed stock
+  libraries. This is static ABI evidence; no camera executable was run.
+- Re-fetched the original maintainer recovery attachment and matched the
+  retained bytes. Reconstructed/validated both filesystems and prepared
+  deterministic candidate tgz inputs, independently rereading every payload,
+  permission, owner, timestamp and symlink. Both home version files match the
+  required base. These are maintainer equivalent rebuilds, not device dumps or
+  vendor-signed originals; private input approval must cover that distinction.
+- Downloaded the official 0.5.8 y203c archive and matched its publisher asset
+  digest. The semantic validator passes against both real official JFFS2 images,
+  including base/hack versions and model. No new firmware exists to compare.
+- Final Linux regressions: 32 passed, zero skips. Windows host guards: 28 passed.
+  Shell syntax checks passed. Candidate-size ceilings remain documented upstream
+  examples; no new camera partition measurement is claimed.
+
+The complete candidate lock has 19 input files and
+108 additional provenance records; every
+input SHA-256 was rechecked. Its review_status remains UNREVIEWED and no
+approved lock is manufactured. The private lock digest is
+`5c630babf0398b840e3dde53f416cc14a85b599936c3bdf85138d58a826fb051`.
+The prospective execution-lock digest, after changing only review_status to
+approved following explicit approval, is
+`a8811138136127fd3cf763ac30ec0dc9c7741e5b6122f36f5bb0e6a0228662c1`. No approved execution lock has
+been written. These exact bytes and the final checkout revision must be reviewed.
+The acceptance criteria explicitly require a complete **approved** private lock,
+and FW-008 requires an independently reviewed entrypoint revision. No PR reviews
+were present when checked. Therefore private preflight and compilation were not
+attempted with self-approved hashes or approval tokens.
+
+Source revision: `c8582405b2c3c0e3b80219b0e71e21785a482867`.
+Tested entrypoint code revision: `f826a1f59b066411c78d51577ac3c380ca0295d1`.
+Workflow revision: `5a05439df718e2d1d7b93f9cf5a0fdfe7c9a2306`.
+The executable runner's approval must name the final checkout HEAD (including
+this report commit), not merely the earlier code commit.
+
+Builder assembly and acquisition timings/peaks were not comprehensively sampled;
+the ARM smoke has its own measured duration in the JSON evidence. No elapsed or
+peak resource measurement is presented as a firmware-build result. All large
+inputs, the builder, native Docker storage, source checkout, logs and staging
+remain on the selected data disk. No broad cache pruning, shared WSL config
+change, Docker service change, camera access, flashing or merge occurred.
+
+See [minimum dependencies and provenance](fw-001-minimum-dependencies.md),
+[machine-readable continuation evidence](fw-001-minimum-input-evidence.json),
+[static audit](fw-001-dependency-audit.json) and
+[Git archive verification](fw-001-public-git-archive-evidence.json).
