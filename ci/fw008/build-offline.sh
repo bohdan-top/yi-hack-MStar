@@ -38,9 +38,9 @@ for entry in lock["files"]:
 apply_baseline_aliases(root, lock)
 PY
 # No mtd devices, mounts, sudo, camera or network are available. Stock tgz only.
-bash scripts/init_sysroot.sh y203c
+bash -e scripts/init_sysroot.sh y203c
 check_download /work/unexpected-download
-bash scripts/compile.sh
+bash -e scripts/compile.sh
 check_download /work/unexpected-download
-bash scripts/pack_fw.sh y203c
+bash -e scripts/pack_fw.sh y203c
 check_download /work/unexpected-download
