@@ -197,7 +197,7 @@ were present when checked. Therefore private preflight and compilation were not
 attempted with self-approved hashes or approval tokens.
 
 Source revision: `c8582405b2c3c0e3b80219b0e71e21785a482867`.
-Tested entrypoint code revision: `f826a1f59b066411c78d51577ac3c380ca0295d1`.
+Tested entrypoint code revision: `f0e7262d0bf36353fbd04996377299de35bc4071`.
 Workflow revision: `5a05439df718e2d1d7b93f9cf5a0fdfe7c9a2306`.
 The executable runner's approval must name the final checkout HEAD (including
 this report commit), not merely the earlier code commit.
@@ -213,3 +213,9 @@ See [minimum dependencies and provenance](fw-001-minimum-dependencies.md),
 [machine-readable continuation evidence](fw-001-minimum-input-evidence.json),
 [static audit](fw-001-dependency-audit.json) and
 [Git archive verification](fw-001-public-git-archive-evidence.json).
+
+Publication used the connected GitHub Git-object API after the native push
+required interactive credentials. All uploaded blob identities and all three
+incremental commit trees match the tested local objects exactly. The original
+local commits are preserved in a task backup ref; the public code revision above
+has the same tree as the tested local code revision recorded in the JSON evidence.

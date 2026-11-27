@@ -5,7 +5,7 @@
   "scope": "Actual input/builder preparation and public/reference validation; firmware compilation NOT RUN",
   "revisions": {
     "source": "c8582405b2c3c0e3b80219b0e71e21785a482867",
-    "entrypoint_code": "f826a1f59b066411c78d51577ac3c380ca0295d1",
+    "entrypoint_code": "f0e7262d0bf36353fbd04996377299de35bc4071",
     "workflow": "5a05439df718e2d1d7b93f9cf5a0fdfe7c9a2306"
   },
   "dependency_audit": {
@@ -180,5 +180,13 @@
   "release_approved": false,
   "camera_accessed": false,
   "firmware_flashed": false,
-  "pr_merged": false
+  "pr_merged": false,
+  "publication": {
+    "method": "Connected GitHub Git-object API; native push required interactive credentials",
+    "original_tested_local_code_commit": "f826a1f59b066411c78d51577ac3c380ca0295d1",
+    "published_code_commit": "f0e7262d0bf36353fbd04996377299de35bc4071",
+    "published_code_tree_sha": "28ea127561dc9141411d71564338166ef968eac5",
+    "all_uploaded_blob_ids_and_three_incremental_trees_match_local_objects": true,
+    "original_local_commits_preserved_in_task_backup_ref": true
+  }
 }
