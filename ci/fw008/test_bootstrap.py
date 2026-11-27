@@ -1,5 +1,7 @@
 import copy
 import hashlib
+import io
+import tarfile
 import importlib.util
 import pathlib
 import tempfile
@@ -72,6 +74,47 @@ class Bootstrap(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertTrue((pathlib.Path(d) / "marker").exists())
             self.assertIn("unexpected download", result.stderr)
+
+    def test_verified_output_archive(self):
+        with tempfile.TemporaryDirectory() as d:
+            work = pathlib.Path(d)
+            result = work / "source/out/y203c"
+            result.mkdir(parents=True)
+            images = {"home_y203c": b"home image", "sys_y203c": b"system image"}
+            for name, data in images.items():
+                (result / name).write_bytes(data)
+            bundle = result / "y203c_test.tgz"
+
+            def write_archive(entries):
+                with tarfile.open(bundle, "w:gz") as archive:
+                    for name, data in entries.items():
+                        info = tarfile.TarInfo(name)
+                        info.size = len(data)
+                        archive.addfile(info, io.BytesIO(data))
+
+            write_archive(images)
+            self.assertEqual(len(build.verified_outputs(work)), 3)
+            write_archive({**images, "home_y203c": b"HOME IMAGE"})
+            with self.assertRaisesRegex(build.Blocked, "image mismatch"):
+                build.verified_outputs(work)
+            write_archive({**images, "extra": b"extra"})
+            with self.assertRaisesRegex(build.Blocked, "archive members"):
+                build.verified_outputs(work)
+            write_archive(images)
+            (result / "home_y203c").unlink()
+            (result / "home_y203c").symlink_to("sys_y203c")
+            with self.assertRaisesRegex(build.Blocked, "Missing/empty"):
+                build.verified_outputs(work)
+
+    def test_output_directory_symlink_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            work = pathlib.Path(d) / "work"
+            work.mkdir()
+            other = pathlib.Path(d) / "other"
+            (other / "out/y203c").mkdir(parents=True)
+            (work / "source").symlink_to(other, target_is_directory=True)
+            with self.assertRaisesRegex(build.Blocked, "Unsafe firmware output directory"):
+                build.verified_outputs(work)
 
     def test_isolation_command(self):
         args = build.docker_args("sha256:" + "a" * 64, "/private/inputs", "/private/work")
