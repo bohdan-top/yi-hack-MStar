@@ -1,19 +1,115 @@
-# FW-001 — baseline build
+# FW-001 — Baseline Firmware Build
 
-- Status: Planned
-- Milestone: 0.1.0
-- Priority: P0
-- Dependencies: FW-008
-- Target: y203c / 6FUS
+- **Status:** Planned
+- **Milestone:** 0.1.0
+- **Priority:** P0
+- **Dependencies:** FW-008
+- **Target:** y203c / 6FUS
+- **Baseline:** upstream yi-hack-MStar 0.5.8
+- **Source commit:** `c8582405b2c3c0e3b80219b0e71e21785a482867`
 
-## Scope
+## Objective
 
-Build the unmodified upstream 0.5.8 tag (c8582405b2c3c0e3b80219b0e71e21785a482867) for y203c, not the moving master branch. Use the manual CI workflow and shared local build entrypoint established in FW-008, with a documented Linux/WSL2 environment; inventory SDK/toolchain, stock images and submodule commits. Use the FW-008 input lock manifest and verified-input-only build path. Verify input digests and licenses; keep device-derived images and secrets outside Git. Record workflow, entrypoint and firmware source commits separately. Any unavoidable source modification is a separate identified patched build, not the pristine baseline. Record build commands, logs, output SHA-256, image layout and size checks. Compare release outputs where possible and explain nondeterminism; do not claim bit-for-bit reproducibility unless proven.
+Establish a verified, repeatable local firmware build environment and successfully compile the unmodified upstream firmware for the target camera using the shared build entrypoint introduced in FW-008.
 
-## Acceptance criteria
+Complete all stages within a single task and implementation PR, using incremental commits.
 
-A successful manually triggered full build (or documented private/local runner execution of the same entrypoint when hosted builds are blocked by input licensing) produces both y203c images and a local update archive; manifest identifies all inputs including transitive downloads and resolved submodules; independent repeat build and comparison results documented. No flashing.
+## 1. Local Build Environment
 
-## Deliverables
+- Inspect the existing Windows, WSL2 and Docker environment.
+- Install or configure missing prerequisites.
+- Obtain the compatible MStar MSC3XX SDK and ARM GCC 4.8.3 cross-compilation toolchain from trusted sources.
+- Verify licenses, provenance, checksums and compatibility.
+- Create a reproducible, version-pinned Docker builder.
+- Compile a minimal ARM executable and verify its architecture, ABI and compatibility with the target firmware.
+- Export the verified builder image and record its immutable image ID and SHA-256.
 
-Implementation PR (where applicable), test commands and results, sanitized evidence, residual risks and explicit NOT VERIFIED items. Link back to the [roadmap](../docs/firmware-roadmap.md). No device changes without explicit owner approval.
+Reuse existing compatible components where possible.
+
+## 2. Build Inputs and Dependencies
+
+- Resolve all outstanding dependencies from the FW-008 input inventory, including transitive downloads.
+- Obtain and independently verify missing archive checksums.
+- Verify recursive Git submodule commits.
+- Prepare verified stock firmware filesystem archives for y203c, version `4.5.0.0C_201910080934`.
+- Verify archive integrity and compatibility.
+- Complete and review the private input lock manifest.
+- Execute the local preflight using the FW-008 entrypoint.
+- Verify actual Docker isolation and rejection of unexpected downloads.
+
+Keep proprietary SDK files, stock firmware, private inputs and sensitive logs outside Git.
+
+Do not bypass checksum verification or approve unresolved inputs merely to complete the build.
+
+## 3. Baseline Firmware Compilation
+
+- Use the exact pinned upstream source commit.
+- Execute the full offline build through the FW-008 entrypoint.
+- Investigate and resolve environment, toolchain and dependency-related failures.
+- Preserve upstream firmware source files unchanged.
+- If a source modification is unavoidable, document it separately as a patched build rather than a pristine baseline.
+- Generate the following private artifacts:
+  - `home_y203c`
+  - `sys_y203c`
+  - `y203c_0.5.8.tgz`
+  - Build metadata and SHA-256 checksums.
+
+Do not report success unless all required artifacts are generated and validated.
+
+## 4. Firmware Artifact Validation
+
+- Verify JFFS2 filesystem structure and integrity.
+- Verify target identifiers and firmware version.
+- Validate image sizes against the documented target partition limits.
+- Verify archive contents and checksums.
+- Compare output structure and relevant contents against the official upstream 0.5.8 release.
+- Perform an independent second build in a clean workspace.
+- Compare artifact hashes and explain any nondeterministic differences.
+
+Do not claim bit-for-bit reproducibility unless demonstrated.
+
+## 5. Automation and Documentation
+
+- Provide a single-command PowerShell entrypoint for Windows that invokes the verified WSL2/Docker build procedure.
+- Support configurable paths for private inputs, build cache and outputs.
+- Reuse verified cached dependencies without unnecessary downloads.
+- Generate a sanitized build report automatically.
+- Document all prerequisites, commands, environment versions, input provenance, execution results and remaining limitations.
+- Record the firmware source, build entrypoint and workflow revisions separately.
+
+## Acceptance Criteria
+
+- [ ] WSL2 and Docker environment operational.
+- [ ] Compatible SDK and ARM toolchain verified.
+- [ ] ARM cross-compilation smoke test passed.
+- [ ] All required build inputs verified.
+- [ ] Private input lock manifest complete and approved.
+- [ ] Local preflight passed.
+- [ ] Docker isolation verified.
+- [ ] Full offline firmware build passed.
+- [ ] All required firmware artifacts generated.
+- [ ] Filesystem, partition size and archive validation passed.
+- [ ] Independent repeat build completed.
+- [ ] Reproducibility results documented.
+- [ ] Single-command local build available.
+- [ ] Sanitized build report committed.
+- [ ] No proprietary inputs or sensitive data committed.
+- [ ] No camera modifications or flashing performed.
+
+## Execution Rules
+
+- Use one feature branch: `feature/fw-001-baseline-build`.
+- Use one implementation PR with incremental commits, following the [roadmap](../docs/firmware-roadmap.md) branch policy: base firmware implementation on `firmware/y203c` created from the pinned upstream commit, with only the reviewed roadmap, task and CI bootstrap files transferred; do not merge master into the firmware branch.
+- Reuse FW-008 infrastructure rather than introducing a parallel build pipeline.
+- Automatically resolve routine implementation and environment issues where safe.
+- Explicitly report genuine external blockers and unverified requirements.
+- Do not weaken security or supply-chain controls to achieve a successful build.
+- Do not proceed to firmware installation or release approval.
+
+## Definition of Done
+
+A verified local environment can repeatedly build the baseline y203c firmware from approved inputs using the shared offline build pipeline.
+
+All acceptance criteria are satisfied, and the implementation and sanitized evidence are committed for independent review.
+
+Successful compilation does not authorize flashing. Security hardening and release approval remain within FW-002 and FW-012.
