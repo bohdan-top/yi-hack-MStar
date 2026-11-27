@@ -23,8 +23,9 @@ jobs:
           persist-credentials: false
       - name: Test bootstrap
         run: |
-          python3 -m unittest discover -s ci/fw008 -p 'test_*.py'
+          python3 -B -m unittest discover -s ci/fw008 -p 'test_*.py'
           bash -n ci/fw008/build-offline.sh
+          bash -n ci/fw008/download-guard.sh
       - name: Manual build request
         env:
           MODE: ${{ inputs.mode }}
@@ -33,7 +34,7 @@ jobs:
           mkdir -p public-diagnostics
           printf 'workflow_sha=%s\n' "$GITHUB_SHA" > public-diagnostics/workflow.txt
           set -o pipefail
-          python3 ci/fw008/manual-build.py --public --mode "$MODE" --source "$SOURCE" | tee public-diagnostics/preflight.txt
+          python3 ci/fw008/manual-build.py --public --mode "$MODE" --source "$SOURCE" 2>&1 | tee public-diagnostics/preflight.txt
       - name: Upload public diagnostics only
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

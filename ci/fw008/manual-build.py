@@ -56,6 +56,14 @@ def validate_lock(lock, source):
     for name, sha in lock["submodules"].items():
         relative(name)
         require(SHA.fullmatch(sha), "Unpinned submodule")
+    provenance = lock.get("additional_inputs")
+    require(isinstance(provenance, list) and bool(provenance),
+            "Missing reviewed SDK, base image and host package provenance")
+    for entry in provenance:
+        require(bool(entry.get("source")) and bool(entry.get("version")) and
+                "UNRESOLVED" not in entry["version"] and
+                DIGEST.fullmatch(entry.get("sha256") or ""),
+                "Unpinned builder dependency provenance")
     files = lock["files"]
     require(isinstance(files, list), "Missing input list")
     seen = set()
@@ -107,6 +115,8 @@ def docker_args(image, stage, work):
             "--log-driver=none", "--read-only", "--tmpfs", "/tmp:rw,nosuid,nodev",
             "--mount", f"type=bind,src={stage},dst=/inputs,readonly",
             "--mount", f"type=bind,src={work},dst=/work",
+            "--user", "0:0", "--env", f"FW008_OWNER_UID={os.getuid()}",
+            "--env", f"FW008_OWNER_GID={os.getgid()}",
             "--entrypoint", "/bin/bash", image, "/inputs/build-offline.sh"]
 
 
@@ -122,6 +132,14 @@ def local(args):
     require(args.approved_lock_sha256 and DIGEST.fullmatch(args.approved_lock_sha256),
             "Supply independently reviewed lock SHA-256")
     require(args.lock and args.inputs, "Supply --lock and --inputs outside checkout")
+    require(args.approved_entrypoint and SHA.fullmatch(args.approved_entrypoint),
+            "Supply reviewed immutable --approved-entrypoint commit")
+    actual = command(["git", "-C", str(ROOT), "rev-parse", "HEAD"],
+                     capture_output=True, text=True).stdout.strip()
+    require(actual == args.approved_entrypoint, "Unapproved entrypoint revision")
+    status = command(["git", "-C", str(ROOT), "status", "--porcelain", "--untracked-files=all",
+                      "--ignored", "--", "ci/fw008"], capture_output=True, text=True).stdout
+    require(not status, "Entrypoint directory must be pristine (including ignored files)")
     inputs = args.inputs.resolve()
     lock_path = args.lock.resolve()
     require(not inputs.is_relative_to(ROOT) and not lock_path.is_relative_to(ROOT),
@@ -153,6 +171,7 @@ def local(args):
         (stage / "lock.json").write_text(json.dumps(lock))
         shutil.copyfile(ROOT / "ci/fw008/build-offline.sh", stage / "build-offline.sh")
         shutil.copyfile(ROOT / "ci/fw008/verify-source.py", stage / "verify-source.py")
+        shutil.copyfile(ROOT / "ci/fw008/download-guard.sh", stage / "download-guard.sh")
         with (output / "private-build.log").open("wb") as log:
             command(["docker", "load", "--input", str(stage / "builder.tar")],
                     stdout=log, stderr=subprocess.STDOUT)
@@ -174,8 +193,7 @@ def local(args):
             dest = output / p.name
             shutil.copyfile(p, dest)
             checksums[p.name] = digest(dest)
-        entrypoint = command(["git", "-C", str(ROOT), "rev-parse", "HEAD"],
-                             capture_output=True, text=True).stdout.strip()
+        entrypoint = actual
         (output / "metadata.json").write_text(json.dumps({
             "target": "y203c", "source_sha": args.source, "entrypoint_sha": entrypoint,
             "workflow_sha": None, "lock_sha256": args.approved_lock_sha256,
@@ -193,6 +211,7 @@ def main():
     parser.add_argument("--lock", type=Path)
     parser.add_argument("--inputs", type=Path)
     parser.add_argument("--approved-lock-sha256")
+    parser.add_argument("--approved-entrypoint")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     try:

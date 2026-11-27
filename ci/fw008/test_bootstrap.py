@@ -3,6 +3,7 @@ import hashlib
 import importlib.util
 import pathlib
 import tempfile
+import subprocess
 import unittest
 
 spec = importlib.util.spec_from_file_location("build", pathlib.Path(__file__).with_name("manual-build.py"))
@@ -15,6 +16,7 @@ class Bootstrap(unittest.TestCase):
         lock = copy.deepcopy(build.read_inventory())
         lock["review_status"] = "approved"
         lock["image_id"] = "sha256:" + "a" * 64
+        lock["additional_inputs"] = [{"source": "synthetic", "version": "fixture", "sha256": "b" * 64}]
         for item in lock["files"]:
             p = inputs / item["path"]
             p.parent.mkdir(parents=True, exist_ok=True)
@@ -61,6 +63,14 @@ class Bootstrap(unittest.TestCase):
                 build.validate_lock(lock, build.BASE)
             with self.assertRaises(build.Blocked):
                 build.relative("../outside")
+
+    def test_unexpected_download_even_if_upstream_ignores_failure(self):
+        with tempfile.TemporaryDirectory() as d:
+            script = pathlib.Path(__file__).with_name("download-guard.sh")
+            result = subprocess.run(["bash", "-c", 'set -e; source "$1"; install_download_guard "$2/guards" "$2/marker"; check_download "$2/marker"; wget https://example.invalid || true; check_download "$2/marker"', "bash", str(script), d], capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertTrue((pathlib.Path(d) / "marker").exists())
+            self.assertIn("unexpected download", result.stderr)
 
     def test_isolation_command(self):
         args = build.docker_args("sha256:" + "a" * 64, "/private/inputs", "/private/work")
