@@ -1,0 +1,3042 @@
+{
+  "schema": 1,
+  "source_sha": "c8582405b2c3c0e3b80219b0e71e21785a482867",
+  "tracked_files_read": 2615,
+  "recursive_submodules": {
+    "src/ftpd/pure-ftpd": "f169d2016707e7991d4c85be92afcf26d84a0135",
+    "src/minimp4/minimp4": "e407f02fdb9828fbf89ffa376e5be2699c3c2d5a",
+    "src/mjpeg-avi/mjpeg-avi": "948b169e9a8a917c8abe1066e9859bacebae4930",
+    "src/mosquitto/mosquitto": "ae309b331cf79663d6a0f2df9a976c6511c552fa",
+    "src/mqtt/mqttv4": "48cf94fa69d65ad009c6bec1de9319ca5de77ccf",
+    "src/onvif_simple_server/onvif_simple_server": "40ec59ead114872069d83e5023dd7e8b63dc834d",
+    "src/proxychains-ng/proxychains-ng": "b8fa2a7405e4e4ddeb35e9f6cf298944680fc52f",
+    "src/rtsp_server_yi/RtspServer": "3c642bc9e5de0473cd9a0ad0fd459dfc4b16cdeb",
+    "src/sftp-server/openssh-portable": "2d98db98331803cbb820211b2fb0d31a6e71e58e"
+  },
+  "modules": [
+    "busybox",
+    "dropbear",
+    "ftpd",
+    "h264grabber",
+    "ipc_cmd",
+    "jq",
+    "mdnsd",
+    "minimp4",
+    "mjpeg-avi",
+    "mosquitto",
+    "mqtt",
+    "mqtt-config",
+    "onvif_simple_server",
+    "pcmvol",
+    "proccgi",
+    "proxychains-ng",
+    "rRTSPServer",
+    "rtsp_server_yi",
+    "set_tz_offset",
+    "sftp-server",
+    "snapshot",
+    "static",
+    "tinyalsa",
+    "wireless_tools",
+    "www"
+  ],
+  "build_instruction_files": [
+    {
+      "path": ".gitmodules",
+      "sha256": "49bc73ee05fae572f333e0081964528de086d9e39e3e62baae0566bc045cbf73"
+    },
+    {
+      "path": "scripts/cleanup.sh",
+      "sha256": "1d154360888514feb4481cf18568ab331967815f23640659b64c50d990c9efad"
+    },
+    {
+      "path": "scripts/common.sh",
+      "sha256": "2ea3c37faa5097395ae175daf14e1ed7a26d2457da4e4e8c2098328274082d9a"
+    },
+    {
+      "path": "scripts/compile.sh",
+      "sha256": "4c3730d01a7a90c39cf712b2eb5d64228aafc9c378732a72cff7e9535ac30986"
+    },
+    {
+      "path": "scripts/init_sysroot.all.sh",
+      "sha256": "7e057d4dc702d47f33c231e6bb4af4e4385c9f23cf42b20c9f795725d78ce18d"
+    },
+    {
+      "path": "scripts/init_sysroot.sh",
+      "sha256": "436fae2135a1bbfd3d2b55efc532c1f909da959b1a85213854cce21bb91446dd"
+    },
+    {
+      "path": "scripts/pack_fw.all.sh",
+      "sha256": "b8576a07961af653361cf7aee3de93064628891209c0afcf61cf636d41a22729"
+    },
+    {
+      "path": "scripts/pack_fw.sh",
+      "sha256": "07092ac96f40e752f90d3a7c005b3889e8b0042407770190e2f27270c85914d1"
+    },
+    {
+      "path": "src/busybox/compile.busybox",
+      "sha256": "83964b36dd1dc3a205fbb88a18b952ad31068e7ae2c782fcb9cbd7f1a42422c7"
+    },
+    {
+      "path": "src/busybox/config.busybox",
+      "sha256": "cd70e3509cd4c0520b9897b7a7f78683dba9a995e436b058b5c4227345dfe11e"
+    },
+    {
+      "path": "src/busybox/init.busybox",
+      "sha256": "f4c03f844e1f5f08e5c5b1483ff2b578149cd1990641ec7618c481cda327f253"
+    },
+    {
+      "path": "src/busybox/install.busybox",
+      "sha256": "9bee07a6a2279b67f23ab0269b6aeb6fa3e9da176518d08f6912903611524ca7"
+    },
+    {
+      "path": "src/dropbear/compile.dropbear",
+      "sha256": "3ba1d7f4109577390853cc8284c3409911a4c5e61878905c18749b667c1d24a9"
+    },
+    {
+      "path": "src/dropbear/config.dropbear",
+      "sha256": "179a6065861185f7891c64ccfaace3c989c9448979ebd662221a224a37aee86a"
+    },
+    {
+      "path": "src/dropbear/init.dropbear",
+      "sha256": "bfc5d84f1c4d041d992f9f4d6221cf965fb24a55b8dd0dd9bf99ab10cfaf0e58"
+    },
+    {
+      "path": "src/dropbear/install.dropbear",
+      "sha256": "1c69d9b1c745cbfa8016dc8e2a964f0046e8c7c38a1655aa6a003ee5b5f8725c"
+    },
+    {
+      "path": "src/ftpd/compile.ftpd",
+      "sha256": "cdc6bc593457bce43586ce77bf473cb930d3ca2d85301ac77b5b3da95dc529cb"
+    },
+    {
+      "path": "src/ftpd/init.ftpd",
+      "sha256": "41de4a8e60346375d324cf90e9964383759619ee85b977f95a86c500b7511dc6"
+    },
+    {
+      "path": "src/ftpd/install.ftpd",
+      "sha256": "6c71affe32ee34780b97edf2b5ce1ba0c003caa65e55296990ec9e6fe8f6ec67"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/Makefile.am",
+      "sha256": "7073b2c8184fe890e9db98333947cd277f4f78ce84331b43af8e919b43765dfe"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/Makefile.gui",
+      "sha256": "6b17bcb2f804c13eef5c57b219e4852fb2d6cfc72f754d2fd97416ae293852da"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/configure.ac",
+      "sha256": "b1a7b440f3b2e8cd1d3c4a824ba4eda8d403d061b2443e652054c9e9c040da5d"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/gui/Makefile.am",
+      "sha256": "b72d4e6738efe1c48a2506c952f446ae6a3ca77ed44b6dce86fc7648df3bd492"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/m4/Makefile.am",
+      "sha256": "972c20efe2ecd169e9cd178fef1fd6913198913fe2b725b506709218ed10ca8e"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/man/Makefile.am",
+      "sha256": "fdc868e58c5c568cb26118568465834944d0b9222ddef943252ede2d17ffbaa1"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/pam/Makefile.am",
+      "sha256": "a6a32e57eb4e7b374212dc3ba981f6b40b748909cc7b024b1d15c76294b29d2f"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/puredb/Makefile.am",
+      "sha256": "04e07c4cde7ee0a58d30651525b8e3c56bf0dcfc55777aeeb35d38d32e77ef59"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/puredb/src/Makefile.am",
+      "sha256": "1712cac464113c94442fdc932854d9374575e10212ba5104a2353e719ec38edf"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/src/Makefile.am",
+      "sha256": "1428f9d6b1ffdc61cc7474abfce92589693af6ade82618cb4c07370ccf7e4dae"
+    },
+    {
+      "path": "src/h264grabber/compile.h264grabber",
+      "sha256": "ec468beb8e5c6b5b18fb27a0495b7f429f4fa673d626605b899f381e9cd3f6c7"
+    },
+    {
+      "path": "src/h264grabber/h264grabber/Makefile",
+      "sha256": "226b1da92295dd89fce53a39699fb458df97b5706443e2c83d649f162e0cf559"
+    },
+    {
+      "path": "src/h264grabber/init.h264grabber",
+      "sha256": "09cd35e5894b1eaf6e8de1ee2532339de99397443668a3dd6e781e95970cba2d"
+    },
+    {
+      "path": "src/h264grabber/install.h264grabber",
+      "sha256": "4d16e9b009a0d46da1aaaa8ff429fe7c0e47774eb76aec0408f4b853a35ca4f6"
+    },
+    {
+      "path": "src/ipc_cmd/compile.ipc_cmd",
+      "sha256": "89a63a226b63482c242ffe8dee75132ff9f6e96e283f689d5b01c82cdabcf95d"
+    },
+    {
+      "path": "src/ipc_cmd/init.ipc_cmd",
+      "sha256": "452ec47b6e9ca9a374d7e8acfdb1148344add0cac2f1d19b6c776f887e3cc793"
+    },
+    {
+      "path": "src/ipc_cmd/install.ipc_cmd",
+      "sha256": "ca7c7881d1891f189f248968f2df2f5bafced63d312960b0a2021eb3a751a588"
+    },
+    {
+      "path": "src/ipc_cmd/ipc_cmd/Makefile",
+      "sha256": "36e6601a3e3bfb5f994e7aee332ec046b15bc453caaaddf17877576abe5e83b3"
+    },
+    {
+      "path": "src/jq/compile.jq",
+      "sha256": "1c45823d06e8c0c8b368dddf7950ef2162400c43d114ae3bbef7d0a82544bbec"
+    },
+    {
+      "path": "src/jq/config.jq",
+      "sha256": "5e5eb6b5c5eb11edb58a25bb21d28c77fa2a66bfcc8e1558096326b2abde7932"
+    },
+    {
+      "path": "src/jq/init.jq",
+      "sha256": "fc4ca7f7c35a9ceb2af9d66c06a5266bbfca46ed27a0a2e9ae78dda7cd7be835"
+    },
+    {
+      "path": "src/jq/install.jq",
+      "sha256": "ca7c7881d1891f189f248968f2df2f5bafced63d312960b0a2021eb3a751a588"
+    },
+    {
+      "path": "src/mdnsd/compile.mdnsd",
+      "sha256": "1f85132623c05c29023947c2087d34130d0f0f0f7bf4fc197a30e4ebc4b07739"
+    },
+    {
+      "path": "src/mdnsd/config.mdnsd",
+      "sha256": "d4634465893d0bbbb5d887c4324bc8be3971a151323e9ae662720b72f4e2b333"
+    },
+    {
+      "path": "src/mdnsd/init.mdnsd",
+      "sha256": "6efaad16f6efcc039f8cb3dc10e6a8c794e71a9a51921146b98fd9444bfcb5b1"
+    },
+    {
+      "path": "src/mdnsd/install.mdnsd",
+      "sha256": "74ea4d4aee3db69de64707721cd40a87648c5ffd3aef8c8f5a9e703d2541dc8b"
+    },
+    {
+      "path": "src/minimp4/compile.minimp4",
+      "sha256": "889d95b2bf155d01f5e1008372de3e36d862a0882f2999b249e37b503e28fade"
+    },
+    {
+      "path": "src/minimp4/init.minimp4",
+      "sha256": "0e3429e29ae845a98fad3e5cde7ab6ec60c0ae14c235f73d1c683d3e94ce1750"
+    },
+    {
+      "path": "src/minimp4/install.minimp4",
+      "sha256": "4d16e9b009a0d46da1aaaa8ff429fe7c0e47774eb76aec0408f4b853a35ca4f6"
+    },
+    {
+      "path": "src/mjpeg-avi/compile.mjpeg-avi",
+      "sha256": "348b902aeff37f2ecce8d0ecaa884745f07b30b8551db73b94f3b197c43bc6a1"
+    },
+    {
+      "path": "src/mjpeg-avi/init.mjpeg-avi",
+      "sha256": "ee44c87e523cf8ea5dc4ce8695573e112cbfcc2c0468ed0108ff5f03510328bc"
+    },
+    {
+      "path": "src/mjpeg-avi/install.mjpeg-avi",
+      "sha256": "ce4cab1bd7341893a75039dff3a34bc97338af60239daa9daa2599d0b73b4581"
+    },
+    {
+      "path": "src/mjpeg-avi/mjpeg-avi/CMakeLists.txt",
+      "sha256": "8a63d997ba53802439988ba350047b9f60c6dc62eba831fb74690812dad3c0bc"
+    },
+    {
+      "path": "src/mosquitto/compile.mosquitto",
+      "sha256": "8e5146055194ccde6b50a7f6abaab576236c6c35d4bba177765a293e193f9542"
+    },
+    {
+      "path": "src/mosquitto/config.mosquitto",
+      "sha256": "63045da3561078d5626f2b36bca158157317cfea894ec5684439246774f8efd1"
+    },
+    {
+      "path": "src/mosquitto/init.mosquitto",
+      "sha256": "bc689bc9ec32720cb6ed6dfd8b541c2a22a5cee9ac756a8d2b06b3618b8fdfb2"
+    },
+    {
+      "path": "src/mosquitto/install.mosquitto",
+      "sha256": "41520c9dbb63c0037f5aa1f624b41f41e6ff5fbac2e4c160b17622340f1dbd4a"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/CMakeLists.txt",
+      "sha256": "3e7c95af7ae2cdff06166bfb9dbb35d6c4806ec29fd67f9ec588b6831ce0ec01"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/Makefile",
+      "sha256": "7d18e7f3ac962850ef624a0b0c593292223746152134b09e7d64c0d65c39e39f"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/CMakeLists.txt",
+      "sha256": "f4893c56a085eec7bb68f7345f7ad71de7f3bd5a32d6a48d90882876a19dbaec"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/Makefile",
+      "sha256": "d31fc63087f4a03e1e69efabe07330467692b9cb1225e9dc1490319e228dd74d"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/config.h",
+      "sha256": "9d8d1e86ccc93758fc0f510ed9c37be828044d49b0c1a9cb75ba536fa3f6296a"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/config.mk",
+      "sha256": "73c2845013f3a5101b1f7832f6db75c2b5e897e2b3e5b72854c37a6de43e95eb"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/examples/mysql_log/Makefile",
+      "sha256": "e2f6c8d08b1e7f7218f9dce16304e675c54e7d04da856ea239d13b13c261123f"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/examples/subscribe_simple/Makefile",
+      "sha256": "6ad55f83f47884074e772435ffe06ad770b240187ff3398255ed22f7cbbcb4ea"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/examples/temperature_conversion/Makefile",
+      "sha256": "d2ab286032fc621ee692bb6bfc68d7a412b4a3810bc1a35822d7cb66d21ebfeb"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/CMakeLists.txt",
+      "sha256": "296dfde4aaf04f612a996512c5301f2110d3aaa844d6617a22887a3b1b0e6a69"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/Makefile",
+      "sha256": "3723db9ee97afddeaaf1743b0f95a3d38375e1ecb8e40207f92ef12c00ec5515"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/cpp/CMakeLists.txt",
+      "sha256": "c1143a254abb9008537a113b9ea4d51640a9fc5de514f96cbed7474607563080"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/cpp/Makefile",
+      "sha256": "38d8319a61589fe66b831841d740b65cac7df6ca15ae7fda37357e678dae1c62"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/man/CMakeLists.txt",
+      "sha256": "bf92e9d601a5e3c8c01de57bdaede37550ceba0238fd7f604e8a1bc94e6bd864"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/man/Makefile",
+      "sha256": "0433a52f537e0a44bde12818a281d33359b2a3742dcf89b8a721b5808de7895a"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/CMakeLists.txt",
+      "sha256": "217577453d1807df5c57ccadb2b1745128aad04b080f2c77906125c685a5d57e"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/Makefile",
+      "sha256": "2a3b677c8ba9eab6e6a12185b58239d0f2e91942e6b9016981074aa3ad0492eb"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/db_dump/Makefile",
+      "sha256": "b9387d6a4413bf64672bdda0cdbc2cbcdec66831d1e22f73866d0cf9230a3374"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/Makefile",
+      "sha256": "724b50a17d267c41f2fddb3ad63e8d2bf4fb37cf4655df3ed46e40d66485d26e"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/broker/Makefile",
+      "sha256": "3d57673c9fec527677a08081df1e0cde26e193cf7f7f8c1a1cc6e827ab0cee8b"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/broker/c/Makefile",
+      "sha256": "371bc9ce765676d762fed10d7c9789248762cb4290bbcd55b3824e057891b47a"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/lib/Makefile",
+      "sha256": "9b35964e449661d60090eb06891b8d0f6a8162b99b1712351aff815c1f3393d9"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/lib/c/Makefile",
+      "sha256": "9978d98883fcea1d85d1b3e5c5071d06dfa1198fbcc03eea41fc290925be2501"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/lib/cpp/Makefile",
+      "sha256": "363b84c60678893663e0a826c52521dab44cce27dea9331e057f89cd2594b669"
+    },
+    {
+      "path": "src/mqtt-config/compile.mqtt-config",
+      "sha256": "d507592fd8652e5aa881f14fa61c38495d5b7be8f3f7dd0e810832b9e92a6094"
+    },
+    {
+      "path": "src/mqtt-config/init.mqtt-config",
+      "sha256": "d49ec5b8a2c000796f4de3eb9e590d5c86371116d2b0816dd7a464e664697268"
+    },
+    {
+      "path": "src/mqtt-config/install.mqtt-config",
+      "sha256": "ca7c7881d1891f189f248968f2df2f5bafced63d312960b0a2021eb3a751a588"
+    },
+    {
+      "path": "src/mqtt-config/mqtt-config/Makefile",
+      "sha256": "35cadf1a706128cf9555c9c390a2bc082ebc39bd8fdc65bb56a25b9f1aeea320"
+    },
+    {
+      "path": "src/mqtt-config/mqtt-config/config.c",
+      "sha256": "1fb08023e2778ed117b3ce8905d85a131621e1387ef63e0f7d48d09bf2a97ca7"
+    },
+    {
+      "path": "src/mqtt-config/mqtt-config/config.h",
+      "sha256": "e06c64a372f555cda994ad537fb8ce4ee519fe156e7743129495f5ea76f6535c"
+    },
+    {
+      "path": "src/mqtt/compile.mqtt",
+      "sha256": "4e406e2cdbfef9109e052d886c101163fa6d78a078f5313b460480dfff421bfe"
+    },
+    {
+      "path": "src/mqtt/config.mak",
+      "sha256": "9bf3ecfe402eef8532f12d0c7006f317bfff7fe237cfb02e02c40ce1d3b879d9"
+    },
+    {
+      "path": "src/mqtt/init.mqtt",
+      "sha256": "b7d601d7cd2e3b4051bd6dabc9e9da64bb1457a2fa9b26a8e71f20a5e2c06c65"
+    },
+    {
+      "path": "src/mqtt/install.mqtt",
+      "sha256": "71f128b401a0ee71d3d9fb91f3baa62f0a331c3735feca6b5bd03648adaa4f33"
+    },
+    {
+      "path": "src/mqtt/mqttv4/Makefile",
+      "sha256": "d44e595f96be9106ce637c98503f45e1df9513f0edd502ceca06bb5ef6a7b697"
+    },
+    {
+      "path": "src/mqtt/mqttv4/config.mak",
+      "sha256": "a40dc4347eb64e8951cdf4e2b1a9b89ca89358b87b24176baa9d738c8bb4d948"
+    },
+    {
+      "path": "src/mqtt/mqttv4/include/config.h",
+      "sha256": "003a6d491d3373e5c3d56e5828a7424c83a0a29517a431ff747e9e7b71c83657"
+    },
+    {
+      "path": "src/mqtt/mqttv4/src/Makefile",
+      "sha256": "ffef9af5ef2c8c0810e50ca6bf5ad140fd4f8f176fff512d00c60297af35cacc"
+    },
+    {
+      "path": "src/mqtt/mqttv4/src/config.c",
+      "sha256": "74a1f6e476203821b7f01f849e8f98dc3dbc9217d7e3b2fc368eef6bd48a088b"
+    },
+    {
+      "path": "src/onvif_simple_server/arm-linux-gnueabihf-toolchain.cmake",
+      "sha256": "4927021734d27859e819453d412d56320dc45878bd9609d493fa23fcea4749fd"
+    },
+    {
+      "path": "src/onvif_simple_server/compile.onvif_simple_server",
+      "sha256": "340e3d3bc19bfb6292be019e2eb90927ce866cd77a9764c34c32a2c7266a3009"
+    },
+    {
+      "path": "src/onvif_simple_server/init.onvif_simple_server",
+      "sha256": "4b31e19a256a9e45d9db193b8047ee321eafb65c32b6173dd4be060e5649b1aa"
+    },
+    {
+      "path": "src/onvif_simple_server/install.onvif_simple_server",
+      "sha256": "1c9881cb1e26e9b0653d0986e3bd0bd9f12dc52d8701443aad864cb5a527bac9"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/Makefile",
+      "sha256": "8890cced1b4cb61b8c3fab5a5d0368f468da2729b26e585d0c1710bff55baf19"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/Makefile.static",
+      "sha256": "feeec3bc776f4019c64aaa159e6135ba1da410314328177257bd5c8646d21e1c"
+    },
+    {
+      "path": "src/pcmvol/compile.pcmvol",
+      "sha256": "d2c229cbfbd01046b900ef07703f85b667481a46ee0057aa72d83802ea8015a5"
+    },
+    {
+      "path": "src/pcmvol/init.pcmvol",
+      "sha256": "0cd254a14483f5892596876d2e0f8d185c3b3ad6847258cb1dc21310c1978eae"
+    },
+    {
+      "path": "src/pcmvol/install.pcmvol",
+      "sha256": "4d16e9b009a0d46da1aaaa8ff429fe7c0e47774eb76aec0408f4b853a35ca4f6"
+    },
+    {
+      "path": "src/pcmvol/pcmvol/Makefile",
+      "sha256": "0e58633342dad46c26663a443e53c7524fcc67ac8080d747631c6e8810e2e238"
+    },
+    {
+      "path": "src/proccgi/compile.proccgi",
+      "sha256": "a1b4e27663efa70334dcb1cd56af8feb1f1ffe224608ee0a8d44245059373c43"
+    },
+    {
+      "path": "src/proccgi/config.mak",
+      "sha256": "e9f4614a1e03bce19e5b1ed4c60066885acdb51a569d7a1e2067cf2648fda90e"
+    },
+    {
+      "path": "src/proccgi/init.proccgi",
+      "sha256": "fdbd6dc0a4eb9009ac8db90bee64b45d728125def2f66b5bd2c5b299efa71f62"
+    },
+    {
+      "path": "src/proccgi/install.proccgi",
+      "sha256": "4224ed629a5194ca50076357aa5164f632cb442ae66f4eef277b427b2c9741b4"
+    },
+    {
+      "path": "src/proccgi/proccgi/Makefile",
+      "sha256": "c3233833c0357372180565dad1c14186a32fc175656c32230e3a78e2abc96c43"
+    },
+    {
+      "path": "src/proccgi/proccgi/config.mak",
+      "sha256": "e9f4614a1e03bce19e5b1ed4c60066885acdb51a569d7a1e2067cf2648fda90e"
+    },
+    {
+      "path": "src/proxychains-ng/compile.proxychains-ng",
+      "sha256": "674daa105afd57e365868c6c0b39206d9ff76a139fe13e00ab65c67aa6760526"
+    },
+    {
+      "path": "src/proxychains-ng/config.mak",
+      "sha256": "80eea13a377cf0040140aaa7be4b3c67d7b4c90a066384c1998dbe53910c5fe8"
+    },
+    {
+      "path": "src/proxychains-ng/init.proxychains-ng",
+      "sha256": "608332e58bc8c3175049549e0821ec701453d065d711ba838f89c4debef0c5dc"
+    },
+    {
+      "path": "src/proxychains-ng/install.proxychains-ng",
+      "sha256": "88eaa25fa87a8c83f4500e91a61faeb1e2db3b02e5d26eeb82c417cb255ec300"
+    },
+    {
+      "path": "src/proxychains-ng/proxychains-ng/Makefile",
+      "sha256": "fdd9f0b49b2eabca473d90730629196d65c021a230b0745a138e997251c66dbd"
+    },
+    {
+      "path": "src/proxychains-ng/proxychains-ng/tools/install.sh",
+      "sha256": "9436deae10780b58193e50e4f1fd5880e0706603b77364c08b45ee5ed4318f65"
+    },
+    {
+      "path": "src/rRTSPServer/Makefile.rRTSPServer",
+      "sha256": "3848bb662697201c621677d7f13b4cb5aaf6e1a67c5e4cf11b70a54b58767974"
+    },
+    {
+      "path": "src/rRTSPServer/compile.rRTSPServer",
+      "sha256": "f9dd85ca9cd0ce18e5494403c1e533df9c30e2f5022d13e0ba907be5a00cca03"
+    },
+    {
+      "path": "src/rRTSPServer/dummylib/Makefile",
+      "sha256": "c2d4d40533c5aaec028583f359ca094453452006a20d62a774cd59a33f715e00"
+    },
+    {
+      "path": "src/rRTSPServer/init.rRTSPServer",
+      "sha256": "c6425e241febf19cf78b82a09944c28f59519a44fc8ad5110fdf2715d70d016a"
+    },
+    {
+      "path": "src/rRTSPServer/install.rRTSPServer",
+      "sha256": "4d16e9b009a0d46da1aaaa8ff429fe7c0e47774eb76aec0408f4b853a35ca4f6"
+    },
+    {
+      "path": "src/rtsp_server_yi/Makefile.rtsp_server_yi",
+      "sha256": "d84647f4a533fe8fa9d4e4a700a49bc06f6817462be6dd2f4e4b1f4acc52b8fc"
+    },
+    {
+      "path": "src/rtsp_server_yi/RtspServer/CMakeLists.txt",
+      "sha256": "97777b3616d232b2805f8579dc4eaaad6a3cedca13fb52eec30384c40050487f"
+    },
+    {
+      "path": "src/rtsp_server_yi/RtspServer/Makefile",
+      "sha256": "372dd04b829e36f44e12dcbf703e3e4ffdfc6da012f538d09266685a2f45f645"
+    },
+    {
+      "path": "src/rtsp_server_yi/compile.rtsp_server_yi",
+      "sha256": "10aa7611ae855a18b739d070e0e0a9573b98c6c03ea8855c3024c6c18d370936"
+    },
+    {
+      "path": "src/rtsp_server_yi/init.rtsp_server_yi",
+      "sha256": "98266fd13c702622eb7caafbe84c686a7c491b63e6210e8deebbb11961a022f7"
+    },
+    {
+      "path": "src/rtsp_server_yi/install.rtsp_server_yi",
+      "sha256": "4d16e9b009a0d46da1aaaa8ff429fe7c0e47774eb76aec0408f4b853a35ca4f6"
+    },
+    {
+      "path": "src/set_tz_offset/compile.set_tz_offset",
+      "sha256": "b87ad5506e050855410383323da6378fa884e8744020fcd267f78340deec8545"
+    },
+    {
+      "path": "src/set_tz_offset/init.set_tz_offset",
+      "sha256": "f448c85da8c8a43880713a34a52d8c7ff8f9f038cd9277a8d9083bbf7234a168"
+    },
+    {
+      "path": "src/set_tz_offset/install.set_tz_offset",
+      "sha256": "4d16e9b009a0d46da1aaaa8ff429fe7c0e47774eb76aec0408f4b853a35ca4f6"
+    },
+    {
+      "path": "src/set_tz_offset/set_tz_offset/Makefile",
+      "sha256": "b8a4af1c355b9667a08ed89fbece7f375a8f6fc50405b65995050a8c9fbc0630"
+    },
+    {
+      "path": "src/sftp-server/compile.sftp-server",
+      "sha256": "5b81f0596daf9fb29b3977c4657ba9d96cb37e7fd3c5e497ee328b05059f62ff"
+    },
+    {
+      "path": "src/sftp-server/init.sftp-server",
+      "sha256": "b88df5872d3f879ceb886fccab3765a0da0d3603be5cd0dbc110871ed60a5bce"
+    },
+    {
+      "path": "src/sftp-server/install.sftp-server",
+      "sha256": "39e81d67759692a4c3b65c027de201e5dda1c9a0868801a04495e7877be3c725"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/Makefile.in",
+      "sha256": "747e102ed2d98446615716759297e56d9b698a342ee047f8043acb5b5c6767c8"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/config.guess",
+      "sha256": "36b03244d5bc0fee6c3b69013d2d4fe3027ae7e05e1dd566dbbd84a3639c3ca9"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/config.h.in",
+      "sha256": "b6a9a2c69216b1cfef3cb02ef7c580e2d4ce0fd79ea766c0892348b803284f88"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/config.sub",
+      "sha256": "0114ee98bffafc27c4d48abea22b6a542fa6fe45c949ca0d2ea1999d395f4197"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/configure.ac",
+      "sha256": "3885eb3b2a951fec2cc430c0ce49941d6f8bb81bc83b942f6beb68624d6511d3"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/contrib/Makefile",
+      "sha256": "7c63b1a7487690a4b84f5a712e25ff9a58ba8ef7aaee77003e1a51e32582da93"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/contrib/cygwin/Makefile",
+      "sha256": "84b0ed907ce8519c9fb0f6589e57872daf938201ea723688d779472af8d37dbb"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/Makefile.in",
+      "sha256": "12474ea8345710ae5af97b07eeb72464b1b208218b3b6a1970debf6f186c51ba"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/regress/Makefile.in",
+      "sha256": "4570e8354957eaeaf6c7bf86195e17372e74f8df760c52f8989a782bf4bdca9f"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/Makefile",
+      "sha256": "d3c7874ece2ff70e52e7032a77fc06066bef8dbc99e9a98f5e1c3dc38ec74974"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/misc/Makefile",
+      "sha256": "7e663964c2d1da432c0ca2ce59c2e7563d3e2db3c079ee43d505bfc62f59afc9"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/misc/fuzz-harness/Makefile",
+      "sha256": "3ece11175ff2aa86100bff428447a9ef2d9372c3f562064dcfbc9b38364d3501"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/misc/sk-dummy/Makefile",
+      "sha256": "917b969191ab243a8ad40e73b32b4f908224994cd878b35863b91a0223ee0246"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/misc/ssh-verify-attestation/Makefile",
+      "sha256": "cb32a9eff614e899975523906f0f43804d962ec9a4664e8fc49065353bf7a3c1"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/Makefile",
+      "sha256": "d0f50d8568ac3cab6e40ddf6615dad51b312c5e432fe231a0f95aee8fecd194d"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/Makefile.inc",
+      "sha256": "0236c6035a44813227189dbaa8ed2889175461fcc5f5e165b644eaaed1a93a4d"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/authopt/Makefile",
+      "sha256": "2f91b712d7d93f3a427ae2b24e3bba34e1b526427c25342515f77a4a525095e8"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/bitmap/Makefile",
+      "sha256": "d720b4802dd8c8a8504675e2180b77bbb831c2d616b81ac6497e7474e548d683"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/conversion/Makefile",
+      "sha256": "c3a2be750d21424cc5b006cb8643f75af3009b6c463d50b35b825d5e72223901"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/hostkeys/Makefile",
+      "sha256": "c1527bbdfcbe7555cbc862fc53b83150d973b0321817806b268883dd9ccf2ebf"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/kex/Makefile",
+      "sha256": "e8ee7f8f4363620554ea56d25c5bf8de1d9bf6cb063faa36046502f7cb25f8df"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/match/Makefile",
+      "sha256": "de55a72ac3192c5253a2203da2c42015f73d246b7b9f98adc63db0ac273c9b53"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/misc/Makefile",
+      "sha256": "787cab44209c1c462c5994df47f660141e56b0dfd86baaeb4ae3528d0c9137cc"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/sshbuf/Makefile",
+      "sha256": "423156336412e9c1b5df0b5029c3e42728a6a6ccfb947d40c1a884e41d71c8bb"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/sshkey/Makefile",
+      "sha256": "67b62e2747e2e4834cdd4add09d652afcf7c008f71f57a0518416cb859689498"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/sshsig/Makefile",
+      "sha256": "066f1f005a12997bd9837c2006458136028d90508aa6ef3eba55e0ff7e5c0753"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/test_helper/Makefile",
+      "sha256": "be0e701a5f41edaac42ae63737e876e71852df5006142a0ac0a7de90a8beae7f"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/regress/unittests/utf8/Makefile",
+      "sha256": "c26e37e64e1bec7bf2edffebcf5173756a758ec7b73ce24cb1f825328b453a38"
+    },
+    {
+      "path": "src/snapshot/compile.snapshot",
+      "sha256": "5f440ab7adc3ce5abb920b6a981004e58137ba2fd525c5637dd346cd1edbee80"
+    },
+    {
+      "path": "src/snapshot/init.snapshot",
+      "sha256": "33b1c5c3a53c730aa41acb8dd681b6c7a1e5ad9774b4f823b8373529b80d776b"
+    },
+    {
+      "path": "src/snapshot/install.snapshot",
+      "sha256": "4d16e9b009a0d46da1aaaa8ff429fe7c0e47774eb76aec0408f4b853a35ca4f6"
+    },
+    {
+      "path": "src/snapshot/snapshot/Makefile",
+      "sha256": "a8d4989fc7e61ad106ec97f3f5c29380528c97e52bafd2ff7b2c33fc4b1dde91"
+    },
+    {
+      "path": "src/snapshot/snapshot/arm-openwrt-linux-toolchain.cmake",
+      "sha256": "9da18e06df982f1337efdf9109ff5299758be44e88d1aa077cf5d33a59df21a7"
+    },
+    {
+      "path": "src/static/compile.static",
+      "sha256": "ae95ced2ad4e70c500e339767b219e0785eef8bba9cf63fe79a671f0085dc0fd"
+    },
+    {
+      "path": "src/static/init.static",
+      "sha256": "418106966f0c3cab621684445464fd0168abb5451c1ad9b49fa6d4609927f145"
+    },
+    {
+      "path": "src/static/install.static",
+      "sha256": "7350975326f9bb1e8475b7cf87bb60e066631bc7af7c20ba0bd7165f4ae686f2"
+    },
+    {
+      "path": "src/static/static/rootfs/init.rc",
+      "sha256": "e0e5666669355c49c491b6e26ee8e2aa80e79ee5a7ac5b43c431eb8521ef3eba"
+    },
+    {
+      "path": "src/tinyalsa/compile.tinyalsa",
+      "sha256": "cf61cb3125b074f059585c37793fe26c11dc10b7cfa5bb81a49d67c7c84d4615"
+    },
+    {
+      "path": "src/tinyalsa/init.tinyalsa",
+      "sha256": "8d79a8cdbf1093f1288d7d5878d45806c3bff5a370df5ee5d3c43b04c7a7abd2"
+    },
+    {
+      "path": "src/tinyalsa/install.tinyalsa",
+      "sha256": "e90dbababe31508c38d0c0a7e6e32b328d649f278aee29a2511527fedd7c511a"
+    },
+    {
+      "path": "src/wireless_tools/compile.wireless_tools",
+      "sha256": "eb6a21ac88cb2e5cc0f49f0a0563fa4e96727fcd54d4837092de5327a03f287f"
+    },
+    {
+      "path": "src/wireless_tools/init.wireless_tools",
+      "sha256": "8796c89197911fbfa78ee1333884098ba1b80af4c978f2cb0f71c8a1f3d93cbf"
+    },
+    {
+      "path": "src/wireless_tools/install.wireless_tools",
+      "sha256": "4d16e9b009a0d46da1aaaa8ff429fe7c0e47774eb76aec0408f4b853a35ca4f6"
+    },
+    {
+      "path": "src/www/compile.www",
+      "sha256": "5db2d845ce909cb176f0ac9d2e0c6655037f26e09a8cb0d4c1303df8197cc481"
+    },
+    {
+      "path": "src/www/init.www",
+      "sha256": "1e15159fb863bbd3f09117919140c7de97c59a40cbf8a53d8a73de84bb005f15"
+    },
+    {
+      "path": "src/www/install.www",
+      "sha256": "1f300c3de20a059dc8a223f4eb6792ae9b0fb4d385492cfa149ac5dac5d5ecb2"
+    }
+  ],
+  "dependency_references": [
+    {
+      "path": ".gitmodules",
+      "line": 3,
+      "text": "url = https://github.com/jedisct1/pure-ftpd"
+    },
+    {
+      "path": ".gitmodules",
+      "line": 6,
+      "text": "url = https://github.com/eclipse/mosquitto"
+    },
+    {
+      "path": ".gitmodules",
+      "line": 9,
+      "text": "url = https://github.com/rofl0r/proxychains-ng"
+    },
+    {
+      "path": ".gitmodules",
+      "line": 12,
+      "text": "url = https://github.com/roleoroleo/mqttv4"
+    },
+    {
+      "path": ".gitmodules",
+      "line": 15,
+      "text": "url = https://github.com/roleoroleo/RtspServer"
+    },
+    {
+      "path": ".gitmodules",
+      "line": 18,
+      "text": "url = https://github.com/roleoroleo/minimp4"
+    },
+    {
+      "path": ".gitmodules",
+      "line": 21,
+      "text": "url = https://github.com/openssh/openssh-portable"
+    },
+    {
+      "path": ".gitmodules",
+      "line": 24,
+      "text": "url = http://github.com/roleoroleo/onvif_simple_server"
+    },
+    {
+      "path": ".gitmodules",
+      "line": 27,
+      "text": "url = https://github.com/Ricardicus/mjpeg-avi"
+    },
+    {
+      "path": "scripts/cleanup.sh",
+      "line": 4,
+      "text": "#  This file is part of yi-hack-v4 (https://github.com/TheCrypt0/yi-hack-v4)."
+    },
+    {
+      "path": "scripts/cleanup.sh",
+      "line": 18,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "scripts/common.sh",
+      "line": 4,
+      "text": "#  This file is part of yi-hack-v4 (https://github.com/TheCrypt0/yi-hack-v4)."
+    },
+    {
+      "path": "scripts/common.sh",
+      "line": 17,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "scripts/compile.sh",
+      "line": 4,
+      "text": "#  This file is part of yi-hack-v4 (https://github.com/TheCrypt0/yi-hack-v4)."
+    },
+    {
+      "path": "scripts/compile.sh",
+      "line": 17,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "scripts/compile.sh",
+      "line": 84,
+      "text": "export PATH=\"/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin:~/.local/bin:$PATH\""
+    },
+    {
+      "path": "scripts/init_sysroot.all.sh",
+      "line": 4,
+      "text": "#  This file is part of yi-hack-v4 (https://github.com/TheCrypt0/yi-hack-v4)."
+    },
+    {
+      "path": "scripts/init_sysroot.all.sh",
+      "line": 17,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "scripts/init_sysroot.sh",
+      "line": 4,
+      "text": "#  This file is part of yi-hack-v4 (https://github.com/TheCrypt0/yi-hack-v4)."
+    },
+    {
+      "path": "scripts/init_sysroot.sh",
+      "line": 17,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "scripts/pack_fw.all.sh",
+      "line": 4,
+      "text": "#  This file is part of yi-hack-v4 (https://github.com/TheCrypt0/yi-hack-v4)."
+    },
+    {
+      "path": "scripts/pack_fw.all.sh",
+      "line": 17,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "scripts/pack_fw.sh",
+      "line": 4,
+      "text": "#  This file is part of yi-hack-v4 (https://github.com/TheCrypt0/yi-hack-v4)."
+    },
+    {
+      "path": "scripts/pack_fw.sh",
+      "line": 17,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "scripts/pack_fw.sh",
+      "line": 233,
+      "text": "export STRIP=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin/arm-linux-gnueabihf-strip"
+    },
+    {
+      "path": "src/busybox/config.busybox",
+      "line": 4,
+      "text": "MAIN_URL_ALT=https://github.com/mirror/busybox/archive/refs/tags/${VERSION}.tar.gz"
+    },
+    {
+      "path": "src/busybox/config.busybox",
+      "line": 5,
+      "text": "MAIN_URL=https://busybox.net/downloads/busybox-${VERSION}.tar.bz2"
+    },
+    {
+      "path": "src/busybox/init.busybox",
+      "line": 13,
+      "text": "wget \"${MAIN_URL}\""
+    },
+    {
+      "path": "src/busybox/init.busybox",
+      "line": 15,
+      "text": "wget \"${MAIN_URL_ALT}\""
+    },
+    {
+      "path": "src/dropbear/config.dropbear",
+      "line": 4,
+      "text": "MAIN_URL=https://github.com/mkj/dropbear/archive/refs/tags/DROPBEAR_${VERSION}.tar.gz"
+    },
+    {
+      "path": "src/dropbear/init.dropbear",
+      "line": 11,
+      "text": "wget \"${MAIN_URL}\""
+    },
+    {
+      "path": "src/dropbear/init.dropbear",
+      "line": 22,
+      "text": "CFLAGS=\"-Os -mcpu=cortex-a7 -mfpu=neon-vfpv4 -I/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/usr/include\" \\"
+    },
+    {
+      "path": "src/ftpd/init.ftpd",
+      "line": 15,
+      "text": "CFLAGS=\"-Os -mcpu=cortex-a7 -mfpu=neon-vfpv4 -I/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/usr/include -L/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/lib/arm-linux-gnueabihf\" \\"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/configure.ac",
+      "line": 1472,
+      "text": "AC_MSG_NOTICE([| Go to http://www.pureftpd.org/ml/ now!                 |])"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/src/ftp_parser.c",
+      "line": 646,
+      "text": "addreply_noformat(211, \"https://www.pureftpd.org/\");"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/src/ftp_parser.c",
+      "line": 739,
+      "text": "addreply_noformat(214, \"Pure-FTPd - http://pureftpd.org/\");"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/src/pure-ftpwho.c",
+      "line": 276,
+      "text": "\"          \\\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\\\">\\n\""
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/src/pure-ftpwho.c",
+      "line": 277,
+      "text": "\"<html xmlns=\\\"http://www.w3.org/1999/xhtml\\\" xml:lang=\\\"en\\\">\\n\""
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/src/pure-ftpwho.c",
+      "line": 475,
+      "text": "puts(\"<!DOCTYPE plist PUBLIC \\\"-//Apple Computer//DTD PLIST 1.0//EN\\\" \\\"http://www.apple.com/DTDs/PropertyList-1.0.dtd\\\">\");"
+    },
+    {
+      "path": "src/ftpd/pure-ftpd/src/pure-pw.c",
+      "line": 294,
+      "text": "\"Please install libsodium (https://libsodium.org) and recompile pure-ftpd.\\n\");"
+    },
+    {
+      "path": "src/h264grabber/compile.h264grabber",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/h264grabber/h264grabber/h264grabber.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/h264grabber/h264grabber/h264grabber2.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/ipc_cmd/compile.ipc_cmd",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/ipc_cmd/ipc_cmd/ipc2file.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/ipc_cmd/ipc_cmd/ipc2file.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/ipc_cmd/ipc_cmd/ipc_cmd.c",
+      "line": 2,
+      "text": "* This file is part of libipc (https://github.com/TheCrypt0/libipc)."
+    },
+    {
+      "path": "src/ipc_cmd/ipc_cmd/ipc_cmd.c",
+      "line": 15,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/ipc_cmd/ipc_cmd/ipc_cmd.h",
+      "line": 2,
+      "text": "* This file is part of libipc (https://github.com/TheCrypt0/libipc)."
+    },
+    {
+      "path": "src/ipc_cmd/ipc_cmd/ipc_cmd.h",
+      "line": 15,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/jq/compile.jq",
+      "line": 7,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/jq/init.jq",
+      "line": 11,
+      "text": "wget https://github.com/stedolan/jq/releases/download/jq-${VERSION}/$ARCHIVE"
+    },
+    {
+      "path": "src/mdnsd/config.mdnsd",
+      "line": 4,
+      "text": "#MAIN_URL=\"https://github.com/troglobit/mdnsd/releases/download/v${VERSION}/mdnsd-${VERSION}.tar.gz\""
+    },
+    {
+      "path": "src/mdnsd/config.mdnsd",
+      "line": 5,
+      "text": "MAIN_URL=\"https://github.com/troglobit/mdnsd/archive/refs/heads/${VERSION}.zip\""
+    },
+    {
+      "path": "src/mdnsd/init.mdnsd",
+      "line": 11,
+      "text": "wget \"${MAIN_URL}\" -O \"${ARCHIVE}\" || exit 1"
+    },
+    {
+      "path": "src/mdnsd/init.mdnsd",
+      "line": 19,
+      "text": "CFLAGS=\"-Os -mcpu=cortex-a7 -mfpu=neon-vfpv4 -I/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/usr/include -L/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/lib/arm-linux-gnueabihf\" \\"
+    },
+    {
+      "path": "src/minimp4/compile.minimp4",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/minimp4/init.minimp4",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 4,
+      "text": "https://github.com/aspt/mp4"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 5,
+      "text": "https://github.com/lieff/minimp4"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 8,
+      "text": "See <http://creativecommons.org/publicdomain/zero/1.0/>."
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 74,
+      "text": "// http://www.mp4ra.org/object.html 0xC0-E0  && 0xE2 - 0xFE are specified as \"user private\""
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 112,
+      "text": "// Used for private stream, as suggested in http://www.mp4ra.org/handler.html"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 557,
+      "text": "// http://www.itscj.ipsj.or.jp/sc29/open/29view/29n7644t.doc"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 602,
+      "text": "// Metagata tags, see http://atomicparsley.sourceforge.net/mpeg-4files.html"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 639,
+      "text": "// 3GPP metatags  (http://cpansearch.perl.org/src/JHAR/MP4-Info-1.12/Info.pm)"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 648,
+      "text": "// these from http://lists.mplayerhq.hu/pipermail/ffmpeg-devel/2008-September/053151.html"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 658,
+      "text": "// Used for private stream, as suggested in http://www.mp4ra.org/handler.html"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 1170,
+      "text": "*   https://developer.apple.com/library/mac/documentation/QuickTime/QTFF/Metadata/Metadata.html#//apple_ref/doc/uid/TP40000939-CH1-SW1"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 1171,
+      "text": "*   http://atomicparsley.sourceforge.net/mpeg-4files.html"
+    },
+    {
+      "path": "src/minimp4/minimp4/minimp4.h",
+      "line": 1464,
+      "text": "// http://xhelmboyx.tripod.com/formats/mp4-layout.txt"
+    },
+    {
+      "path": "src/mjpeg-avi/compile.mjpeg-avi",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/mosquitto/compile.mosquitto",
+      "line": 22,
+      "text": "CFLAGS=\"-Os -mcpu=cortex-a7 -mfpu=neon-vfpv4 -I/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/usr/include -L/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/lib/arm-linux-gnueabihf\" \\"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/client_shared.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/client_shared.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/client_shared.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/client_shared.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/pub_client.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/pub_client.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/pub_client.c",
+      "line": 293,
+      "text": "printf(\"\\nSee http://mosquitto.org/ for more information.\\n\\n\");"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/sub_client.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/sub_client.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/sub_client.c",
+      "line": 231,
+      "text": "printf(\"\\nSee http://mosquitto.org/ for more information.\\n\\n\");"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/sub_client_output.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/client/sub_client_output.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/actions.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/actions.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/callbacks.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/callbacks.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/connect.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/connect.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/cpp/mosquittopp.cpp",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/cpp/mosquittopp.cpp",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/cpp/mosquittopp.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/cpp/mosquittopp.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_connack.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_connack.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_ping.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_ping.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_pubackcomp.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_pubackcomp.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_publish.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_publish.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_pubrec.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_pubrec.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_pubrel.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_pubrel.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_suback.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_suback.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_unsuback.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/handle_unsuback.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/helpers.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/helpers.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/logging_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/logging_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/logging_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/logging_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/loop.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/loop.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/memory_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/memory_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/memory_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/memory_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/messages_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/messages_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/messages_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/messages_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/mosquitto.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/mosquitto.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/mosquitto.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/mosquitto.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/mosquitto_internal.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/mosquitto_internal.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/mqtt3_protocol.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/mqtt3_protocol.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/net_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/net_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/net_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/net_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/options.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/options.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/packet_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/packet_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/packet_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/packet_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/read_handle.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/read_handle.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/read_handle.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/read_handle.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_connect.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_connect.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_disconnect.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_disconnect.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_publish.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_publish.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_subscribe.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_subscribe.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_unsubscribe.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/send_unsubscribe.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/socks_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/socks_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/socks_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/socks_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/srv_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/srv_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/thread_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/thread_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/time_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/time_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/time_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/time_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/tls_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/tls_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/tls_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/tls_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/utf8_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/utf8_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/util_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/util_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/util_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/util_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/will_mosq.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/will_mosq.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/will_mosq.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/lib/will_mosq.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/bridge.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/bridge.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/conf.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/conf.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/conf.c",
+      "line": 381,
+      "text": "printf(\"\\nSee http://mosquitto.org/ for more information.\\n\\n\");"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/conf_includedir.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/conf_includedir.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/context.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/context.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/database.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/database.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/db_dump/db_dump.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/db_dump/db_dump.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/deps/uthash.h",
+      "line": 2,
+      "text": "Copyright (c) 2003-2013, Troy D. Hanson     http://troydhanson.github.com/uthash/"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/deps/uthash.h",
+      "line": 366,
+      "text": "* http://eternallyconfuzzled.com/tuts/algorithms/jsw_tut_hashing.aspx */"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/handle_connack.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/handle_connack.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/handle_connect.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/handle_connect.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/handle_publish.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/handle_publish.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/handle_subscribe.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/handle_subscribe.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/handle_unsubscribe.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/handle_unsubscribe.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/lib_load.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/lib_load.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/logging.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/logging.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/loop.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/loop.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto_broker.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto_broker.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto_broker_internal.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto_broker_internal.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto_broker_internal.h",
+      "line": 110,
+      "text": "* http://milianw.de/blog/heaptrack-a-heap-memory-profiler-for-linux to"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto_passwd.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto_passwd.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto_passwd.c",
+      "line": 92,
+      "text": "printf(\"\\nSee http://mosquitto.org/ for more information.\\n\\n\");"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto_plugin.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/mosquitto_plugin.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/net.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/net.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/persist.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/persist.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/persist.c",
+      "line": 519,
+      "text": "* man close (http://linux.die.net/man/2/close, 2016-06-20):"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/persist.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/persist.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/plugin.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/plugin.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/plugin_defer.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/plugin_defer.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/read_handle.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/read_handle.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/security.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/security.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/security_default.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/security_default.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/send_connack.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/send_connack.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/send_suback.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/send_suback.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/service.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/service.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/signals.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/signals.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/subs.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/subs.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/sys_tree.c",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/sys_tree.c",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/sys_tree.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/sys_tree.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/uhpa.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/src/uhpa.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/broker/c/mosquitto_plugin_v2.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/broker/c/mosquitto_plugin_v2.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/lib/c/09-util-utf8-validate.c",
+      "line": 7,
+      "text": "* http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt but modified for"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/lib/cpp/09-util-utf8-validate.cpp",
+      "line": 7,
+      "text": "* http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt but modified for"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/packet-gen.c",
+      "line": 3,
+      "text": "* See http://answers.launchpad.net/mosquitto/+question/123594"
+    },
+    {
+      "path": "src/mosquitto/mosquitto/test/packet-gen.c",
+      "line": 4,
+      "text": "* also http://answers.launchpad.net/mosquitto/+question/136821"
+    },
+    {
+      "path": "src/mqtt-config/compile.mqtt-config",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/mqtt-config/mqtt-config/mosquitto.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mqtt-config/mqtt-config/mosquitto.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mqtt/compile.mqtt",
+      "line": 16,
+      "text": "export CFLAGS=\"-Os -mcpu=cortex-a7 -mfpu=neon-vfpv4 -I/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/usr/include -I${CPWD}/${WOLFSSL_DIR}/include -I${CPWD}/${WOLFMQTT_DIR}/include -I${CPWD}/${MOSQUITTO_DIR}/../mosquitto/lib\""
+    },
+    {
+      "path": "src/mqtt/compile.mqtt",
+      "line": 17,
+      "text": "export LIBS=\"-L/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/lib/arm-linux-gnueabihf -L${CPWD}/${WOLFSSL_DIR}/lib -L${CPWD}/${WOLFMQTT_DIR}/lib -L${CPWD}/${MOSQUITTO_DIR}/lib\""
+    },
+    {
+      "path": "src/mqtt/compile.mqtt",
+      "line": 18,
+      "text": "#export LIBS=\"-L/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/lib/arm-linux-gnueabihf -L${CPWD}/${MOSQUITTO_DIR}/lib\""
+    },
+    {
+      "path": "src/mqtt/config.mak",
+      "line": 2,
+      "text": "#  This file is part of mqttv4 (https://github.com/TheCrypt0/mqttv4)."
+    },
+    {
+      "path": "src/mqtt/config.mak",
+      "line": 15,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/mqtt/mqttv4/Makefile",
+      "line": 2,
+      "text": "#  This file is part of mqttv4 (https://github.com/TheCrypt0/mqttv4)."
+    },
+    {
+      "path": "src/mqtt/mqttv4/Makefile",
+      "line": 15,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/mqtt/mqttv4/config.mak",
+      "line": 2,
+      "text": "#  This file is part of mqttv4 (https://github.com/TheCrypt0/mqttv4)."
+    },
+    {
+      "path": "src/mqtt/mqttv4/config.mak",
+      "line": 15,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/mqtt/mqttv4/config.mak",
+      "line": 19,
+      "text": "USER_CFLAGS=-march=armv5te -mcpu=arm926ej-s -I/opt/hisi-linux/x86-arm/arm-hisiv300-linux/target/usr/include -L/opt/hisi-linux/x86-arm/arm-hisiv300-linux/target/usr/lib"
+    },
+    {
+      "path": "src/mqtt/mqttv4/include/ipc.h",
+      "line": 2,
+      "text": "* This file is part of libipc (https://github.com/TheCrypt0/libipc)."
+    },
+    {
+      "path": "src/mqtt/mqttv4/include/ipc.h",
+      "line": 15,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/mqtt/mqttv4/include/mosquitto.h",
+      "line": 9,
+      "text": "http://www.eclipse.org/legal/epl-v10.html"
+    },
+    {
+      "path": "src/mqtt/mqttv4/include/mosquitto.h",
+      "line": 11,
+      "text": "http://www.eclipse.org/org/documents/edl-v10.php."
+    },
+    {
+      "path": "src/mqtt/mqttv4/src/ipc.c",
+      "line": 2,
+      "text": "* This file is part of libipc (https://github.com/TheCrypt0/libipc)."
+    },
+    {
+      "path": "src/mqtt/mqttv4/src/ipc.c",
+      "line": 15,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/arm-linux-gnueabihf-toolchain.cmake",
+      "line": 16,
+      "text": "set(CMAKE_SYSROOT /opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc)"
+    },
+    {
+      "path": "src/onvif_simple_server/compile.onvif_simple_server",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/onvif_simple_server/init.onvif_simple_server",
+      "line": 19,
+      "text": "wget https://github.com/libtom/libtomcrypt/releases/download/v1.18.2/crypt-1.18.2.tar.xz"
+    },
+    {
+      "path": "src/onvif_simple_server/init.onvif_simple_server",
+      "line": 28,
+      "text": "wget https://github.com/Mbed-TLS/mbedtls/releases/download/${MBEDTLS_NAME}/${MBEDTLS_NAME}.tar.bz2"
+    },
+    {
+      "path": "src/onvif_simple_server/init.onvif_simple_server",
+      "line": 38,
+      "text": "wget https://github.com/wolfSSL/wolfssl/archive/refs/tags/${WOLFSSL_VERSION}.tar.gz"
+    },
+    {
+      "path": "src/onvif_simple_server/init.onvif_simple_server",
+      "line": 45,
+      "text": "wget https://www.zlib.net/zlib-1.3.2.tar.gz || \\"
+    },
+    {
+      "path": "src/onvif_simple_server/init.onvif_simple_server",
+      "line": 46,
+      "text": "wget https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz"
+    },
+    {
+      "path": "src/onvif_simple_server/init.onvif_simple_server",
+      "line": 53,
+      "text": "wget https://s3.amazonaws.com/json-c_releases/releases/json-c-0.18.tar.gz"
+    },
+    {
+      "path": "src/onvif_simple_server/mbedtls_config.h",
+      "line": 18,
+      "text": "*  http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/conf.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/conf.c",
+      "line": 1363,
+      "text": "fprintf(stderr, \"\\tsnapurl=http://%%s/cgi-bin/snapshot.sh?res=high&watermark=yes\\n\");"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/conf.c",
+      "line": 1373,
+      "text": "fprintf(stderr, \"\\tsnapurl=http://%%s/cgi-bin/snapshot.sh?res=low&watermark=yes\\n\");"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/conf.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 52,
+      "text": "snprintf(device_service_address, sizeof(device_service_address), \"http://%s%s/onvif/device_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 53,
+      "text": "snprintf(media_service_address, sizeof(media_service_address), \"http://%s%s/onvif/media_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 54,
+      "text": "snprintf(media2_service_address, sizeof(media2_service_address), \"http://%s%s/onvif/media2_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 55,
+      "text": "snprintf(ptz_service_address, sizeof(ptz_service_address), \"http://%s%s/onvif/ptz_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 56,
+      "text": "snprintf(events_service_address, sizeof(events_service_address), \"http://%s%s/onvif/events_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 57,
+      "text": "snprintf(deviceio_service_address, sizeof(deviceio_service_address), \"http://%s%s/onvif/deviceio_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 517,
+      "text": "snprintf(device_service_address, sizeof(device_service_address), \"http://%s%s/onvif/device_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 518,
+      "text": "snprintf(media_service_address, sizeof(media_service_address), \"http://%s%s/onvif/media_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 519,
+      "text": "snprintf(ptz_service_address, sizeof(ptz_service_address), \"http://%s%s/onvif/ptz_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 520,
+      "text": "snprintf(events_service_address, sizeof(events_service_address), \"http://%s%s/onvif/events_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.c",
+      "line": 521,
+      "text": "snprintf(deviceio_service_address, sizeof(deviceio_service_address), \"http://%s%s/onvif/deviceio_service\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/device_service.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/deviceio_service.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/deviceio_service.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/events_service.c",
+      "line": 15,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/events_service.c",
+      "line": 171,
+      "text": "snprintf(events_service_address, sizeof(events_service_address), \"http://%s%s/onvif/events_service?sub=%d\", service_ctx.address_url, my_port, subscription_id);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/events_service.c",
+      "line": 219,
+      "text": "// Subscription manager replies to address http://%s%s/onvif/events_service?sub=%d"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/events_service.c",
+      "line": 461,
+      "text": "* e.g. \"http://evil.com@127.0.0.1/\" */"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/events_service.c",
+      "line": 556,
+      "text": "snprintf(events_service_address, sizeof(events_service_address), \"http://%s%s/onvif/events_service?sub=%d\", service_ctx.address_url, my_port, subscription_id);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/events_service.c",
+      "line": 604,
+      "text": "// Subscription manager replies to address http://%s%s/onvif/events_service?sub=%d"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/events_service.c",
+      "line": 794,
+      "text": "// Subscription manager replies to address http://%s%s/onvif/events_service?sub=%d"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/events_service.c",
+      "line": 867,
+      "text": "// Subscription manager replies to address http://%s%s/onvif/events_service?sub=%d"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/events_service.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/extras/mbedtls_config.h",
+      "line": 18,
+      "text": "*  http://www.apache.org/licenses/LICENSE-2.0"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/ezxml_wrapper.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/ezxml_wrapper.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/fault.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/fault.c",
+      "line": 58,
+      "text": "snprintf(device_address, sizeof(device_address), \"http://%s%s/onvif\", service_ctx.address_url, port);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/fault.c",
+      "line": 59,
+      "text": "snprintf(service_address, sizeof(service_address), \"http://%s%s/onvif/%s\", service_ctx.address_url, port, service);"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/fault.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/media2_service.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/media2_service.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/media_service.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/media_service.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/onvif_notify_server.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/onvif_notify_server.c",
+      "line": 246,
+      "text": "/* IPv6: http://[addr]:port/path */"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/onvif_notify_server.c",
+      "line": 262,
+      "text": "/* IPv4 or hostname: http://host:port/path */"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/onvif_simple_server.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/onvif_simple_server.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/ptz_service.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/ptz_service.c",
+      "line": 637,
+      "text": "if ((space_p == NULL) || (strcmp(\"http://www.onvif.org/ver10/tptz/PanTiltSpaces/TranslationGenericSpace\", space_p) == 0)) {"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/ptz_service.c",
+      "line": 664,
+      "text": "} else if (strcmp(\"http://www.onvif.org/ver10/tptz/PanTiltSpaces/TranslationSpaceFov\", space_p) == 0) {"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/ptz_service.c",
+      "line": 703,
+      "text": "if (strcmp(\"http://www.onvif.org/ver10/tptz/ZoomSpaces/TranslationGenericSpace\", space_z) == 0) {"
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/ptz_service.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/utils.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/utils.c",
+      "line": 293,
+      "text": "\"<soapenv:Envelope xmlns:soapenv=\\\"http://www.w3.org/2003/05/soap-envelope\\\"\""
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/utils.c",
+      "line": 294,
+      "text": "\" xmlns:ter=\\\"http://www.onvif.org/ver10/error\\\"\""
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/utils.c",
+      "line": 295,
+      "text": "\" xmlns:xs=\\\"http://www.w3.org/2000/10/XMLSchema\\\">\""
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/utils.c",
+      "line": 307,
+      "text": "\"<soapenv:Node>http://www.w3.org/2003/05/soap-envelope/node/ultimateReceiver</soapenv:Node>\""
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/utils.c",
+      "line": 308,
+      "text": "\"<soapenv:Role>http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver</soapenv:Role>\""
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/utils.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/onvif_simple_server/onvif_simple_server/wsd_simple_server.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/pcmvol/compile.pcmvol",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/pcmvol/pcmvol/pcmvol.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/proccgi/compile.proccgi",
+      "line": 5,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/proccgi/config.mak",
+      "line": 2,
+      "text": "#  This file is part of yi-hack-v4 (https://github.com/TheCrypt0/yi-hack-v4)."
+    },
+    {
+      "path": "src/proccgi/config.mak",
+      "line": 15,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/proccgi/proccgi/Makefile",
+      "line": 2,
+      "text": "#  This file is part of yi-hack-v4 (https://github.com/TheCrypt0/yi-hack-v4)."
+    },
+    {
+      "path": "src/proccgi/proccgi/Makefile",
+      "line": 15,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/proccgi/proccgi/config.mak",
+      "line": 2,
+      "text": "#  This file is part of yi-hack-v4 (https://github.com/TheCrypt0/yi-hack-v4)."
+    },
+    {
+      "path": "src/proccgi/proccgi/config.mak",
+      "line": 15,
+      "text": "#  along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/proxychains-ng/compile.proxychains-ng",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/proxychains-ng/config.mak",
+      "line": 5,
+      "text": "USER_CFLAGS=-Os -mcpu=cortex-a7 -mfpu=neon-vfpv4 -I/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/usr/include -L/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/lib/arm-linux-gnueabihf"
+    },
+    {
+      "path": "src/proxychains-ng/proxychains-ng/src/core.c",
+      "line": 357,
+      "text": "curl work fine when the version is 5, so let's do the same and accept"
+    },
+    {
+      "path": "src/proxychains-ng/proxychains-ng/src/libproxychains.c",
+      "line": 177,
+      "text": "http://user:password@proxy.domain.com:port"
+    },
+    {
+      "path": "src/proxychains-ng/proxychains-ng/src/libproxychains.c",
+      "line": 178,
+      "text": "http://proxy.domain.com:port"
+    },
+    {
+      "path": "src/rRTSPServer/Makefile.rRTSPServer",
+      "line": 68,
+      "text": "@echo \"For more information about this source code (including your obligations under the LGPL), please see our FAQ at http://live555.com/liveMedia/faq.html\""
+    },
+    {
+      "path": "src/rRTSPServer/compile.rRTSPServer",
+      "line": 3,
+      "text": "export PATH=${PATH}:/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/rRTSPServer/dummylib/Makefile",
+      "line": 2,
+      "text": "$(CC) -fPIC -shared -o libOMX_AVQE_A.so YiAudioLibFuncs.c"
+    },
+    {
+      "path": "src/rRTSPServer/dummylib/Makefile",
+      "line": 5,
+      "text": "rm -rf libOMX_AVQE_A.so"
+    },
+    {
+      "path": "src/rRTSPServer/include/rRTSPServer.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/init.rRTSPServer",
+      "line": 7,
+      "text": "export PATH=${PATH}:/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/rRTSPServer/init.rRTSPServer",
+      "line": 31,
+      "text": "wget https://github.com/mstorsjo/fdk-aac/archive/${ARCHIVE_FDKAAC}"
+    },
+    {
+      "path": "src/rRTSPServer/init.rRTSPServer",
+      "line": 41,
+      "text": "CFLAGS=\"-g -Os -ffunction-sections -fdata-sections -mcpu=cortex-a7 -mfpu=neon-vfpv4 -I/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/usr/include -L/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/lib/arm-linux-gnueabihf\" \\"
+    },
+    {
+      "path": "src/rRTSPServer/init.rRTSPServer",
+      "line": 51,
+      "text": "wget https://download.videolan.org/pub/contrib/live555/$ARCHIVE"
+    },
+    {
+      "path": "src/rRTSPServer/src/ADTS2PCMFileSink.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/ADTSAudioFileServerMediaSubsession_BC.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/ADTSFromWAVAudioFifoServerMediaSubsession.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/ADTSFromWAVAudioFifoSource.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/FileServerMediaSubsession_BC.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/OnDemandServerMediaSubsession_BC.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/PCMAudioFileServerMediaSubsession_BC.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/PCMFileSink.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/WAVAudioFifoServerMediaSubsession.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/WAVAudioFifoSource.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/YiNoiseReduction.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/aLawAudioFilter.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rRTSPServer/src/rRTSPServer.cpp",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/rtsp_server_yi/compile.rtsp_server_yi",
+      "line": 3,
+      "text": "export PATH=${PATH}:/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/set_tz_offset/compile.set_tz_offset",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/sftp-server/compile.sftp-server",
+      "line": 3,
+      "text": "export PATH=${PATH}:/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/sftp-server/init.sftp-server",
+      "line": 15,
+      "text": "CFLAGS=\"-std=gnu99 -Os -mcpu=cortex-a7 -mfpu=neon-vfpv4 -I/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/usr/include -L/opt/yi/arm-linux-gnueabihf-4.8.3-201404/arm-linux-gnueabihf/libc/lib/arm-linux-gnueabihf\" \\"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/config.guess",
+      "line": 20,
+      "text": "# along with this program; if not, see <https://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/config.guess",
+      "line": 32,
+      "text": "# https://git.savannah.gnu.org/cgit/config.git/plain/config.guess"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/config.guess",
+      "line": 1727,
+      "text": "https://git.savannah.gnu.org/cgit/config.git/plain/config.guess"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/config.guess",
+      "line": 1729,
+      "text": "https://git.savannah.gnu.org/cgit/config.git/plain/config.sub"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/config.sub",
+      "line": 20,
+      "text": "# along with this program; if not, see <https://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/config.sub",
+      "line": 38,
+      "text": "# https://git.savannah.gnu.org/cgit/config.git/plain/config.sub"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/configure.ac",
+      "line": 231,
+      "text": "# https://bugzilla.mindrot.org/show_bug.cgi?id=3475 and"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/configure.ac",
+      "line": 232,
+      "text": "# https://github.com/llvm/llvm-project/issues/59242"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/configure.ac",
+      "line": 234,
+      "text": "# flag at all (https://bugzilla.mindrot.org/show_bug.cgi?id=3629)"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/configure.ac",
+      "line": 1643,
+      "text": "See http://www.gzip.org/zlib/ for details.])"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/configure.ac",
+      "line": 1683,
+      "text": "# see https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Particular-Functions.html"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/configure.ac",
+      "line": 2862,
+      "text": "dnl development (see http://gnats.netbsd.org/44977) they still shipped it."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/configure.ac",
+      "line": 3128,
+      "text": "# https://openssl.org/policies/general/versioning-policy.html"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/contrib/gnome-ssh-askpass4.c",
+      "line": 37,
+      "text": "*     https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/6781"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/ed25519.c",
+      "line": 1717,
+      "text": "/* See http://www.hyperelliptic.org/EFD/g1p/auto-twisted-extended-1.html#doubling-dbl-2008-hwcd */"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/libcrux_mlkem768_sha3.h",
+      "line": 5905,
+      "text": "<https://csrc.nist.gov/pubs/fips/203/ipd>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/libcrux_mlkem768_sha3.h",
+      "line": 6238,
+      "text": "<https://csrc.nist.gov/pubs/fips/203/ipd>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/libcrux_mlkem768_sha3.h",
+      "line": 7608,
+      "text": "<https://csrc.nist.gov/pubs/fips/203/ipd>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/libcrux_mlkem768_sha3.h",
+      "line": 7980,
+      "text": "<https://csrc.nist.gov/pubs/fips/203/ipd>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/libcrux_mlkem768_sha3.h",
+      "line": 8324,
+      "text": "<https://csrc.nist.gov/pubs/fips/203/ipd>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/libcrux_mlkem768_sha3.h",
+      "line": 8446,
+      "text": "<https://csrc.nist.gov/pubs/fips/203/ipd>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/libcrux_mlkem768_sha3.h",
+      "line": 8805,
+      "text": "<https://csrc.nist.gov/pubs/fips/203/ipd>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/libcrux_mlkem768_sha3.h",
+      "line": 9569,
+      "text": "<https://csrc.nist.gov/pubs/fips/203/ipd>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/libcrux_mlkem768_sha3.h",
+      "line": 10148,
+      "text": "<https://csrc.nist.gov/pubs/fips/203/ipd>."
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/misc.c",
+      "line": 1086,
+      "text": "* See https://tools.ietf.org/html/draft-ietf-secsh-scp-sftp-ssh-uri-04"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/fnmatch.c",
+      "line": 49,
+      "text": "*   http://pubs.opengroup.org/onlinepubs/9699919799/functions/fnmatch.html"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/fnmatch.c",
+      "line": 53,
+      "text": "*   http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_13"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/fnmatch.c",
+      "line": 64,
+      "text": "*   http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09_03_05"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/glob.c",
+      "line": 897,
+      "text": "* here: https://research.swtch.com/glob"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/openssl-compat.c",
+      "line": 40,
+      "text": "* See https://www.openssl.org/policies/releasestrat.html"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/openssl-compat.h",
+      "line": 59,
+      "text": "* https://boringssl.googlesource.com/boringssl/+/0a211dfe9"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/port-linux.c",
+      "line": 252,
+      "text": "* http://lxr.linux.no/#linux+v2.6.32/Documentation/filesystems/proc.txt"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/port-linux.c",
+      "line": 253,
+      "text": "* http://lxr.linux.no/#linux+v2.6.36/Documentation/filesystems/proc.txt"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/openbsd-compat/sha2.c",
+      "line": 158,
+      "text": "*   (see http://csrc.nist.gov/cryptval/shs/sha256-384-512.pdf) uses this"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/pkcs11.h",
+      "line": 16,
+      "text": "http://www.scute.org/ (or send them to marcus@g10code.com), so that"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/pkcs11.h",
+      "line": 381,
+      "text": "* For details visit https://tc26.ru/standarts/perevody/guidelines-the-pkcs-11-extensions-for-implementing-the-gost-r-34-10-2012-and-gost-r-34-11-2012-russian-standards-.html"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/poly1305.c",
+      "line": 4,
+      "text": "* poly1305-donna-unrolled.c from https://github.com/floodyberry/poly1305-donna"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/poly1305.h",
+      "line": 5,
+      "text": "* poly1305-donna-unrolled.c from https://github.com/floodyberry/poly1305-donna"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/sandbox-seccomp-filter.c",
+      "line": 468,
+      "text": "* https://bugs.debian.org/849923"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/ssh-pkcs11.c",
+      "line": 470,
+      "text": "* https://datatracker.ietf.org/doc/html/rfc8017#section-9.2"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/ssh-pkcs11.c",
+      "line": 1102,
+      "text": "/* https://docs.oasis-open.org/pkcs11/pkcs11-curr/v3.0/os/pkcs11-curr-v3.0-os.html#_Toc30061180 */"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/sshconnect.c",
+      "line": 1576,
+      "text": "logit(\"** The server may need to be upgraded. See https://openssh.com/pq.html\");"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/umac.c",
+      "line": 9,
+      "text": "* world-wide-web page at https://fastcrypto.org/umac/"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/umac.c",
+      "line": 39,
+      "text": "* at http://www.esat.kuleuven.ac.be/~rijmen/rijndael/ (search for"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/umac.c",
+      "line": 42,
+      "text": "* Public license at http://fp.gladman.plus.com/AES/index.htm. It"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/umac.h",
+      "line": 9,
+      "text": "* world-wide-web page at http://www.cs.ucdavis.edu/~rogaway/umac"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/umac.h",
+      "line": 39,
+      "text": "* at http://www.esat.kuleuven.ac.be/~rijmen/rijndael/ (search for"
+    },
+    {
+      "path": "src/sftp-server/openssh-portable/umac.h",
+      "line": 43,
+      "text": "* and can be found at http://fp.gladman.plus.com/AES/index.htm. It"
+    },
+    {
+      "path": "src/snapshot/compile.snapshot",
+      "line": 3,
+      "text": "export CROSSPATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/snapshot/snapshot/Makefile",
+      "line": 54,
+      "text": "wget -O ./SDK/ffmpeg.tar.bz2.tmp \"https://ffmpeg.org/releases/$(FFMPEG).tar.bz2\"; \\"
+    },
+    {
+      "path": "src/snapshot/snapshot/Makefile",
+      "line": 76,
+      "text": "wget -O ./SDK/jpeg.tar.gz.tmp \"https://github.com/libjpeg-turbo/libjpeg-turbo/archive/refs/tags/$(JPEGLIB_VERSION).tar.gz\"; \\"
+    },
+    {
+      "path": "src/snapshot/snapshot/convert2jpg.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/snapshot/snapshot/convert2jpg.h",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/snapshot/snapshot/imggrabber.c",
+      "line": 14,
+      "text": "* along with this program. If not, see <http://www.gnu.org/licenses/>."
+    },
+    {
+      "path": "src/tinyalsa/compile.tinyalsa",
+      "line": 3,
+      "text": "export PATH=${PATH}:/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/tinyalsa/init.tinyalsa",
+      "line": 11,
+      "text": "wget https://github.com/tinyalsa/tinyalsa/archive/$ARCHIVE"
+    },
+    {
+      "path": "src/wireless_tools/compile.wireless_tools",
+      "line": 3,
+      "text": "export PATH=${PATH}:/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin"
+    },
+    {
+      "path": "src/wireless_tools/init.wireless_tools",
+      "line": 11,
+      "text": "wget  https://hewlettpackard.github.io/wireless-tools/$ARCHIVE"
+    }
+  ],
+  "scope": "Static tracked Git source audit; generated build instructions and compilation remain separate checks"
+}

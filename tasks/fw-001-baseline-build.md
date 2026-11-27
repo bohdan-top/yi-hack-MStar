@@ -1,6 +1,6 @@
 # FW-001 — Baseline Firmware Build
 
-- **Status:** Planned
+- **Status:** In progress — approved derived builder and all 19 inputs retained; actual private preflight and prior public probes passed. Review hardening implemented; new runner approval, full primary/repeat compilation and actual artifact validation pending.
 - **Milestone:** 0.1.0
 - **Priority:** P0
 - **Dependencies:** FW-008
@@ -18,7 +18,8 @@ Complete all stages within a single task and implementation PR, using incrementa
 
 - Inspect the existing Windows, WSL2 and Docker environment.
 - Install or configure missing prerequisites.
-- Obtain the compatible MStar MSC3XX SDK and ARM GCC 4.8.3 cross-compilation toolchain from trusted sources.
+- Obtain the compatible ARM GCC 4.8.3 cross-toolchain, matching sysroot (headers, libraries and ABI) and only the additional components actually required by the pinned baseline, from trusted sources.
+- Audit all baseline module build scripts, makefiles and recursive submodules for vendor-specific dependencies. The complete MSC3XX SDK is **not a mandatory prerequisite**. Obtain specific SDK components only if the audit or compilation demonstrates a concrete need; document the dependency and its provenance. See [SDK provenance investigation](../docs/fw-001-sdk-provenance-investigation.md).
 - Verify licenses, provenance, checksums and compatibility.
 - Create a reproducible, version-pinned Docker builder.
 - Compile a minimal ARM executable and verify its architecture, ABI and compatibility with the target firmware.
@@ -37,7 +38,7 @@ Reuse existing compatible components where possible.
 - Execute the local preflight using the FW-008 entrypoint.
 - Verify actual Docker isolation and rejection of unexpected downloads.
 
-Keep proprietary SDK files, stock firmware, private inputs and sensitive logs outside Git.
+Keep any proprietary toolchain/SDK components, stock firmware, private inputs and sensitive logs outside Git.
 
 Do not bypass checksum verification or approve unresolved inputs merely to complete the build.
 
@@ -79,10 +80,10 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 
 ## 6. Resource Management and Autonomous Execution
 
-- Provide configurable Windows/WSL2 storage locations for the SDK, private inputs, verified dependency cache, builder archives, staging/temp directories and outputs. Support an alternate local disk to avoid filling the system SSD. Keep Linux build workspaces on a Linux-compatible filesystem; document supported WSL2 distribution and Docker data-disk placement. Do not silently relocate existing distributions, Docker data or user files.
+- Provide configurable Windows/WSL2 storage locations for the toolchain and any required SDK components, private inputs, verified dependency cache, builder archives, staging/temp directories and outputs. Support an alternate local disk to avoid filling the system SSD. Keep Linux build workspaces on a Linux-compatible filesystem; document supported WSL2 distribution and Docker data-disk placement. Do not silently relocate existing distributions, Docker data or user files.
 - Check free disk space on all affected volumes before downloads, staging and builds; report estimated and actual storage needs. Recommend an initial 40 GB free-space budget, adjustable to measured requirements.
 - Expose configurable build CPU and memory limits, initially 4–6 logical CPUs and 8 GB RAM. Bound parallel compilation (including upstream make/nproc usage) and container resources. Do not require GPU resources. Document effective limits and distinguish container limits from whole-WSL usage. Do not silently edit global .wslconfig, change shared Docker settings or restart existing services; request approval if such changes are necessary.
-- Make the one-command runner non-interactive for routine stages, with clear per-stage progress, exit codes and actionable failure summaries. Stop at genuine blockers such as missing trusted SDK provenance, required license acceptance, administrator approval, or approval of private inputs; never automatically bypass these gates.
+- Make the one-command runner non-interactive for routine stages, with clear per-stage progress, exit codes and actionable failure summaries. Stop at genuine blockers such as missing trusted toolchain or required component provenance, required license acceptance, administrator approval, or approval of private inputs; never automatically bypass these gates.
 - Persist stage checkpoints outside Git, keyed by source/entrypoint revisions, input-lock digest, builder identity and relevant settings. Resume from the last verified successful stage after interruption or failure. Revalidate cached artifacts and invalidate dependent stages when inputs change. Provide an explicit clean/rebuild option. The independent repeat-build validation must use a fresh build workspace and must not reuse compiled outputs or skip compilation through checkpoints.
 - Reuse only digest-verified cached downloads and approved builder inputs. Download again if verification fails; do not bless newly observed hashes. Preserve approved private inputs and successful outputs.
 - Clean up only task-owned disposable files, with explicit opt-in for deleting retained cache data. Do not run broad Docker prune commands, delete unrelated files or remove existing WSL distributions. Retain useful private failure logs for diagnosis.
@@ -90,20 +91,20 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 
 ## Acceptance Criteria
 
-- [ ] WSL2 and Docker environment operational.
-- [ ] Compatible SDK and ARM toolchain verified.
-- [ ] ARM cross-compilation smoke test passed.
-- [ ] All required build inputs verified.
-- [ ] Private input lock manifest complete and approved.
-- [ ] Local preflight passed.
-- [ ] Docker isolation verified.
+- [x] WSL2 and Docker environment operational.
+- [x] Compatible ARM GCC 4.8.3 toolchain and matching sysroot verified by signed package, ARM smoke and static stock ABI checks; full dependency audit completed, with any actually required vendor components identified, licensed and verified. No requirement to obtain an unused full SDK.
+- [x] ARM cross-compilation smoke test passed; static stock symbol-version compatibility verified, no target code executed.
+- [x] All required build inputs verified.
+- [x] Private input lock manifest complete and approved.
+- [x] Local preflight passed.
+- [x] Docker isolation verified using the public environment probe and shared FW-008 flags; actual firmware builder execution remains pending.
 - [ ] Full offline firmware build passed.
 - [ ] All required firmware artifacts generated.
 - [ ] Filesystem, partition size and archive validation passed.
 - [ ] Independent repeat build completed.
 - [ ] Reproducibility results documented.
-- [ ] Single-command local build available.
-- [ ] Sanitized build report committed.
+- [x] Single-command local build available; full successful build remains pending.
+- [x] Sanitized execution report committed; actual failed compilations and remaining acceptance work are explicit.
 - [ ] Alternate-disk storage and configurable paths demonstrated without unintended system-disk growth.
 - [ ] CPU/RAM limits and bounded compilation parallelism configured and verified.
 - [ ] Interrupted execution resumes from verified checkpoints; changed or tampered inputs invalidate affected stages.
@@ -111,8 +112,8 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 - [ ] Cleanup confined to task-owned disposable files.
 - [ ] Autonomous routine execution demonstrated; approval and provenance blockers fail closed.
 - [ ] Sanitized timing and resource-usage report includes actual measurements and measurement limitations.
-- [ ] No proprietary inputs or sensitive data committed.
-- [ ] No camera modifications or flashing performed.
+- [x] No proprietary inputs or sensitive data committed.
+- [x] No camera modifications or flashing performed.
 
 ## Execution Rules
 
@@ -131,3 +132,21 @@ A verified local environment can repeatedly build the baseline y203c firmware fr
 All acceptance criteria are satisfied, and the implementation and sanitized evidence are committed for independent review.
 
 Successful compilation does not authorize flashing. Security hardening and release approval remain within FW-002 and FW-012.
+
+
+## Minimum-input preparation continuation (2026-11-27)
+
+See the appended [execution report](../docs/fw-001-execution-report.md) and [minimum-input evidence](../docs/fw-001-minimum-input-evidence.json). The full SDK acquisition blocker is superseded. The owner subsequently approved the complete derived-builder inputs. See the later runtime execution section; full/repeat/new-artifact acceptance boxes remain open.
+
+
+## Independent review follow-up (2026-11-27)
+
+The FW-001 review fixes strengthen static ARM ABI/provider resolution, require
+both builds to match the pinned official reference, restrict normalization to
+validated GNU build-id descriptors, and require complete matching isolation
+evidence when restoring a primary checkpoint. The stricter validator is not yet
+verified on real images. The prior approved lock and builder/cache inputs are
+unchanged. No acceptance box for successful compilation, repeat, reproducibility,
+real artifact validation or release approval is closed by these changes.
+See the [execution report](../docs/fw-001-execution-report.md) for focused test
+results and limitations.

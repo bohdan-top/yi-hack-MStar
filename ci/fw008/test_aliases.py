@@ -1,6 +1,7 @@
 import hashlib
 from pathlib import Path
 import tempfile
+import sys
 import unittest
 import zipfile
 from baseline_aliases import apply_baseline_aliases, BASE
@@ -17,10 +18,11 @@ class AliasTests(unittest.TestCase):
         with zipfile.ZipFile(mdnsd, "w") as z:
             z.writestr("mdnsd-" + commit + "/autogen.sh", "fixture")
         lock = {"source_sha": BASE, "files": [
-            {"path": str(p.relative_to(root)), "sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
+            {"path": p.relative_to(root).as_posix(), "sha256": hashlib.sha256(p.read_bytes()).hexdigest(),
              "version": commit} for p in (mbed, mdnsd)]}
         return mbed, mdnsd, lock
 
+    @unittest.skipIf(sys.platform == "win32", "Linux symlink fixture; run in WSL2")
     def test_aliases(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)

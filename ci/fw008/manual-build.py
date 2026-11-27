@@ -59,7 +59,7 @@ def validate_lock(lock, source):
         require(SHA.fullmatch(sha), "Unpinned submodule")
     provenance = lock.get("additional_inputs")
     require(isinstance(provenance, list) and bool(provenance),
-            "Missing reviewed SDK, base image and host package provenance")
+            "Missing reviewed toolchain/sysroot, base image and host package provenance")
     for entry in provenance:
         require(bool(entry.get("source")) and bool(entry.get("version")) and
                 "UNRESOLVED" not in entry["version"] and
@@ -83,10 +83,15 @@ def validate_lock(lock, source):
                     "Only explicit module archives are accepted")
     required = {"source.tar", "builder.tar", "stock_firmware/y203c/home_y203c.tgz",
                 "stock_firmware/y203c/sys_y203c.tgz"}
-    require(required <= seen, "Missing SDK/builder/source/stock image inputs")
+    require(required <= seen, "Missing builder/source/stock image inputs")
     if source == BASE:
         inv = read_inventory()
         require({x["path"] for x in inv["files"]} <= seen, "Missing baseline archive")
+        approved_hashes = {x["path"]: x["sha256"] for x in inv["files"]
+                           if x["path"].startswith("src/") and x["sha256"]}
+        require(all(item["sha256"] == approved_hashes[item["path"]]
+                    for item in files if item["path"] in approved_hashes),
+                "Baseline archive digest differs from independent public provenance")
         mdnsd = next(x for x in files if x["path"] == "src/mdnsd/mdnsd-master.zip")
         require(SHA.fullmatch(mdnsd["version"]) and mdnsd["source"] ==
                 "https://github.com/troglobit/mdnsd/archive/" + mdnsd["version"] + ".zip",
@@ -113,8 +118,22 @@ def command(args, **kwargs):
     return subprocess.run(args, check=True, **kwargs)
 
 
-def docker_args(image, stage, work):
-    return ["docker", "run", "--rm", "--pull=never", "--network=none",
+def docker_args(image, stage, work, cpus=None, memory_gib=None, observation_id=None):
+    limits = []
+    if cpus is not None:
+        available = sorted(os.sched_getaffinity(0))
+        require(1 <= cpus <= len(available), "CPU limit exceeds available logical processors")
+        limits += ["--cpuset-cpus", ",".join(map(str, available[:cpus])), "--cpus", str(cpus),
+                   "--env", "MAKEFLAGS=-j1", "--env", "FW008_JOBS=1"]
+    if memory_gib is not None:
+        require(memory_gib >= 1, "Invalid memory limit")
+        limits += ["--memory", f"{memory_gib}g", "--memory-swap", f"{memory_gib}g"]
+    # The pristine rRTSPServer Makefile has unordered library prerequisites.
+    # Keep compilation serial independently of the configurable container quota.
+    if observation_id is not None:
+        require(re.fullmatch(r"[0-9a-f]{32}", observation_id), "Invalid observation ID")
+        limits += ["--label", "local.fw001.observation=" + observation_id]
+    return ["docker", "run", "--rm", *limits, "--pull=never", "--network=none",
             "--cap-drop=ALL", "--cap-add=CHOWN", "--cap-add=DAC_OVERRIDE",
             "--cap-add=FOWNER", "--security-opt=no-new-privileges",
             "--log-driver=none", "--read-only", "--tmpfs", "/tmp:rw,nosuid,nodev",
@@ -136,7 +155,7 @@ def public_preflight(source, mode):
             "Public inventory contains an invalid SHA-256")
     print("Target: y203c; source: " + source)
     print(f"Inventory: {len(inventory['files'])} inputs, "
-          f"{sum(x['sha256'] is not None for x in inventory['files'])} published candidate digests.")
+          f"{sum(x['sha256'] is not None for x in inventory['files'])} provenance-backed candidate digests.")
     print("Public preflight: inventory present; private inputs NOT VERIFIED; full build NOT RUN.")
     require(mode != "full", "Hosted full build disabled: use trusted offline local build with approved inputs")
 
@@ -189,7 +208,7 @@ def local(args):
     require(hashlib.sha256(raw).hexdigest() == args.approved_lock_sha256, "Lock digest mismatch")
     lock = json.loads(raw)
     validate_lock(lock, args.source)
-    with tempfile.TemporaryDirectory(prefix="fw008-") as temp:
+    with tempfile.TemporaryDirectory(prefix="fw008-", dir=args.temp_root) as temp:
         stage = Path(temp) / "inputs"
         stage.mkdir()
         stage_inputs(lock, args.source, inputs, stage)
@@ -222,7 +241,7 @@ def local(args):
             require(info["Id"] == lock["image_id"] and info["Architecture"] == "amd64" and
                     not info["Config"].get("Volumes") and info["Os"] == "linux",
                     "Unexpected builder identity/platform/volumes")
-            command(docker_args(lock["image_id"], stage, work), stdout=log, stderr=subprocess.STDOUT)
+            command(docker_args(lock["image_id"], stage, work, args.cpus, args.memory_gib, getattr(args, "observation_id", None)), stdout=log, stderr=subprocess.STDOUT)
         expected = verified_outputs(work)
         checksums = {}
         for p in expected:
@@ -235,7 +254,9 @@ def local(args):
             "workflow_sha": None, "lock_sha256": args.approved_lock_sha256,
             "submodules": lock["submodules"], "builder_image": lock["image_id"],
             "output_sha256": checksums, "release_approved": False,
-            "baseline_archive_aliases": args.source == BASE
+            "baseline_archive_aliases": args.source == BASE,
+            "requested_cpus": args.cpus, "requested_memory_gib": args.memory_gib, "compilation_jobs": 1,
+            "observation_id": getattr(args, "observation_id", None)
         }, indent=2) + "\n")
         print("Full local build produced private outputs; NOT release-approved.")
 
@@ -250,6 +271,10 @@ def main():
     parser.add_argument("--approved-lock-sha256")
     parser.add_argument("--approved-entrypoint")
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--temp-root", type=Path)
+    parser.add_argument("--cpus", type=int)
+    parser.add_argument("--memory-gib", type=int)
+    parser.add_argument("--observation-id")
     args = parser.parse_args()
     try:
         if args.public:

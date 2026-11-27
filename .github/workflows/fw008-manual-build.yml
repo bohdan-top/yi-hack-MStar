@@ -24,6 +24,7 @@ jobs:
       - name: Test bootstrap
         run: |
           python3 -B -m unittest discover -s ci/fw008 -p 'test_*.py'
+          python3 -B -m unittest discover -s ci/fw001 -p 'test_*.py'
           bash -n ci/fw008/build-offline.sh
           bash -n ci/fw008/download-guard.sh
       - name: Manual build request

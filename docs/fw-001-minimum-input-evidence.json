@@ -1,0 +1,192 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "status": "AWAITING_INDEPENDENT_PRIVATE_INPUT_AND_ENTRYPOINT_APPROVAL",
+  "scope": "Actual input/builder preparation and public/reference validation; firmware compilation NOT RUN",
+  "revisions": {
+    "source": "c8582405b2c3c0e3b80219b0e71e21785a482867",
+    "entrypoint_code": "f0e7262d0bf36353fbd04996377299de35bc4071",
+    "workflow": "5a05439df718e2d1d7b93f9cf5a0fdfe7c9a2306"
+  },
+  "dependency_audit": {
+    "modules": 25,
+    "recursive_gitlinks": 9,
+    "tracked_files": 2615,
+    "build_instruction_files": 181,
+    "complete_vendor_sdk_required": false,
+    "additional_external_vendor_build_components_demonstrated": []
+  },
+  "public_inputs": {
+    "verified_archives": 15,
+    "prior_verified_cache_hits": 9,
+    "warm_cache_sha256_rechecks": 15,
+    "new_module_archive_retained_bytes": 20449388,
+    "historical_mdnsd_contents_proven": false,
+    "verification_methods": [
+      "published distro hashes",
+      "publisher signature",
+      "complete separately fetched Git-tree content and mode comparison"
+    ]
+  },
+  "builder": {
+    "scope": "Candidate builder; independent private lock approval required",
+    "config_sha256": "307d38cd925e3fa53ca32504e1b547e387c4c87317c3ee2fbb846d29a7a55f04",
+    "image_id_before_load": "sha256:eec37b625aed123d27fb6fbd64dd22a9279802301fa8190b3a0414abc9786536",
+    "image_id": "sha256:eec37b625aed123d27fb6fbd64dd22a9279802301fa8190b3a0414abc9786536",
+    "archive_sha256": "572d6a9404e07e36960b6f978a84a7e1fd25338e885184e20e5db39614e3b07c",
+    "archive_bytes": 568682496,
+    "layer_count": 8,
+    "all_saved_layers_match_config_diff_ids": true,
+    "architecture": "amd64",
+    "volumes_absent": true
+  },
+  "arm_smoke": {
+    "scope": "Public toolchain smoke under shared FW-008 flags; no stock executable run",
+    "image_id": "sha256:eec37b625aed123d27fb6fbd64dd22a9279802301fa8190b3a0414abc9786536",
+    "architecture": "amd64",
+    "elapsed_seconds": 24.56,
+    "compiler_version": "arm-linux-gnueabihf-gcc (crosstool-NG linaro-1.13.1-4.8-2014.04 - Linaro GCC 4.8-2014.04) 4.8.3 20140401 (prerelease)",
+    "target": "arm-linux-gnueabihf",
+    "c_elf_sha256": "a74ffc32b947940d21ffd5da741afba66e4970274ce43c18c83c85586fa09295",
+    "cpp_elf_sha256": "c009a5fd7a74a7e9f0f822efecb6c686f6fe294a50ec02ec680c3b689e721dc5",
+    "arm_elf_eabi5_hard_float": true,
+    "interpreter": "/lib/ld-linux-armhf.so.3",
+    "network": "none, only loopback",
+    "nproc": 6,
+    "makeflags": "-j6",
+    "memory_max_bytes": 8589934592,
+    "memory_swap_max_bytes": 0,
+    "stripped_runtime_sha256": "12bc1219cb83303f31265c4aa9677f107b7b3131fdf06ac61de806d6dc7bab11  libc-original.so\n90774d30b265be9fd8db71f134a00d057e5d8bbf96daa987ab2a971b788af324  loader-original.so\n",
+    "device_runtime_tested": false,
+    "firmware_built": false,
+    "release_approved": false
+  },
+  "static_stock_abi": {
+    "scope": "Static ELF32 version-definition/version-need comparison; no target code executed",
+    "programs": [
+      {
+        "program": "smoke",
+        "required_symbol_versions": {
+          "libc.so.6": [
+            "GLIBC_2.4"
+          ]
+        },
+        "all_required_versions_provided_by_stock": true
+      },
+      {
+        "program": "smoke-cpp",
+        "required_symbol_versions": {
+          "libstdc++.so.6": [
+            "CXXABI_1.3",
+            "GLIBCXX_3.4"
+          ],
+          "libc.so.6": [
+            "GLIBC_2.4"
+          ]
+        },
+        "all_required_versions_provided_by_stock": true
+      }
+    ],
+    "device_runtime_tested": false
+  },
+  "stock": {
+    "source": "maintainer equivalent rebuild; not vendor-signed or a device dump",
+    "entries": {
+      "home_y203c.tgz": 211,
+      "sys_y203c.tgz": 191
+    },
+    "base_version": "4.5.0.0C_201910080934",
+    "crc_decompression_directory_and_archive_reread_passed": true,
+    "approved": false
+  },
+  "official_reference": {
+    "source": "upstream GitHub 0.5.8 release asset",
+    "archive_sha256": "ba0432c2c238487d0e1213f587fda20b64db0562a6fd500e2622d9506d78e796",
+    "real_image_structure_model_version_validation": {
+      "home_y203c": {
+        "structure": {
+          "bytes": 10514496,
+          "candidate_limit_bytes": 12779520,
+          "inodes": 4839,
+          "dirents": 584,
+          "cleanmarkers": 161,
+          "padding": 0
+        },
+        "identities": {
+          "homever": "4.5.0.0C_201910080934",
+          "app/.appver": "4.5.0.0C_201910080934",
+          "yi-hack/version": "0.5.8",
+          "yi-hack/model_suffix": "y203c"
+        },
+        "filesystem_entries": 584,
+        "content_manifest_sha256": "dc39062a6fe0ba437c6532d456e5b87d98db7dca2340bdc5f63bd0ada266618c",
+        "timestamped_manifest_sha256": "a2de76c12173422e5cc69dce05510a762d78b2c9a395a623e312c0f74c4f6406"
+      },
+      "sys_y203c": {
+        "structure": {
+          "bytes": 1747600,
+          "candidate_limit_bytes": 1966080,
+          "inodes": 905,
+          "dirents": 289,
+          "cleanmarkers": 27,
+          "padding": 0
+        },
+        "identities": {},
+        "filesystem_entries": 289,
+        "content_manifest_sha256": "8ea9a1009183f8d20b8d989b5e7a7b221c224adbb47b9fdecba23e8730b4d624",
+        "timestamped_manifest_sha256": "8006503762bf266dfd11c917172e38ed41c638d397246606a3a9c844e8d8b837"
+      }
+    },
+    "new_firmware_comparison": "NOT RUN"
+  },
+  "input_lock": {
+    "status": "AWAITING_INDEPENDENT_REVIEW",
+    "candidate_lock_sha256": "5c630babf0398b840e3dde53f416cc14a85b599936c3bdf85138d58a826fb051",
+    "file_count": 19,
+    "provenance_record_count": 108,
+    "all_input_sha256_rechecked": true,
+    "prospective_approved_lock_sha256": "a8811138136127fd3cf763ac30ec0dc9c7741e5b6122f36f5bb0e6a0228662c1",
+    "approval_transform": "Only review_status changes to approved after explicit approval; no approved lock written",
+    "private_lock_approved": false,
+    "firmware_built": false
+  },
+  "tests": {
+    "linux_unittests": 32,
+    "linux_skips": 0,
+    "windows_host_assertions": 28,
+    "shell_syntax": "PASS",
+    "real_recovery_images": "PASS",
+    "real_official_release_images": "PASS",
+    "pinned_signed_package_closure_recheck": "PASS"
+  },
+  "firmware": {
+    "private_preflight": "NOT RUN; independent approval required",
+    "primary": "NOT RUN",
+    "independent_repeat": "NOT RUN",
+    "required_outputs": "NOT GENERATED",
+    "new_artifact_validation": "NOT RUN",
+    "bit_reproducibility": "NOT DEMONSTRATED"
+  },
+  "resource_scope": {
+    "cpus": 6,
+    "memory_gib": 8,
+    "data_and_native_docker_storage": "selected alternate data disk and dedicated ext4 distro",
+    "firmware_wall_time": "not measured; not run",
+    "firmware_peak_cpu_ram": "not measured; not run",
+    "total_acquisition_bytes": "not fully measured; retained module archive bytes above exclude Git transfers, metadata, retries, toolchain, packages and reference acquisitions",
+    "peak_preparation_storage": "not measured"
+  },
+  "private_inputs_committed": false,
+  "release_approved": false,
+  "camera_accessed": false,
+  "firmware_flashed": false,
+  "pr_merged": false,
+  "publication": {
+    "method": "Connected GitHub Git-object API; native push required interactive credentials",
+    "original_tested_local_code_commit": "f826a1f59b066411c78d51577ac3c380ca0295d1",
+    "published_code_commit": "f0e7262d0bf36353fbd04996377299de35bc4071",
+    "published_code_tree_sha": "28ea127561dc9141411d71564338166ef968eac5",
+    "all_uploaded_blob_ids_and_three_incremental_trees_match_local_objects": true,
+    "original_local_commits_preserved_in_task_backup_ref": true
+  }
+}
