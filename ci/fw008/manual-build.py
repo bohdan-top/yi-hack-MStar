@@ -9,6 +9,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -140,6 +141,33 @@ def public_preflight(source, mode):
     require(mode != "full", "Hosted full build disabled: use trusted offline local build with approved inputs")
 
 
+def verified_outputs(work):
+    result = work / "source/out/y203c"
+    require(result.is_dir() and result.resolve() == work.resolve() / "source/out/y203c",
+            "Unsafe firmware output directory")
+    images = [result / "home_y203c", result / "sys_y203c"]
+    archives = list(result.glob("y203c_*.tgz"))
+    require(len(archives) == 1, "Expected exactly one update archive")
+    outputs = images + archives
+    require(all(p.is_file() and not p.is_symlink() and p.stat().st_size > 0 for p in outputs),
+            "Missing/empty firmware outputs")
+    # The upstream packer can leave a partial archive. Verify exact regular
+    # members and their bytes against the standalone images before exporting.
+    by_name = {p.name: p for p in images}
+    with tarfile.open(archives[0], "r:gz") as archive:
+        members = archive.getmembers()
+        require(len(members) == len(by_name) and
+                {m.name for m in members} == set(by_name) and
+                all(m.isfile() for m in members), "Unexpected update archive members")
+        for member in members:
+            image = by_name[member.name]
+            require(member.size == image.stat().st_size, "Update archive size mismatch")
+            with archive.extractfile(member) as stream:
+                require(hashlib.file_digest(stream, "sha256").hexdigest() == digest(image),
+                        "Update archive image mismatch")
+    return outputs
+
+
 def local(args):
     require(sys.platform.startswith("linux"), "Use trusted Linux or WSL2")
     require(args.approved_lock_sha256 and DIGEST.fullmatch(args.approved_lock_sha256),
@@ -195,13 +223,7 @@ def local(args):
                     not info["Config"].get("Volumes") and info["Os"] == "linux",
                     "Unexpected builder identity/platform/volumes")
             command(docker_args(lock["image_id"], stage, work), stdout=log, stderr=subprocess.STDOUT)
-        result = work / "source/out/y203c"
-        expected = [result / "home_y203c", result / "sys_y203c"]
-        archives = list(result.glob("y203c_*.tgz"))
-        require(len(archives) == 1, "Expected exactly one update archive")
-        expected += archives
-        require(all(p.is_file() and not p.is_symlink() and p.stat().st_size > 0 for p in expected),
-                "Missing/empty firmware outputs")
+        expected = verified_outputs(work)
         checksums = {}
         for p in expected:
             dest = output / p.name
@@ -234,7 +256,7 @@ def main():
             public_preflight(args.source, args.mode)
         else:
             local(args)
-    except (Blocked, OSError, ValueError, KeyError, TypeError, subprocess.CalledProcessError) as e:
+    except (Blocked, OSError, ValueError, KeyError, TypeError, tarfile.TarError, subprocess.CalledProcessError) as e:
         # Do not print arbitrary command output or private paths.
         print("BLOCKED: " + (str(e) if isinstance(e, Blocked) else
                             type(e).__name__ + "; inspect private inputs/log locally"), file=sys.stderr)
