@@ -1,0 +1,315 @@
+{
+  "date": "2026-11-27",
+  "status": "BLOCKED; firmware compilation NOT RUN",
+  "measurement_scope": "local Windows host regressions and public dependency audit; not Linux/container execution",
+  "source_sha": "c8582405b2c3c0e3b80219b0e71e21785a482867",
+  "workflow_execution_revision": null,
+  "upstream_firmware_files_unchanged": true,
+  "recursive_gitlinks_match": true,
+  "recursive_gitlink_count": 9,
+  "checks": [
+    {
+      "name": "Windows host regressions",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_seconds": 3.886,
+      "expectation_passed": true
+    },
+    {
+      "name": "FW-001 synthetic tests",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_seconds": 3.4,
+      "expectation_passed": true
+    },
+    {
+      "name": "FW-008 synthetic tests",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_seconds": 16.264,
+      "expectation_passed": true
+    },
+    {
+      "name": "Offline wrapper Bash syntax",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_seconds": 0.093,
+      "expectation_passed": true
+    },
+    {
+      "name": "Download guard Bash syntax",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_seconds": 0.058,
+      "expectation_passed": true
+    },
+    {
+      "name": "Public inventory preflight",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_seconds": 0.127,
+      "expectation_passed": true
+    },
+    {
+      "name": "Hosted full request fails closed",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "elapsed_seconds": 0.152,
+      "expectation_passed": true
+    },
+    {
+      "name": "Actual Windows build request",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "elapsed_seconds": 0.869,
+      "expectation_passed": true
+    }
+  ],
+  "checks_total_wall_seconds": 26.84,
+  "disk_before": {
+    "data_free_bytes": 3350836621312,
+    "system_free_bytes": 81531367424,
+    "task_file_bytes": 45384113,
+    "temporary_file_bytes": 0
+  },
+  "disk_after": {
+    "data_free_bytes": 3350836621312,
+    "system_free_bytes": 81530712064,
+    "task_file_bytes": 45385027,
+    "temporary_file_bytes": 0
+  },
+  "resource_limits": {
+    "requested_cpus": 6,
+    "requested_memory_gib": 8,
+    "enforcement": "unit-tested command construction only; actual cgroup enforcement NOT VERIFIED",
+    "peak_build_cpu": null,
+    "peak_build_ram": null,
+    "peak_temporary_storage": null,
+    "sampling": "no build process; no peak build measurements available"
+  },
+  "public_dependency_audit": {
+    "scope": "public dependency provenance audit; not an approved input lock or firmware build",
+    "cold": [
+      {
+        "input": "src/busybox/busybox-1.36.1.tar.bz2",
+        "expected_sha256": "b8cc24c9574d809e7279c3be349795c5d5ceb6fdf19ca709f80cde50e47de314",
+        "downloaded_bytes": 2525473,
+        "cache_hit": false,
+        "observed_sha256": "b8cc24c9574d809e7279c3be349795c5d5ceb6fdf19ca709f80cde50e47de314",
+        "status": "VERIFIED",
+        "size_bytes": 2525473,
+        "elapsed_seconds": 3.078
+      },
+      {
+        "input": "src/jq/jq-1.8.1.tar.gz",
+        "expected_sha256": "2be64e7129cecb11d5906290eba10af694fb9e3e7f9fc208a311dc33ca837eb0",
+        "downloaded_bytes": 2026798,
+        "cache_hit": false,
+        "observed_sha256": "2be64e7129cecb11d5906290eba10af694fb9e3e7f9fc208a311dc33ca837eb0",
+        "status": "VERIFIED",
+        "size_bytes": 2026798,
+        "elapsed_seconds": 1.125
+      },
+      {
+        "input": "src/onvif_simple_server/crypt-1.18.2.tar.xz",
+        "expected_sha256": "96ad4c3b8336050993c5bc2cf6c057484f2b0f9f763448151567fbab5e767b84",
+        "downloaded_bytes": 2638064,
+        "cache_hit": false,
+        "observed_sha256": "96ad4c3b8336050993c5bc2cf6c057484f2b0f9f763448151567fbab5e767b84",
+        "status": "VERIFIED",
+        "size_bytes": 2638064,
+        "elapsed_seconds": 1.219
+      },
+      {
+        "input": "src/onvif_simple_server/mbedtls-3.6.5.tar.bz2",
+        "expected_sha256": "4a11f1777bb95bf4ad96721cac945a26e04bf19f57d905f241fe77ebeddf46d8",
+        "downloaded_bytes": 5367178,
+        "cache_hit": false,
+        "observed_sha256": "4a11f1777bb95bf4ad96721cac945a26e04bf19f57d905f241fe77ebeddf46d8",
+        "status": "VERIFIED",
+        "size_bytes": 5367178,
+        "elapsed_seconds": 2.031
+      },
+      {
+        "input": "src/onvif_simple_server/v5.9.2-stable.tar.gz",
+        "expected_sha256": "2f4ef3d4fd387a9b3191d36a6316d69116c46ff69bb9583b6c82b36d7b8ca114",
+        "downloaded_bytes": 28078586,
+        "cache_hit": false,
+        "observed_sha256": "2f4ef3d4fd387a9b3191d36a6316d69116c46ff69bb9583b6c82b36d7b8ca114",
+        "status": "VERIFIED",
+        "size_bytes": 28078586,
+        "elapsed_seconds": 3.906
+      },
+      {
+        "input": "src/onvif_simple_server/zlib-1.3.2.tar.gz",
+        "expected_sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16",
+        "downloaded_bytes": 1502830,
+        "cache_hit": false,
+        "observed_sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16",
+        "status": "VERIFIED",
+        "size_bytes": 1502830,
+        "elapsed_seconds": 0.922
+      },
+      {
+        "input": "src/onvif_simple_server/json-c-0.18.tar.gz",
+        "expected_sha256": "876ab046479166b869afc6896d288183bbc0e5843f141200c677b3e8dfb11724",
+        "downloaded_bytes": 401788,
+        "cache_hit": false,
+        "observed_sha256": "876ab046479166b869afc6896d288183bbc0e5843f141200c677b3e8dfb11724",
+        "status": "VERIFIED",
+        "size_bytes": 401788,
+        "elapsed_seconds": 1.188
+      },
+      {
+        "input": "src/rRTSPServer/v2.0.1.tar.gz",
+        "expected_sha256": "a4142815d8d52d0e798212a5adea54ecf42bcd4eec8092b37a8cb615ace91dc6",
+        "downloaded_bytes": 2488373,
+        "cache_hit": false,
+        "observed_sha256": "a4142815d8d52d0e798212a5adea54ecf42bcd4eec8092b37a8cb615ace91dc6",
+        "status": "VERIFIED",
+        "size_bytes": 2488373,
+        "elapsed_seconds": 0.922
+      },
+      {
+        "input": "src/wireless_tools/wireless_tools.29.tar.gz",
+        "expected_sha256": "6fb80935fe208538131ce2c4178221bab1078a1656306bce8909c19887e2e5a1",
+        "downloaded_bytes": 294417,
+        "cache_hit": false,
+        "observed_sha256": "6fb80935fe208538131ce2c4178221bab1078a1656306bce8909c19887e2e5a1",
+        "status": "VERIFIED",
+        "size_bytes": 294417,
+        "elapsed_seconds": 0.75
+      }
+    ],
+    "elapsed_seconds": 5.125,
+    "warm": [
+      {
+        "input": "src/busybox/busybox-1.36.1.tar.bz2",
+        "expected_sha256": "b8cc24c9574d809e7279c3be349795c5d5ceb6fdf19ca709f80cde50e47de314",
+        "downloaded_bytes": 0,
+        "cache_hit": true,
+        "status": "VERIFIED",
+        "size_bytes": 2525473,
+        "elapsed_seconds": 0.016
+      },
+      {
+        "input": "src/jq/jq-1.8.1.tar.gz",
+        "expected_sha256": "2be64e7129cecb11d5906290eba10af694fb9e3e7f9fc208a311dc33ca837eb0",
+        "downloaded_bytes": 0,
+        "cache_hit": true,
+        "status": "VERIFIED",
+        "size_bytes": 2026798,
+        "elapsed_seconds": 0.031
+      },
+      {
+        "input": "src/onvif_simple_server/crypt-1.18.2.tar.xz",
+        "expected_sha256": "96ad4c3b8336050993c5bc2cf6c057484f2b0f9f763448151567fbab5e767b84",
+        "downloaded_bytes": 0,
+        "cache_hit": true,
+        "status": "VERIFIED",
+        "size_bytes": 2638064,
+        "elapsed_seconds": 0.016
+      },
+      {
+        "input": "src/onvif_simple_server/mbedtls-3.6.5.tar.bz2",
+        "expected_sha256": "4a11f1777bb95bf4ad96721cac945a26e04bf19f57d905f241fe77ebeddf46d8",
+        "downloaded_bytes": 0,
+        "cache_hit": true,
+        "status": "VERIFIED",
+        "size_bytes": 5367178,
+        "elapsed_seconds": 0.031
+      },
+      {
+        "input": "src/onvif_simple_server/v5.9.2-stable.tar.gz",
+        "expected_sha256": "2f4ef3d4fd387a9b3191d36a6316d69116c46ff69bb9583b6c82b36d7b8ca114",
+        "downloaded_bytes": 0,
+        "cache_hit": true,
+        "status": "VERIFIED",
+        "size_bytes": 28078586,
+        "elapsed_seconds": 0.047
+      },
+      {
+        "input": "src/onvif_simple_server/zlib-1.3.2.tar.gz",
+        "expected_sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16",
+        "downloaded_bytes": 0,
+        "cache_hit": true,
+        "status": "VERIFIED",
+        "size_bytes": 1502830,
+        "elapsed_seconds": 0.032
+      },
+      {
+        "input": "src/onvif_simple_server/json-c-0.18.tar.gz",
+        "expected_sha256": "876ab046479166b869afc6896d288183bbc0e5843f141200c677b3e8dfb11724",
+        "downloaded_bytes": 0,
+        "cache_hit": true,
+        "status": "VERIFIED",
+        "size_bytes": 401788,
+        "elapsed_seconds": 0.016
+      },
+      {
+        "input": "src/rRTSPServer/v2.0.1.tar.gz",
+        "expected_sha256": "a4142815d8d52d0e798212a5adea54ecf42bcd4eec8092b37a8cb615ace91dc6",
+        "downloaded_bytes": 0,
+        "cache_hit": true,
+        "status": "VERIFIED",
+        "size_bytes": 2488373,
+        "elapsed_seconds": 0.015
+      },
+      {
+        "input": "src/wireless_tools/wireless_tools.29.tar.gz",
+        "expected_sha256": "6fb80935fe208538131ce2c4178221bab1078a1656306bce8909c19887e2e5a1",
+        "downloaded_bytes": 0,
+        "cache_hit": true,
+        "status": "VERIFIED",
+        "size_bytes": 294417,
+        "elapsed_seconds": 0.015
+      }
+    ]
+  },
+  "firmware_artifact_sha256": null,
+  "independent_repeat_build": "NOT RUN",
+  "release_approved": false,
+  "actual_host_build_request": {
+    "schema": 1,
+    "status": "BLOCKED",
+    "stage": "WSL distribution",
+    "failure_code": "WSL_DISTRO_MISSING",
+    "runner_exit_code": null,
+    "requested_cpu": 6,
+    "requested_ram_gib": 8,
+    "elapsed_seconds": 0.199,
+    "data_free_before_bytes": 3350836621312,
+    "data_free_after_bytes": 3350836621312,
+    "system_free_before_bytes": 81530748928,
+    "system_free_after_bytes": 81530748928,
+    "storage_scope": "whole Windows volumes; unrelated activity may affect values",
+    "swap_placement": "not checked",
+    "temporary_files": "selected data root",
+    "peak_cpu_ram": "not measured by Windows wrapper",
+    "release_approved": false
+  },
+  "tested_entrypoint_revision": "5a05439df718e2d1d7b93f9cf5a0fdfe7c9a2306",
+  "workflow_definition_revision": "5a05439df718e2d1d7b93f9cf5a0fdfe7c9a2306",
+  "test_counts": {
+    "host_assertions_passed": 28,
+    "fw001_passed": 7,
+    "fw008_passed": 10,
+    "fw008_skipped_linux_symlink_fixtures": 2
+  },
+  "environment": {
+    "windows": "10.0.26200.9911",
+    "powershell": "7.6.9",
+    "python": "3.12.10",
+    "git": "2.52.0.windows.1",
+    "git_bash": "5.2.37",
+    "wsl": "2.6.3.0",
+    "wsl_kernel": "6.6.87.2-1",
+    "docker_cli": "29.1.3",
+    "docker_engine": "not running",
+    "dedicated_build_distro": "absent",
+    "data_filesystem": "NTFS",
+    "host_logical_processors": 16,
+    "host_physical_memory_bytes": 68295344128
+  },
+  "tested_implementation_tree_sha": "bb8173bae3ef1e5e598ad3ff3a9c598fabfdfff4"
+}

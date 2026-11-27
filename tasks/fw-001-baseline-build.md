@@ -1,6 +1,6 @@
 # FW-001 — Baseline Firmware Build
 
-- **Status:** Planned
+- **Status:** Blocked — Windows runner/tests and nine public downloads executed; licensed private inputs, input approval and isolated WSL provisioning remain outstanding.
 - **Milestone:** 0.1.0
 - **Priority:** P0
 - **Dependencies:** FW-008
