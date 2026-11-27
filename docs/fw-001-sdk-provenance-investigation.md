@@ -111,3 +111,7 @@ justifies a scope change.
 
 No runtime tests, SDK download, OCI pull, firmware build, or camera operation
 were performed in this investigation. No builder identity or digest was approved.
+
+## Accepted scope decision (2026-11-27)
+
+FW-001 now requires the verified minimum toolchain/sysroot and any demonstrably needed vendor components, rather than acquisition of a full MSC3XX SDK. The owner approved this scope change. The hypothesis of SDK-free compilation remains untested; dependency audit, independent input approval, actual baseline and repeat builds, and all artifact/ABI/security gates remain mandatory. Earlier execution reports describe the historical scope and are not rewritten.
