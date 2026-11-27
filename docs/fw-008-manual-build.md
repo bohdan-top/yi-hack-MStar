@@ -22,7 +22,7 @@ python3 ci/fw008/manual-build.py --mode full --lock /private/lock.json \
   --output /private/new-build
 ```
 
-Use --source EXACT_40_HEX for an independently approved fork revision. The supplied lock digest is an explicit local trust anchor, not an automated review mechanism. Staging copies only approved files into a fresh temp directory; digests are checked before loading/extraction. Source and recursive Git links are verified inside the container before compilation. Docker runs without network, privileged mode, device access or credentials; common download tools are denied with a marker checked at build phase boundaries. Raw logs and outputs stay private. A successful compile must produce both nonempty images and exactly one update archive; metadata contains source/entrypoint commits, input and output digests. Release acceptance is FW-001/FW-012.
+Use --source EXACT_40_HEX for an independently approved fork revision. The supplied lock digest is an explicit local trust anchor, not an automated review mechanism. Staging copies only approved files into a fresh temp directory; digests are checked before loading/extraction. Source and recursive Git links are verified inside the container before compilation. Docker runs without network, privileged mode, device access or credentials; common download tools are denied with a marker checked at build phase boundaries. Raw logs and outputs stay private. The wrapper enables Bash errexit on the three top-level upstream phases (not a guarantee for every nested script). A successful compile must produce both nonempty images and exactly one update archive containing only the two regular images with matching sizes and SHA-256 digests; metadata contains source/entrypoint commits, input and output digests. Release acceptance is FW-001/FW-012.
 
 ## Known blockers / NOT VERIFIED
 
@@ -41,7 +41,7 @@ python3 ci/fw008/manual-build.py --public --mode preflight
 python3 ci/fw008/manual-build.py --public --mode full # expected nonzero
 ```
 
-Synthetic fixtures exercise missing input, tamper, unapproved ref/lock, unsafe path, unpinned Git links and fresh staging. Docker command flags are unit-tested, not a proof of isolation. The synthetic shell test also checks the download guard when upstream ignores wget failure. Actual container behavior must be demonstrated before FW-008 acceptance is closed.
+Synthetic fixtures exercise missing input, tamper, unapproved ref/lock, unsafe path, unpinned Git links and fresh staging. Synthetic output tests check archive integrity and reject symlinked output paths. Docker command flags are unit-tested, not a proof of isolation. The synthetic shell test also checks the download guard when upstream ignores wget failure. Actual container behavior must be demonstrated before FW-008 acceptance is closed.
 
 See [executed bootstrap evidence](fw-008-bootstrap-evidence.md).
 
