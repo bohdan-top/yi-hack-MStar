@@ -24,7 +24,7 @@ For private-input jobs, enforce approved immutable workflow/entrypoint and sourc
 
 ## Acceptance criteria
 
-The workflow and local entrypoint are reviewable and manually runnable; preflight, missing-input, tampered-archive, unexpected-download and unapproved-ref failure paths are tested and documented. Demonstrate the clean workspace and verified-input-only path without requiring a full firmware compile. Workflow syntax is validated. No push, pull_request or scheduled build trigger. No false green for a requested full build that did not compile. Actual successful full firmware compilation, output layout and baseline comparison are FW-001 acceptance criteria, not a circular prerequisite for this bootstrap. FW-007.1 later integrates minimum security tests into the manual pipeline; FW-012 requires successful build and tests before release.
+The workflow and local entrypoint are reviewable and manually runnable; preflight, missing-input, tampered-archive, unexpected-download and unapproved-ref failure paths are tested and documented. Demonstrate the clean workspace and verified-input-only path without requiring a full firmware compile. Workflow syntax is validated. No push, pull_request or scheduled build trigger. No false green for a requested full build that did not compile. Actual successful full firmware compilation, output layout and baseline comparison are FW-001 acceptance criteria, not a circular prerequisite for this bootstrap. FW-002 later integrates minimum security tests into the manual pipeline; FW-012 requires successful build and tests before release.
 
 ## Deliverables
 

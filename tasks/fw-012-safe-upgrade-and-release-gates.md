@@ -3,7 +3,7 @@
 - Status: Planned
 - Milestone: 0.1.0
 - Priority: P0
-- Dependencies: FW-001; FW-002; FW-003; FW-004; FW-007.1; FW-005.1
+- Dependencies: FW-002
 - Target: y203c / 6FUS
 
 ## Scope
@@ -18,7 +18,7 @@ Inventory credential-bearing backups including `.fw_upgrade` on FAT32. Minimize 
 
 ## Acceptance criteria
 
-Before first flash: build and static gates pass, candidate-specific FW-005.1 triage is complete and final FW-007.1 suite passes (including update integrity tests or equivalent host-side tests if CGI updater is disabled), validated recovery inputs and documented recovery plan, external isolation and explicit approval. Before daily use: hardware gates pass, no critical unmitigated risk, config migration and local update path verified on the controlled device or through a documented safe SD procedure; do not advertise upgrade readiness if unverified; report NOT VERIFIED for untested brick recovery. Subsequent releases require rollback readiness, independent artifact verification, regression results and explicit approval. Implement and test minimum RTSP/recording fixes in 0.1.0 if needed for daily use even when broader FW-006 work remains planned for 0.2.0.
+Before first flash: build and static gates pass, candidate-specific FW-002 minimum dependency triage is complete and final FW-002 minimum security suite passes (including update integrity tests or equivalent host-side tests if CGI updater is disabled), validated recovery inputs and documented recovery plan, external isolation and explicit approval. Before daily use: hardware gates pass, no critical unmitigated risk, config migration and local update path verified on the controlled device or through a documented safe SD procedure; do not advertise upgrade readiness if unverified; report NOT VERIFIED for untested brick recovery. Subsequent releases require rollback readiness, independent artifact verification, regression results and explicit approval. Implement and test minimum RTSP/recording fixes in 0.1.0 if needed for daily use even when broader FW-006 work remains planned for 0.2.0.
 
 ## Deliverables
 

@@ -3,7 +3,7 @@
 - Status: Planned
 - Milestone: 0.2.0
 - Priority: P1 (minimum stability gate P0)
-- Dependencies: FW-001; FW-003; FW-004; FW-012
+- Dependencies: FW-012
 - Target: y203c / 6FUS
 
 ## Scope

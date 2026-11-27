@@ -3,7 +3,7 @@
 - Status: Planned
 - Milestone: 0.3.0
 - Priority: P1
-- Dependencies: FW-007.1; FW-005
+- Dependencies: FW-002; FW-005
 - Target: y203c / 6FUS
 
 ## Scope
