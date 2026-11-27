@@ -55,6 +55,7 @@ function Assert-Fw001SwapPlacement([string]$ConfigPath, [string]$DataRoot) {
 function Get-Fw001PublicProgress([string]$Line) {
     # Only fixed messages authored by the reviewed runner may reach the console.
     $allowed = @('[FW-001] verify/cache inputs', '[FW-001] FW-008 private preflight',
-        '[FW-001] primary offline build', '[FW-001] independent offline repeat build')
+        '[FW-001] primary offline build', '[FW-001] independent offline repeat build',
+        '[FW-001] firmware artifact validation', '[FW-001] artifact validation PASS')
     if ($allowed -ccontains $Line) { return $Line }
 }

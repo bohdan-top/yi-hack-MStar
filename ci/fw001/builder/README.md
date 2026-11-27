@@ -55,3 +55,11 @@ obtain independent approval before giving stock inputs to the build entrypoint.
 These inputs pin the reconstruction recipe. Docker timestamps/layer metadata
 are not claimed bit reproducible. Binary firmware reproducibility requires the
 separate primary and independent clean firmware builds.
+
+
+The executed image needs the separate `Dockerfile.pathfix` derivation so the
+strict compiler PATH resolves Debian's /usr/sbin/mkfs.jffs2. Build the original
+recipe first, verify its pinned identity, then derive with that file offline.
+The approved derivation adds only the symlink to the already verified packer;
+no package or executable byte is added. See the execution report for both image
+identities, archive digests and the explicit owner approval of the derived lock.

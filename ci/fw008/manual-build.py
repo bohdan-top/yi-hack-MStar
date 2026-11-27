@@ -118,16 +118,21 @@ def command(args, **kwargs):
     return subprocess.run(args, check=True, **kwargs)
 
 
-def docker_args(image, stage, work, cpus=None, memory_gib=None):
+def docker_args(image, stage, work, cpus=None, memory_gib=None, observation_id=None):
     limits = []
     if cpus is not None:
         available = sorted(os.sched_getaffinity(0))
         require(1 <= cpus <= len(available), "CPU limit exceeds available logical processors")
         limits += ["--cpuset-cpus", ",".join(map(str, available[:cpus])), "--cpus", str(cpus),
-                   "--env", f"MAKEFLAGS=-j{cpus}", "--env", f"FW008_JOBS={cpus}"]
+                   "--env", "MAKEFLAGS=-j1", "--env", "FW008_JOBS=1"]
     if memory_gib is not None:
         require(memory_gib >= 1, "Invalid memory limit")
         limits += ["--memory", f"{memory_gib}g", "--memory-swap", f"{memory_gib}g"]
+    # The pristine rRTSPServer Makefile has unordered library prerequisites.
+    # Keep compilation serial independently of the configurable container quota.
+    if observation_id is not None:
+        require(re.fullmatch(r"[0-9a-f]{32}", observation_id), "Invalid observation ID")
+        limits += ["--label", "local.fw001.observation=" + observation_id]
     return ["docker", "run", "--rm", *limits, "--pull=never", "--network=none",
             "--cap-drop=ALL", "--cap-add=CHOWN", "--cap-add=DAC_OVERRIDE",
             "--cap-add=FOWNER", "--security-opt=no-new-privileges",
@@ -236,7 +241,7 @@ def local(args):
             require(info["Id"] == lock["image_id"] and info["Architecture"] == "amd64" and
                     not info["Config"].get("Volumes") and info["Os"] == "linux",
                     "Unexpected builder identity/platform/volumes")
-            command(docker_args(lock["image_id"], stage, work, args.cpus, args.memory_gib), stdout=log, stderr=subprocess.STDOUT)
+            command(docker_args(lock["image_id"], stage, work, args.cpus, args.memory_gib, getattr(args, "observation_id", None)), stdout=log, stderr=subprocess.STDOUT)
         expected = verified_outputs(work)
         checksums = {}
         for p in expected:
@@ -250,7 +255,7 @@ def local(args):
             "submodules": lock["submodules"], "builder_image": lock["image_id"],
             "output_sha256": checksums, "release_approved": False,
             "baseline_archive_aliases": args.source == BASE,
-            "requested_cpus": args.cpus, "requested_memory_gib": args.memory_gib
+            "requested_cpus": args.cpus, "requested_memory_gib": args.memory_gib, "compilation_jobs": 1
         }, indent=2) + "\n")
         print("Full local build produced private outputs; NOT release-approved.")
 
@@ -268,6 +273,7 @@ def main():
     parser.add_argument("--temp-root", type=Path)
     parser.add_argument("--cpus", type=int)
     parser.add_argument("--memory-gib", type=int)
+    parser.add_argument("--observation-id")
     args = parser.parse_args()
     try:
         if args.public:

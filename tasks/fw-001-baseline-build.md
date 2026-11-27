@@ -94,9 +94,9 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 - [x] WSL2 and Docker environment operational.
 - [x] Compatible ARM GCC 4.8.3 toolchain and matching sysroot verified by signed package, ARM smoke and static stock ABI checks; full dependency audit completed, with any actually required vendor components identified, licensed and verified. No requirement to obtain an unused full SDK.
 - [x] ARM cross-compilation smoke test passed; static stock symbol-version compatibility verified, no target code executed.
-- [ ] All required build inputs verified.
-- [ ] Private input lock manifest complete and approved.
-- [ ] Local preflight passed.
+- [x] All required build inputs verified.
+- [x] Private input lock manifest complete and approved.
+- [x] Local preflight passed.
 - [x] Docker isolation verified using the public environment probe and shared FW-008 flags; actual firmware builder execution remains pending.
 - [ ] Full offline firmware build passed.
 - [ ] All required firmware artifacts generated.
@@ -104,7 +104,7 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 - [ ] Independent repeat build completed.
 - [ ] Reproducibility results documented.
 - [ ] Single-command local build available.
-- [x] Sanitized execution report committed; it explicitly records that firmware compilation has not run.
+- [x] Sanitized execution report committed; actual failed compilations and remaining acceptance work are explicit.
 - [ ] Alternate-disk storage and configurable paths demonstrated without unintended system-disk growth.
 - [ ] CPU/RAM limits and bounded compilation parallelism configured and verified.
 - [ ] Interrupted execution resumes from verified checkpoints; changed or tampered inputs invalidate affected stages.
@@ -136,4 +136,4 @@ Successful compilation does not authorize flashing. Security hardening and relea
 
 ## Minimum-input preparation continuation (2026-11-27)
 
-See the appended [execution report](../docs/fw-001-execution-report.md) and [minimum-input evidence](../docs/fw-001-minimum-input-evidence.json). The full SDK acquisition blocker is superseded. Candidate inputs remain unapproved; compilation/repeat/new-artifact acceptance boxes remain open.
+See the appended [execution report](../docs/fw-001-execution-report.md) and [minimum-input evidence](../docs/fw-001-minimum-input-evidence.json). The full SDK acquisition blocker is superseded. The owner subsequently approved the complete derived-builder inputs. See the later runtime execution section; full/repeat/new-artifact acceptance boxes remain open.

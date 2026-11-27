@@ -1,0 +1,2 @@
+FROM sha256:eec37b625aed123d27fb6fbd64dd22a9279802301fa8190b3a0414abc9786536
+RUN ln -s /usr/sbin/mkfs.jffs2 /usr/local/bin/mkfs.jffs2

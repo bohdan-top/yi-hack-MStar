@@ -16,6 +16,8 @@ import urllib.parse
 import urllib.request
 import uuid
 import image_filesystem
+import artifact_validation
+import resource_observer
 
 if sys.platform.startswith("linux"):
     import fcntl
@@ -110,6 +112,7 @@ def resume_primary(checkpoint, output_root, key, report):
         out = output_root / name
         hashes = verify_outputs(out, key)
         require(hashes == saved["hashes"], "Checkpoint digest mismatch")
+        report["container_observations"] = saved.get("container_observations", [])
         report["primary_resumed"] = True
         return out, hashes
     except (fw.Blocked, OSError, ValueError, TypeError, KeyError, tarfile.TarError):
@@ -178,6 +181,10 @@ def run(args, report):
             "Build entrypoint files must be pristine")
     require(1 <= args.cpus <= len(os.sched_getaffinity(0)) and args.memory_gib >= 1,
             "Requested resource limits unavailable")
+    if not args.preflight_only:
+        require(args.reference_archive is not None and args.reference_archive.is_file()
+                and fw.digest(args.reference_archive) == artifact_validation.REFERENCE_SHA256,
+                "Supply the independently verified official reference archive")
     raw = args.lock.read_bytes()
     require(hashlib.sha256(raw).hexdigest() == args.approved_lock_sha256, "Lock digest mismatch")
     lock = json.loads(raw)
@@ -255,7 +262,17 @@ def run(args, report):
 
             def new_build(label):
                 out = args.output_root / (label + "-" + uuid.uuid4().hex)
-                subprocess.run(shared + ["--mode", "full", "--output", str(out)], check=True)
+                token = uuid.uuid4().hex
+                observer = resource_observer.Observer(token, key["image"], args.stage_root)
+                observer.start()
+                try:
+                    subprocess.run(shared + ["--mode", "full", "--output", str(out),
+                                            "--observation-id", token], check=True)
+                finally:
+                    observations = observer.finish()
+                    report.setdefault("container_observations", []).extend(observations)
+                require(observations and all(resource_observer.valid_runtime(row, args.cpus, args.memory_gib)
+                                             for row in observations), "Actual container isolation/resource evidence incomplete")
                 return out, verify_outputs(out, key)
 
             first = None if args.clean else resume_primary(
@@ -265,26 +282,25 @@ def run(args, report):
             report["primary_image_structure"] = stage("primary JFFS2 structural validation",
                 lambda: image_filesystem.inspect_firmware_pair(first[0]))
             if not report["primary_resumed"]:
-                atomic_json(checkpoint, {"key": key, "directory": first[0].name, "hashes": first[1]})
+                atomic_json(checkpoint, {"key": key, "directory": first[0].name, "hashes": first[1],
+                                         "container_observations": report.get("container_observations", [])})
             # Always a new output directory and fresh FW-008 temp workspace.
             # No repeat checkpoint, compiled output, or shared writable build cache.
             second = stage("independent offline repeat build", lambda: new_build("repeat"))
             report["repeat_image_structure"] = stage("repeat JFFS2 structural validation",
                 lambda: image_filesystem.inspect_firmware_pair(second[0]))
+            report["output_directories"] = {"primary": first[0].name, "repeat": second[0].name}
             report["artifact_sha256"] = {"primary": first[1], "repeat": second[1]}
             report["artifact_hash_matches"] = {n: first[1][n] == second[1][n] for n in NAMES}
             report["artifact_content_matches"] = {n: report["primary_image_structure"][n]["content_manifest_sha256"] ==
                 report["repeat_image_structure"][n]["content_manifest_sha256"] for n in image_structure.CANDIDATE_LIMITS}
-            report["status"] = "BUILD OUTPUTS VERIFIED; full FW-001 acceptance BLOCKED"
-            # Until trusted partition limits, JFFS2 integrity, release comparison, ARM
-            # ABI and actual isolation evidence are available, never return full success.
-            report["remaining_validation"] = [
-                "confirmed hardware partition limits (current ceilings are documented candidate values)",
-                "comparison against independently verified official release",
-                "ARM smoke test and SDK/license provenance evidence",
-                "actual network isolation and effective resource-limit evidence",
-                "explanation of any nondeterministic output differences"]
-            return 2
+            report["artifact_validation"] = stage("firmware artifact validation", lambda:
+                artifact_validation.validate_archive_pair(first[0], second[0], args.reference_archive, args.stage_root))
+            require(report["artifact_validation"]["status"] == "PASS", "Artifact validation incomplete")
+            report["validator_sha256"] = fw.digest(Path(artifact_validation.__file__))
+            report["status"] = "PASS"
+            report["remaining_validation"] = []
+            return 0
 
 
 def main():
@@ -296,6 +312,7 @@ def main():
     parser.add_argument("--cpus", type=int, default=6)
     parser.add_argument("--memory-gib", type=int, default=8)
     parser.add_argument("--min-free-gib", type=int, default=40)
+    parser.add_argument("--reference-archive", type=Path)
     parser.add_argument("--clean", action="store_true")
     parser.add_argument("--preflight-only", action="store_true")
     args = parser.parse_args()
@@ -312,7 +329,7 @@ def main():
     args.report_dir.mkdir(parents=True, exist_ok=True)
     try:
         rc = run(args, report)
-    except (fw.Blocked, OSError, ValueError, KeyError, TypeError, tarfile.TarError,
+    except (fw.Blocked, OSError, RuntimeError, ValueError, KeyError, TypeError, tarfile.TarError,
             subprocess.CalledProcessError) as error:
         # Do not persist exception strings (may contain private paths/URLs).
         report["failure_type"] = type(error).__name__
@@ -324,7 +341,15 @@ def main():
             usage = resource.getrusage(resource.RUSAGE_CHILDREN)
             report["client_children_cpu_seconds"] = usage.ru_utime + usage.ru_stime
             report["client_children_max_rss_kib"] = usage.ru_maxrss
-        report["resource_scope"] = "Linux child processes only; excludes Docker daemon/container"
+        report["resource_scope"] = "Child counters exclude Docker; container maxima sampled about every 2 seconds plus CLI/du latency"
+        observations = report.get("container_observations", [])
+        if observations:
+            report["peak_container_cpu_ram"] = {
+                "cpu_percent": max(row["peak_cpu_percent"] for row in observations),
+                "memory_bytes": max(row["peak_memory_bytes"] for row in observations)}
+            report["peak_temp_storage"] = {"workspace_apparent_bytes": max(
+                row["peak_workspace_apparent_bytes"] for row in observations),
+                "scope": "workspaces only; excludes input snapshots, Docker layers and host filesystem allocation"}
         if "disk_free_before_bytes" in report:
             report["disk_free_after_bytes"] = [shutil.disk_usage(p).free for p in
                 (args.stage_root, args.output_root, args.inputs)]

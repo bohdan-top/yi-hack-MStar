@@ -219,3 +219,100 @@ required interactive credentials. All uploaded blob identities and all three
 incremental commit trees match the tested local objects exactly. The original
 local commits are preserved in a task backup ref; the public code revision above
 has the same tree as the tested local code revision recorded in the JSON evidence.
+
+
+## Approved execution and runtime fixes (2026-11-27)
+
+The owner explicitly approved entrypoint `f8aa2d06e3172a085f59c3236d5473c1c7fe680b`
+and execution lock `a8811138136127fd3cf763ac30ec0dc9c7741e5b6122f36f5bb0e6a0228662c1`.
+The first actual private preflight passed. The first build stopped because
+Debian installs mkfs.jffs2 in /usr/sbin, outside the reviewed compiler PATH.
+The owner then approved execution lock
+`15bfcc1a2bea6e1ec502bc37c895bf9f2d83f14d11221d0f5c276b89178d47e8`.
+Its builder is `sha256:05a7092f12531a7ed9b349313db26deb29b2e9af9a43b28e16de9b55063a3119`;
+archive SHA-256 `809b1efe6c0c5cfef8279d77901affe1e4c493dc831dfb36f258afb61f1cc796`.
+The only additional image layer contains the mkfs.jffs2 symlink; the original
+eight layers and other 18 input files are unchanged. All required tools and a
+real packer/semantic filesystem fixture passed. No new package/source was added.
+The approved stock-equivalence, mdnsd historical-content and Linaro-signature
+limitations remain applicable.
+
+Actual pristine-source compilation exposed these runtime issues:
+
+- Global MAKEFLAGS=-j6 triggers the unordered live555 library prerequisite in
+  the pinned rRTSPServer Makefile. Serial compilation preserves the original
+  source and its intended dependency order. Container CPU quota/affinity remain
+  independently configurable; the updated wrapper uses one compiler job.
+- A subsequent serial attempt reached rRTSPServer but Autoconf rejected newly
+  created files 8–9 seconds in the future. New WSL connections also failed with
+  E_UNEXPECTED. The owner explicitly approved one WslService restart; standard
+  Windows UAC elevation performed it. Docker Desktop was stopped. No shared
+  configuration or protection policy was changed. New connections recovered.
+- The next PowerShell invocation compiled rRTSPServer, rtsp_server_yi and
+  sftp-server, then stopped in snapshot. FFmpeg configure could not execute
+  host sanity tests in the default noexec /tmp. The updated wrapper sets
+  TMPDIR=/work/tmp; the /tmp protections are retained.
+
+No firmware artifact was accepted from these failed attempts. Source and all
+nine recursive gitlinks passed the actual container checks. No external vendor
+SDK component was needed by the compilation reached so far.
+
+| Actual attempt | Verify/cache seconds | Preflight seconds | Primary stage seconds | Total seconds |
+| --- | ---: | ---: | ---: | ---: |
+| Missing packer PATH | 25.026 | 1.543 | 184.087 | 211.932 |
+| Parallel prerequisite race | 22.533 | 1.572 | 477.822 | 507.217 |
+| Autoconf clock check | 16.062 | 1.473 | 658.312 | 677.13 |
+| FFmpeg noexec TMPDIR | 23.965 | 3.472 | 916.908 | 947.969 |
+
+Stage times include verified staging, Docker load and cleanup. Every invocation
+rehashed all 19 local files; each downloaded zero bytes. These failed timings
+are not successful firmware build or reproducibility results.
+
+The production cache routine was also exercised with the actual approved bytes:
+four private local files, 15 digest-verified public cache hits, zero downloaded
+bytes. A corrupted disposable stock copy and a changed independently pinned
+public digest were rejected. Only task-owned test copies were removed.
+Elapsed time: 112.663 seconds. Approved inputs were preserved.
+
+The corrected TMPDIR was independently tested with the approved public FFmpeg
+source and the same original GCC 4.8.3 builder. Full configure and compilation
+of libavcodec/libavutil passed in 138.329 seconds, at six CPUs/8 GiB, no network,
+readonly root and retained /tmp noexec. No stock input or ARM execution was used;
+the probe's compiled outputs are not reused by firmware builds.
+
+The follow-up runner also adds uniquely labelled, automatic actual-container
+resource/isolation observations, preserves primary observations in its verified
+checkpoint, checks the pinned official reference and ARM dependency/version
+sets, and explains repeat differences only when they reduce to filesystem
+mtimes, ELF compile timestamps and derived build IDs. Other differences block
+success. It no longer substitutes an unconditional post-build blocked marker
+for these checks. Full firmware acceptance remains pending actual successful
+primary/repeat outputs and their validation under the reviewed follow-up.
+
+
+Follow-up public validation: **38 tests passed, zero skips** inside the actual
+minimal builder, including the reproduced unordered-make prerequisite fixture.
+Windows: 25 tests passed with one GNU-make fixture skipped because Windows has
+no GNU make; all 28 host guards passed. The native distro also lacks GNU make;
+the builder run supplies the complete Linux execution evidence. Shell and
+PowerShell syntax checks passed. Firmware source, stock inputs and VERSION
+remain unchanged.
+
+The corrected automatic observer passed an actual public container test at
+6 CPU quota/affinity, 8 GiB RAM, zero swap, readonly root/inputs, capabilities
+0xb, seccomp, no-new-privileges and loopback-only networking. The compiler nproc
+guard returned 1; native docker-exec nproc returned 6, and these are recorded
+separately. Its initial observation used docker-exec's base PATH rather than the
+compiler guard and was corrected before any private follow-up execution.
+Five samples observed 546.95% CPU and 34,152,120 bytes RAM during a deliberate
+public six-worker load; these are not firmware resource peaks. The run took
+37.746 seconds, downloaded zero bytes and verified both executable /work/tmp
+and retained noexec /tmp behavior.
+
+The complete artifact validator also passed against two disposable copies of
+the independently verified official images in 2.277 seconds: no differences,
+no missing required hack ELF files. This is a public reference fixture, not a
+new firmware build or independent repeat. Actual firmware validation remains
+pending. Independent review of the published follow-up entrypoint is required
+before the private build gate accepts its new revision; the approved lock and
+all 19 input bytes remain unchanged.

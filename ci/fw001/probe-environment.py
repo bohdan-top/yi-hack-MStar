@@ -39,7 +39,7 @@ def inside(args):
     status = dict(line.split(':', 1) for line in Path('/proc/self/status').read_text().splitlines() if ':' in line)
     require(status['NoNewPrivs'].strip() == '1' and status['Seccomp'].strip() == '2', 'No-new-privileges/seccomp enforcement mismatch')
     require(int(status['CapEff'].strip(), 16) == 0xB, 'Unexpected effective capabilities')
-    require(os.environ.get('FW008_JOBS') == str(args.cpus) and os.environ.get('MAKEFLAGS') == '-j' + str(args.cpus), 'Build parallelism environment mismatch')
+    require(os.environ.get('FW008_JOBS') == '1' and os.environ.get('MAKEFLAGS') == '-j1', 'Build parallelism environment mismatch')
     nproc = int(subprocess.check_output(['nproc'], text=True).strip())
     require(nproc == args.cpus, 'nproc does not respect affinity')
     readonly = {}

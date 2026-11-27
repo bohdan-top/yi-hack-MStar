@@ -71,3 +71,40 @@ On Docker 29 with the containerd store, runtime image identity can be a manifest
 ## Minimum-input continuation (2026-11-27)
 
 See [minimum dependency audit and candidate provenance](fw-001-minimum-dependencies.md). All 15 public module archives now have verification evidence, including the two snapshot downloads omitted by the earlier inventory. Earlier counts and blockers above are historical. Private lock and entrypoint approval remain mandatory; no automatic approval is introduced. The semantic validator now decompresses supported JFFS2 payloads and checks model/base/hack versions for both build outputs, but actual compilation, repeat and release comparison are still pending.
+
+
+## Runtime fixes after approved execution
+
+Use the approved derived builder and its unchanged lock digest documented in the
+latest execution report. Supply the exact independently reviewed runner commit.
+The Windows invocation is one command:
+
+```powershell
+./scripts/run-fw001.ps1 -DataRoot E:\FirmwareBuild -Inputs E:\FirmwareBuild\inputs-v2 -LockFile E:\FirmwareBuild\lock-v2.json -CpuLimit 6 -MemoryGB 8 -ApprovedLockSha256 15bfcc1a2bea6e1ec502bc37c895bf9f2d83f14d11221d0f5c276b89178d47e8 -ApprovedEntrypoint REVIEWED_RUNNER_COMMIT
+```
+
+The container retains the requested CPU quota and affinity. Compilation is
+serial because the pristine rRTSPServer makefile has unordered prerequisites;
+MAKEFLAGS and the compiler nproc guard both return one job. This avoids source
+patches. TMPDIR is /work/tmp for executable host configure tests; Docker /tmp
+stays noexec. The official release archive defaults to the documented candidate
+file under DataRoot and must match the independently verified publisher digest.
+Use -OfficialReferenceArchive to select another local copy of the same bytes.
+
+Full runs automatically observe only their uniquely labelled build containers.
+Reports include sampled CPU/RAM maxima, workspace apparent bytes, effective
+cgroups, affinity, capabilities/seccomp, readonly mounts, network denial and
+download-guard rejection. Poll interval is two seconds plus Docker stats/du
+latency; maxima are observations, not continuous hard peaks. Workspace figures
+exclude input snapshots, Docker layers and host allocation. Child CPU/RSS
+counters are reported separately and exclude the Docker processes.
+
+After both clean builds, the runner verifies all JFFS2 payloads and identities,
+documented size ceilings, archive hashes, installed ARM library/version needs,
+the pinned official reference and normalized repeat contents. Unexplained
+differences return nonzero. Bit reproducibility and hardware execution are
+separate claims. Successful compilation does not approve release or flashing.
+For read-only revalidation of retained outputs, -ValidateOnly additionally takes
+-PrimaryOutput, -RepeatOutput and -ReferenceDirectory, all inside DataRoot.
+It rechecks the approved lock, original build metadata, artifact bytes and the
+official reference; it does not compile or reuse a repeat checkpoint.

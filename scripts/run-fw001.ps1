@@ -11,6 +11,11 @@ param(
     [string]$LinuxStageRoot = '/var/tmp/fw001',
     [string]$ApprovedLockSha256,
     [string]$ApprovedEntrypoint,
+    [string]$OfficialReferenceArchive,
+    [string]$ReferenceDirectory,
+    [string]$PrimaryOutput,
+    [string]$RepeatOutput,
+    [switch]$ValidateOnly,
     [switch]$Clean,
     [switch]$PreflightOnly
 )
@@ -80,13 +85,28 @@ try {
     }
     $stage = 'Linux runner'
     Write-Host '[FW-001] Starting the verified Linux runner; diagnostics remain private.'
+    if (-not $OfficialReferenceArchive) { $OfficialReferenceArchive = Join-Path $root 'candidates/official-y203c_0.5.8.tgz' }
+    $OfficialReferenceArchive = Assert-Fw001DataPath $OfficialReferenceArchive $root
     $entry = Convert-WslPath (Join-Path $repo 'ci/fw001/run.py')
     $argsList = @('python3','-B',$entry,
         '--inputs',(Convert-WslPath $Inputs),'--lock',(Convert-WslPath $LockFile),
         '--output-root',(Convert-WslPath $OutputRoot),'--report-dir',(Convert-WslPath $reportDir),
         '--stage-root',$LinuxStageRoot,'--cpus',"$CpuLimit",'--memory-gib',"$MemoryGB",
         '--min-free-gib',"$MinimumFreeGB",'--approved-lock-sha256',$ApprovedLockSha256,
-        '--approved-entrypoint',$ApprovedEntrypoint)
+        '--approved-entrypoint',$ApprovedEntrypoint,'--reference-archive',(Convert-WslPath $OfficialReferenceArchive))
+    if ($ValidateOnly) {
+        if ($Clean -or $PreflightOnly) { throw 'INCOMPATIBLE_VALIDATION_FLAGS' }
+        $PrimaryOutput = Assert-Fw001DataPath $PrimaryOutput $root
+        $RepeatOutput = Assert-Fw001DataPath $RepeatOutput $root
+        $ReferenceDirectory = Assert-Fw001DataPath $ReferenceDirectory $root
+        $entry = Convert-WslPath (Join-Path $repo 'ci/fw001/artifact_validation.py')
+        $validationReport = Join-Path $reportDir ("fw001-validation-$runId.json")
+        $argsList = @('python3','-B',$entry,(Convert-WslPath $PrimaryOutput),
+            '--repeat',(Convert-WslPath $RepeatOutput),'--reference',(Convert-WslPath $ReferenceDirectory),
+            '--reference-archive',(Convert-WslPath $OfficialReferenceArchive),'--report',(Convert-WslPath $validationReport),
+            '--lock',(Convert-WslPath $LockFile),'--approved-entrypoint',$ApprovedEntrypoint,
+            '--approved-lock-sha256',$ApprovedLockSha256,'--cpus',"$CpuLimit",'--memory-gib',"$MemoryGB")
+    }
     if ($Clean) { $argsList += '--clean' }
     if ($PreflightOnly) { $argsList += '--preflight-only' }
     & wsl.exe --distribution $Distro --exec @argsList 2>&1 | ForEach-Object {
@@ -97,7 +117,7 @@ try {
     }
     $runnerCode = $LASTEXITCODE
     if ($runnerCode -ne 0) { throw 'LINUX_RUNNER_BLOCKED' }
-    $status = if ($PreflightOnly) { 'PREFLIGHT PASS; full build NOT RUN' } else { 'Runner completed; inspect Linux acceptance report' }
+    $status = if ($PreflightOnly) { 'PREFLIGHT PASS; full build NOT RUN' } elseif ($ValidateOnly) { 'ARTIFACT VALIDATION PASS' } else { 'BUILD AND VALIDATION PASS' }
     $exitCode = 0
 } catch {
     # Arbitrary exception text can contain private paths, URLs or input data.

@@ -4,6 +4,9 @@ umask 077
 # Return ownership of disposable bind-mount contents even on build failure.
 trap 'chown -hR "$FW008_OWNER_UID:$FW008_OWNER_GID" /work; find /work -type d -exec chmod u+rwx {} +' EXIT
 export HOME=/tmp
+# Host configure tests require executable temporary files; /tmp stays noexec.
+mkdir -p /work/tmp
+export TMPDIR=/work/tmp
 export GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_TERMINAL_PROMPT=0
 export GIT_CONFIG_COUNT=2 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0=/dev/null
 export GIT_CONFIG_KEY_1=core.fsmonitor GIT_CONFIG_VALUE_1=false
