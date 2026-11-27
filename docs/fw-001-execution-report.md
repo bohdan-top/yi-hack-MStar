@@ -84,3 +84,56 @@ The actual Windows build entrypoint was rerun with 6 CPUs / 8 GiB. It now passes
 **No `home_y203c`, `sys_y203c` or `y203c_0.5.8.tgz` firmware artifacts exist from this execution. No firmware hashes or reproducibility claim can be made.** FW-008 remains the sole firmware build entrypoint. The full FW-001 runner still intentionally returns nonzero if outputs are produced but the remaining acceptance validation has not been completed.
 
 Keep FW-001 **blocked** and PR #3 **draft**. Continue once trusted licensed SDK/toolchain and stock inputs, remaining provenance and an independently approved lock/digest are available; then finish validation implementation and execute the primary/repeat firmware builds. The shared swap approval has already been applied and does not need to be requested again.
+
+
+## Remote continuation: structural validation and input provenance review (2026-11-27)
+
+Added `ci/fw001/image_structure.py` and six synthetic regression tests in
+`ci/fw001/test_image_structure.py`. The runner now validates both primary and
+repeat JFFS2 images, including a resumed primary, before reporting comparison
+results; the primary checkpoint is published only after the new checks pass.
+Checks cover little-endian node magic, node/header and payload/name CRCs,
+eraseblock boundaries, erased padding, and candidate partition sizes.
+
+The candidate limits are 0xC30000 (home) and 0x1E0000 (sys), from the
+[upstream backup wiki example](https://github.com/roleoroleo/yi-hack-MStar/wiki/Dump-your-backup-firmware/d5d2274c60f31421cdbd4b3ccca290b7c66d3060).
+The pinned `scripts/pack_fw.sh` supplies the 64 KiB erase size and little-endian
+format. These limits are not independent evidence of this particular camera's
+partition geometry. The scanner is deliberately restricted to pristine
+mkfs.jffs2 node types; it does not mount, decompress, reconstruct filesystem
+semantics, verify the model/version files or compare official release contents.
+Unsupported node types fail closed pending review. Full acceptance still
+returns nonzero; no release authorization is implied.
+
+**Executed:** six synthetic tests passed in a separate Linux execution
+environment (Python unittest, 0.009 s); the tested file Git blob hashes
+matched the committed files:
+`7d5418ff1c1613018b37ea2b8ecc6aa5edc69d27` (validator),
+`92eb2262eba3161e4908fbe85be8c4eb6f789537` (tests).
+Command: `python -B -m unittest -v test_image_structure` in the isolated
+test directory. The original 19 tests and the full integrated runner were not
+rerun in this continuation. Real mkfs.jffs2 images and private firmware
+outputs were unavailable, so the new checks are NOT VERIFIED against them.
+
+Public source research:
+- Dropbear: [Buildroot 2026.91 update](https://lists.buildroot.org/pipermail/buildroot/2026-May/801979.html)
+  publishes SHA-256 for `dropbear-2026.91.tar.bz2`, not the required GitHub
+  `DROPBEAR_2026.91.tar.gz`. Do not transfer its digest.
+- tinyalsa: [historical Buildroot update](https://lists.buildroot.org/pipermail/buildroot/2016-November/164193.html)
+  identifies v1.0.2 and an earlier commit archive; neither proves v1.0.0.
+- live555: [VideoLAN mirror](https://download.videolan.org/pub/pub/testing/contrib/live555/)
+  lists the requested version; a listing alone is not independent digest evidence.
+- mdnsd: historical equivalence and exact archive digest remain unresolved.
+- SDK: upstream README recommends the community
+  [borodiliz/yi-hack image](https://hub.docker.com/r/borodiliz/yi-hack).
+  This is a lead, not an authenticated licensed SDK or an approved builder.
+  No proprietary download or untrusted image execution was performed.
+- Stock: upstream stock_firmware/README.md requires device-derived images.
+  The existing private recovery artifacts may be useful, but their contents and
+  provenance must be verified locally; do not substitute a modified release.
+
+No unresolved digest was populated and no private input lock was approved.
+The environment and compilation status above remains unchanged. The new
+runner revision supersedes the earlier entrypoint revision for future builds;
+the earlier evidence remains historical. Use an independently reviewed new
+entrypoint SHA when eventually executing the runner.
