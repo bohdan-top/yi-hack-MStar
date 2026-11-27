@@ -43,4 +43,6 @@ python3 ci/fw008/manual-build.py --public --mode full # expected nonzero
 
 Synthetic fixtures exercise missing input, tamper, unapproved ref/lock, unsafe path, unpinned Git links and fresh staging. Docker command flags are unit-tested, not a proof of isolation. The synthetic shell test also checks the download guard when upstream ignores wget failure. Actual container behavior must be demonstrated before FW-008 acceptance is closed.
 
+See [executed bootstrap evidence](fw-008-bootstrap-evidence.md).
+
 [Roadmap](firmware-roadmap.md) · [Task](../tasks/fw-008-manual-ci-build.md)
