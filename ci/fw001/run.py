@@ -15,6 +15,7 @@ import time
 import urllib.parse
 import urllib.request
 import uuid
+import image_filesystem
 
 if sys.platform.startswith("linux"):
     import fcntl
@@ -262,21 +263,23 @@ def run(args, report):
             if first is None:
                 first = stage("primary offline build", lambda: new_build("primary"))
             report["primary_image_structure"] = stage("primary JFFS2 structural validation",
-                lambda: image_structure.inspect_pair(first[0]))
+                lambda: image_filesystem.inspect_firmware_pair(first[0]))
             if not report["primary_resumed"]:
                 atomic_json(checkpoint, {"key": key, "directory": first[0].name, "hashes": first[1]})
             # Always a new output directory and fresh FW-008 temp workspace.
             # No repeat checkpoint, compiled output, or shared writable build cache.
             second = stage("independent offline repeat build", lambda: new_build("repeat"))
             report["repeat_image_structure"] = stage("repeat JFFS2 structural validation",
-                lambda: image_structure.inspect_pair(second[0]))
+                lambda: image_filesystem.inspect_firmware_pair(second[0]))
             report["artifact_sha256"] = {"primary": first[1], "repeat": second[1]}
             report["artifact_hash_matches"] = {n: first[1][n] == second[1][n] for n in NAMES}
+            report["artifact_content_matches"] = {n: report["primary_image_structure"][n]["content_manifest_sha256"] ==
+                report["repeat_image_structure"][n]["content_manifest_sha256"] for n in image_structure.CANDIDATE_LIMITS}
             report["status"] = "BUILD OUTPUTS VERIFIED; full FW-001 acceptance BLOCKED"
             # Until trusted partition limits, JFFS2 integrity, release comparison, ARM
             # ABI and actual isolation evidence are available, never return full success.
             report["remaining_validation"] = [
-                "JFFS2 decompression/filesystem semantics, target/version and confirmed hardware partition limits",
+                "confirmed hardware partition limits (current ceilings are documented candidate values)",
                 "comparison against independently verified official release",
                 "ARM smoke test and SDK/license provenance evidence",
                 "actual network isolation and effective resource-limit evidence",
