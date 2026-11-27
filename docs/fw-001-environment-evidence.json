@@ -1,0 +1,203 @@
+{
+  "date": "2026-11-27",
+  "status": "ENVIRONMENT VERIFIED; FW-001 BLOCKED ON APPROVED FIRMWARE INPUTS AND REMAINING VALIDATION",
+  "source_sha": "c8582405b2c3c0e3b80219b0e71e21785a482867",
+  "unchanged_fw008_entrypoint_revision": "5a05439df718e2d1d7b93f9cf5a0fdfe7c9a2306",
+  "previous_report_commit": "b93a3ff4b02a58e7e4ba831468566efe54f85214",
+  "workflow_execution_revision": null,
+  "environment_probe_sha256": "ba837d02d3ed4d90660a585c24f7041321ce7de7f9ade0813aa2e579aa7d5562",
+  "approved_storage": {
+    "date": "2026-11-27",
+    "scope": "Windows storage placement after explicitly approved WSL configuration",
+    "shared_swap_approved": true,
+    "swap_config_valid": true,
+    "distro_version": 2,
+    "distro_vhd_beneath_data_root": true,
+    "distro_vhd_file_bytes": 2998927360,
+    "swap_vhd_beneath_data_root": true,
+    "swap_vhd_file_bytes": 37748736,
+    "forced_shared_shutdown_performed": false,
+    "data_volume_free_before_bytes": 3350836604928,
+    "data_volume_free_after_bytes": 3346621800448,
+    "system_volume_free_before_bytes": null,
+    "system_volume_free_after_bytes": 81462042624,
+    "disk_scope": "whole-volume snapshots; unrelated host activity can affect values; system-volume baseline for this continuation not measured",
+    "peak_temporary_storage": null
+  },
+  "native_environment": {
+    "scope": "actual dedicated WSL/native Docker environment observations; no firmware build",
+    "root_filesystem": "ext4",
+    "kernel": "6.6.87.2-microsoft-standard-WSL2",
+    "python": "3.12.3",
+    "docker_server": "29.1.3",
+    "local_docker_socket": true,
+    "native_dockerd_present": true,
+    "docker_and_containerd_on_root_ext4": true,
+    "private_staging_on_root_ext4": true,
+    "swap_devices": [
+      {
+        "size_bytes": 8589934592,
+        "used_bytes": 0
+      }
+    ],
+    "package_versions": {
+      "ca-certificates": "20260816ubuntu0.24.04.2",
+      "containerd": "2.2.1-0ubuntu1~24.04.4",
+      "docker.io": "29.1.3-0ubuntu3~24.04.2",
+      "git": "1:2.43.0-1ubuntu7.4",
+      "procps": "2:4.0.4-4ubuntu3.3",
+      "python3": "3.12.3-0ubuntu2.1",
+      "runc": "1.3.4-0ubuntu1~24.04.1",
+      "util-linux": "2.39.3-9ubuntu6.6"
+    },
+    "task_probe_containers_remaining": 0,
+    "disk_file_bytes": {
+      "docker": 180285,
+      "containerd": 255032003,
+      "private_stage": 15723
+    }
+  },
+  "native_setup": {
+    "stage": "native WSL/Docker provisioning",
+    "exit_code": 0,
+    "elapsed_seconds": 250.138,
+    "rootfs_sha256": "bb415d824822c4b878125729af451a5d18fb13d1cf5cbed9a7393ad64ac6039e",
+    "shared_swap_approved": true
+  },
+  "linux_regressions": {
+    "scope": "actual native WSL Linux regression tests; firmware build NOT RUN",
+    "checks": [
+      {
+        "name": "FW-001 Linux suite",
+        "exit_code": 0,
+        "elapsed_seconds": 3.154
+      },
+      {
+        "name": "FW-008 Linux suite",
+        "exit_code": 0,
+        "elapsed_seconds": 0.865
+      },
+      {
+        "name": "offline wrapper syntax",
+        "exit_code": 0,
+        "elapsed_seconds": 0.037
+      },
+      {
+        "name": "download guard syntax",
+        "exit_code": 0,
+        "elapsed_seconds": 0.035
+      },
+      {
+        "name": "environment probe CLI syntax",
+        "exit_code": 0,
+        "elapsed_seconds": 0.254
+      }
+    ],
+    "python": "Python 3.12.3",
+    "git": "git version 2.43.0",
+    "docker": "29.1.3",
+    "kernel": "6.6.87.2-microsoft-standard-WSL2"
+  },
+  "linux_tests_passed": 19,
+  "linux_tests_skipped": 0,
+  "public_probe_image_provenance": {
+    "scope": "official public Python image for environment probe only; not SDK builder",
+    "source": "docker.io/library/python:3.12-slim-bookworm",
+    "index_digest": "sha256:44cf1793efa7c7a476bb0f2cff81443f4a072c90c1cb127e2924933daa3e8c64",
+    "amd64_manifest_digest": "sha256:1475c4f5b6bcb7d35e57661d6f5d7429ec4041275633c15f2b49350ac898276d",
+    "layer_count": 4,
+    "compressed_bytes": 45269859,
+    "archive_sha256": "f91993b6dfcc1c8878d48887ce028ac208cf583194fa17931ea82f8c6316dcb2",
+    "archive_bytes": 128460800,
+    "elapsed_seconds": 23.547,
+    "all_layers_and_diff_ids_verified": true,
+    "docker29_runtime_image_id": "sha256:fb5b23e71c65e126bb2dd9c8bdcf612d54ffff59767893cfad303a633446443f",
+    "roundtrip_manifest_config_and_layers_verified": true,
+    "runtime_identity_note": "Docker 29 containerd uses imported manifest digest; official config digest and every uncompressed layer were independently reverified after export before execution",
+    "registry_image_config_digest": "sha256:f4a31709c79ea38eafccf1234211e87d36625b5f9752d3df28319b43b48c0f23"
+  },
+  "container_interruption_probe": {
+    "scope": "public environment probe using FW-008 Docker arguments; firmware NOT BUILT",
+    "image_id": "sha256:fb5b23e71c65e126bb2dd9c8bdcf612d54ffff59767893cfad303a633446443f",
+    "image_repo_digests": [
+      "fw001-python-probe@sha256:fb5b23e71c65e126bb2dd9c8bdcf612d54ffff59767893cfad303a633446443f"
+    ],
+    "requested_cpus": 6,
+    "requested_memory_gib": 8,
+    "native_docker_data_and_staging_on_root_ext4": true,
+    "release_approved": false,
+    "interrupted_exit_code": 137,
+    "completed_output_absent": true,
+    "sample_count": 2,
+    "peak_observed_cpu_percent": 597.37,
+    "peak_observed_memory_bytes": 159383552,
+    "sampling": "docker stats --no-stream plus 0.5 second wait; sampled peaks of this 8-second probe, not firmware compilation",
+    "task_workspace_cleaned": true,
+    "elapsed_seconds": 17.236,
+    "status": "CONTAINER INTERRUPTION CHECK PASS; firmware build NOT RUN"
+  },
+  "fresh_offline_container_probe": {
+    "scope": "public environment probe using FW-008 Docker arguments; firmware NOT BUILT",
+    "image_id": "sha256:fb5b23e71c65e126bb2dd9c8bdcf612d54ffff59767893cfad303a633446443f",
+    "image_repo_digests": [
+      "fw001-python-probe@sha256:fb5b23e71c65e126bb2dd9c8bdcf612d54ffff59767893cfad303a633446443f"
+    ],
+    "requested_cpus": 6,
+    "requested_memory_gib": 8,
+    "native_docker_data_and_staging_on_root_ext4": true,
+    "release_approved": false,
+    "container_checks": {
+      "affinity_cpu_count": 6,
+      "cpu_quota": 600000,
+      "cpu_period": 100000,
+      "memory_max_bytes": 8589934592,
+      "memory_swap_max_bytes": 0,
+      "readonly_root_and_inputs": true,
+      "interfaces": [
+        "lo"
+      ],
+      "external_connection_blocked": true,
+      "download_guard_rejected": true,
+      "mtd_devices_absent": true,
+      "load_seconds_per_worker": 8,
+      "load_workers": 6,
+      "no_new_privileges": true,
+      "seccomp_filtering": true,
+      "effective_capabilities_hex": "000000000000000b",
+      "makeflags": "-j6",
+      "nproc": 6
+    },
+    "sample_count": 5,
+    "peak_observed_cpu_percent": 599.77,
+    "peak_observed_memory_bytes": 159068979,
+    "sampling": "docker stats --no-stream plus 0.5 second wait; sampled peaks of this 8-second probe, not firmware compilation",
+    "task_workspace_cleaned": true,
+    "elapsed_seconds": 24.261,
+    "status": "ENVIRONMENT PROBE PASS; firmware build NOT RUN"
+  },
+  "actual_windows_entrypoint": {
+    "schema": 1,
+    "status": "BLOCKED",
+    "stage": "input approval",
+    "failure_code": "INDEPENDENT_INPUT_APPROVAL_REQUIRED",
+    "runner_exit_code": null,
+    "requested_cpu": 6,
+    "requested_ram_gib": 8,
+    "elapsed_seconds": 0.373,
+    "data_free_before_bytes": 3347690012672,
+    "data_free_after_bytes": 3347690012672,
+    "system_free_before_bytes": 81500499968,
+    "system_free_after_bytes": 81500499968,
+    "storage_scope": "whole Windows volumes; unrelated activity may affect values",
+    "swap_placement": "data-root swap configured; effective VM state requires verification",
+    "temporary_files": "selected data root",
+    "peak_cpu_ram": "not measured by Windows wrapper",
+    "release_approved": false
+  },
+  "upstream_firmware_files_unchanged": true,
+  "firmware_artifact_sha256": null,
+  "primary_firmware_build": "NOT RUN",
+  "independent_firmware_repeat": "NOT RUN",
+  "arm_toolchain_smoke": "NOT RUN",
+  "release_approved": false
+}

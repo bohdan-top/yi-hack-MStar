@@ -50,3 +50,19 @@ Git Bash is used only for shell guard tests and syntax checks. It does not run f
 The public inventory is still unapproved. Nine exact public archives have now been downloaded and checked against independently sourced candidate digests; four public digests and private prerequisites remain unresolved. An approved lock cannot override an independently pinned baseline public digest. Warm-cache results in the execution report cover the separate public provenance audit; production FW-001 cache/recovery checks are synthetic until approved inputs and native Docker are available.
 
 See [execution evidence](fw-001-execution-report.md). This is not release or flash approval.
+
+
+## Executed dedicated environment probe
+
+The dedicated FirmwareBuild distro/native Docker and shared swap placement were provisioned after explicit owner approval. See the current execution report and environment JSON for observed versions, hashes and measurements. The build runner still requires the separate approved private lock; environment probes never approve proprietary inputs or compile firmware.
+
+A verified public Python runtime can exercise the actual FW-008 Docker arguments without the SDK. Run inside the dedicated distro, using an immutable, independently verified runtime ID:
+
+```sh
+python3 -B ci/fw001/probe-environment.py --image VERIFIED_SHA256_IMAGE_ID --stage-root /var/tmp/fw001 --report-dir /mnt/e/FirmwareBuild/reports --cpus 6 --memory-gib 8 --interrupt-after 2
+python3 -B ci/fw001/probe-environment.py --image VERIFIED_SHA256_IMAGE_ID --stage-root /var/tmp/fw001 --report-dir /mnt/e/FirmwareBuild/reports --cpus 6 --memory-gib 8
+```
+
+The first invocation checks actual interruption cleanup; the second always uses a fresh workspace and checks cgroups, affinity, seccomp, no-new-privileges, capabilities, read-only mounts, network denial, download rejection and nproc/make environment. Sampled CPU/RAM observations describe this probe only. It does not test the 8 GiB OOM threshold, ARM GCC, upstream compilation, firmware checkpoints or artifact acceptance. No broad Docker/cache cleanup is performed.
+
+On Docker 29 with the containerd store, runtime image identity can be a manifest digest rather than the registry's image-config digest. Verify the imported manifest/config/layer graph against authenticated original contents before recording the runtime ID in a reviewed lock. Do not replace an expected digest with an observed value merely to proceed. The execution report records the public probe's verified graph; it is not approval of an SDK builder.

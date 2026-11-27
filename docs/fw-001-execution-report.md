@@ -1,100 +1,86 @@
 # FW-001 — sanitized execution report
 
-Date: 2026-11-27. Status: **BLOCKED — local Windows checks and public downloads executed; firmware compilation NOT RUN.**
+Date: 2026-11-27. Status: **BLOCKED — native WSL/Docker, Linux regressions and real constrained-container probes passed; firmware compilation NOT RUN.**
 
-## Revisions and scope
+## Revisions and evidence scope
 
-- Firmware source: `c8582405b2c3c0e3b80219b0e71e21785a482867` (upstream 0.5.8, y203c / 6FUS).
-- Tested implementation and workflow definition: `5a05439df718e2d1d7b93f9cf5a0fdfe7c9a2306`. The working files tested were committed as this revision without implementation changes afterward. The report/evidence update is a separate commit.
-- Branch: `feature/fw-001-baseline-build`; existing draft [PR #3](https://github.com/bohdan-top/yi-hack-MStar/pull/3), base `firmware/y203c` at `0fc8aff82ba94adb58d2932bd860912ea2aca4d3`.
-- Publication used the authenticated GitHub connection after Git CLI required interactive authentication. The published implementation tree `bb8173bae3ef1e5e598ad3ff3a9c598fabfdfff4` exactly matches the tested local implementation tree.
-- Workflow execution revision: **none**. No hosted workflow dispatched; local results are not CI results.
-- Source comparison against the pinned commit found no changes to upstream firmware files. All nine recursive Git dependencies match the inventory. The clean onvif submodule was restored to its pinned gitlink after switching branches; no local submodule edits were discarded.
-- This report supersedes the previous remote-sandbox blocker report. Its machine-readable measurements and public archive hashes are in [local evidence](fw-001-local-evidence.json). Raw logs, manifests and downloaded archives remain outside Git.
+Firmware source: `c8582405b2c3c0e3b80219b0e71e21785a482867`, upstream 0.5.8, y203c / 6FUS. Branch `feature/fw-001-baseline-build`, existing draft [PR #3](https://github.com/bohdan-top/yi-hack-MStar/pull/3), base `firmware/y203c`. Upstream firmware files remain unchanged; all nine recursive gitlinks were verified in the earlier local run.
 
-## Actual host environment
+The shared FW-008 entrypoint, FW-001 build runner and workflow definition remain unchanged from `5a05439df718e2d1d7b93f9cf5a0fdfe7c9a2306`. The newly executed environment-probe script has SHA-256 `ba837d02d3ed4d90660a585c24f7041321ce7de7f9ade0813aa2e579aa7d5562` and is included with this evidence update. Workflow execution revision: **none**; no hosted workflow dispatched.
 
-Windows `10.0.26200.9911`; PowerShell `7.6.9`; Python `3.12.10`; Git `2.52.0.windows.1`; Git Bash `5.2.37`. The host has 16 logical processors and 68,295,344,128 bytes of physical RAM. The selected data volume is NTFS with roughly 3.35 TB free, exceeding the initial 40 GiB budget.
+[Current environment evidence](fw-001-environment-evidence.json) contains exact runtime observations. [Earlier Windows/public dependency evidence](fw-001-local-evidence.json), committed in `b93a3ff4b02a58e7e4ba831468566efe54f85214`, remains historical evidence for the nine verified public archives and Windows checks. Its missing-distro and unmeasured-container statements were true at that earlier stage and are superseded by this continuation. Raw logs, archives and private inputs remain outside Git.
 
-WSL `2.6.3.0`, kernel `6.6.87.2-1`, is installed. The only registered distribution observed was the stopped Docker Desktop distribution, with storage outside the selected data root. No dedicated build distribution is registered. Docker CLI `29.1.3` is installed; the Desktop engine connection fails because the engine is not running. This is not an operational isolated build environment.
+## Approved WSL provisioning actually executed
 
-The requested data root did not exist before this run. Task directories, public dependency audit cache, scratch scripts, test temporary data and reports were created on the selected alternate disk. No SDK, stock archives, builder archive or approved private lock was supplied there. No approved lock digest or reviewed private-input provenance was provided. The upstream README's SDK filename and third-party Docker image reference are not independent license/provenance evidence; neither was used to construct a builder.
+The owner explicitly approved shared WSL swap placement. A new .wslconfig points swap to the selected alternate-disk data root. No configuration existed previously; no forced shared WSL shutdown was needed. Existing distributions and Docker Desktop data were not moved. No global WSL CPU/RAM settings were changed.
 
-There is no user .wslconfig file. A shared swap-placement configuration change and any necessary shared VM restart require owner approval under FW-001 section 6. No WSL configuration, existing distro placement, Docker Desktop settings or shared services were changed. No Docker image was pulled or loaded. The missing distro blocks the real host request before any WSL command executes; swap and private approval gates remain additional prerequisites.
+A new `FirmwareBuild` WSL2 distribution was installed on the data disk from Ubuntu 24.04.5 amd64. Rootfs SHA-256 `bb415d824822c4b878125729af451a5d18fb13d1cf5cbed9a7393ad64ac6039e` matched both [Microsoft's distro inventory](https://github.com/microsoft/WSL/blob/master/distributions/DistributionInfo.json) and [Canonical's release checksums](https://releases.ubuntu.com/24.04.5/SHA256SUMS) before installation. The initial WSL download failed with `0x80072efe`; a resumable HTTPS download recovered the operation without disabling TLS or checksum verification.
 
-## Executed checks
+Native Docker and host prerequisites were installed using Ubuntu's authenticated package metadata. Provisioning measured **250.138 seconds**, excluding the earlier rootfs download/import. Observed Linux Python `3.12.3`, kernel `6.6.87.2-microsoft-standard-WSL2`, Docker Engine `29.1.3`. Exact package versions are in the JSON evidence. Native dockerd, its local Unix socket, Docker storage, containerd storage and owner-only staging were verified on the dedicated ext4 filesystem backed by the data-disk VHD. Active VM swap is 8 GiB; its configured backing VHD is on the selected data disk. Container swap is separately limited to zero.
 
-Subprocess wall time is measured with Python `time.perf_counter`; host internal time uses a .NET Stopwatch. Durations include interpreter startup and test fixture I/O. These are prerequisite/test measurements, not build durations.
+The distro VHD measured **2,998,927,360 bytes** and swap VHD **37,748,736 bytes** of file length. This is not an allocation or peak-storage claim. Whole data-volume free space changed from **3350836604928** to **3346621800448 bytes** during this continuation; unrelated activity may contribute. A system-volume baseline and peak temporary storage were not measured, so zero system-disk growth is not claimed. All intentional large task downloads, image archives, distro/Docker data, caches, temporary work and artifacts were placed on the alternate disk. Keep the initial 40 GiB free-space budget for future SDK/build work.
 
-| Local command/check | Exit | Seconds | Interpretation |
-| --- | ---: | ---: | --- |
-| Windows host regressions | 0 | 3.886 | Expected result |
-| FW-001 synthetic tests | 0 | 3.400 | Expected result |
-| FW-008 synthetic tests | 0 | 16.264 | Expected result |
-| Offline wrapper Bash syntax | 0 | 0.093 | Expected result |
-| Download guard Bash syntax | 0 | 0.058 | Expected result |
-| Public inventory preflight | 0 | 0.127 | Expected result |
-| Hosted full request fails closed | 1 | 0.152 | Expected result |
-| Actual Windows build request | 1 | 0.869 | Expected result |
+## Complete Linux checks
 
-Total measured final verification interval, including source and gitlink checks: **26.840 seconds**. The host's own report measured **0.199 seconds** and returned `WSL_DISTRO_MISSING` at the WSL distribution stage.
+Both suites ran in the actual dedicated Linux distro using private ext4 temporary storage: **7 FW-001 tests and 12 FW-008 tests passed, zero skips**. The two symlink fixtures previously skipped on Windows now passed. Both Bash syntax checks and the environment-probe CLI check passed.
 
-- Windows host checks: **28 assertions passed**, including new/missing path ancestors, junction rejection, cleanup retaining the junction target, WSL extended-path normalization, swap placement, duplicate configuration keys, private diagnostic filtering, report sanitization and real missing-distro rejection.
-- FW-001: **7 tests passed**, covering resource/isolation command arguments, cache selection and corrupt-cache recovery, interrupted download cleanup, atomic checkpoint replacement, verified checkpoint reuse, changed settings/tampered outputs, unexpected URLs, and Windows execution rejection before input access. Network interruptions use injected exceptions and synthetic data, not a terminated firmware compile.
-- FW-008: **10 tests passed; 2 Linux symlink fixtures explicitly skipped on Windows**. Synthetic output member/byte checks still ran. Linux symlink checks and the complete Linux suite must run in the dedicated distro before acceptance.
-- The unexpected-download shell guard was actually executed in Git Bash and rejected wget even when its failure was ignored by the calling shell. This is shell guard evidence only; no Docker network namespace or actual container behavior was tested.
-- Both infrastructure shell syntax checks passed. Public inventory preflight passed; it does not validate private inputs. The hosted full request deliberately failed closed. The real Windows build command with 6 CPUs and 8 GiB requested exited 1 at the missing-distro gate.
+| Check | Exit | Wall seconds |
+| --- | ---: | ---: |
+| FW-001 Linux suite | 0 | 3.154 |
+| FW-008 Linux suite | 0 | 0.865 |
+| offline wrapper syntax | 0 | 0.037 |
+| download guard syntax | 0 | 0.035 |
+| environment probe CLI syntax | 0 | 0.254 |
 
-## Public input verification and cache observations
+These are measured subprocess durations, not firmware build timings. Earlier Windows evidence remains 28 host assertions passed, 7 FW-001 tests passed, and 10 FW-008 tests passed with two Windows-only skips. Tests cover verified cache reuse, corrupted cache recovery, atomic checkpoint writes, interruption cleanup, provenance/output tampering, unexpected downloads and source/archive checks with synthetic fixtures.
 
-Nine exact HTTPS archives were downloaded into the alternate-disk audit cache and SHA-256 checked against separately published candidate digests. Two previously missing pins were resolved before downloading: wolfSSL 5.9.2 from the immutable [Buildroot manifest](https://github.com/buildroot/buildroot/blob/45a0ce557d9508f437dd196eb95107958283abf5/package/wolfssl/wolfssl.hash), whose adjacent recipe selects the same GitHub archive tag; wireless-tools 29 from the immutable [OpenWrt recipe](https://github.com/openwrt/openwrt/blob/d69b2830681fdaeb2b19b28231e9171684ead6d1/package/network/utils/wireless-tools/Makefile). Both observed byte streams match those independent hashes.
+## Real offline Docker isolation and limits
 
-The cold audit downloaded **45,323,507 bytes** in **5.125 seconds** with up to three concurrent downloads. A second pass rehashed all nine cached files: **9 verified cache hits, 0 downloaded bytes**. This audit cache is not an approved private input lock and is not a completed FW-001 Linux runner cache exercise. The production cache helper was tested with synthetic inputs separately.
+The public Python image is a test runtime only, **not the SDK builder**. A stalled native Docker CDN transfer was stopped and recovered through Windows HTTPS. The official OCI index, amd64 manifest, config, all four compressed layers and all uncompressed diff IDs were verified before import. Compressed layer bytes: **45,269,859**; prepared Docker archive bytes: **128,460,800**, SHA-256 `f91993b6dfcc1c8878d48887ce028ac208cf583194fa17931ea82f8c6316dcb2`. The verified image preparation measured **23.547 seconds**.
 
-| Public input | Bytes | Verified SHA-256 |
-| --- | ---: | --- |
-| `src/busybox/busybox-1.36.1.tar.bz2` | 2525473 | `b8cc24c9574d809e7279c3be349795c5d5ceb6fdf19ca709f80cde50e47de314` |
-| `src/jq/jq-1.8.1.tar.gz` | 2026798 | `2be64e7129cecb11d5906290eba10af694fb9e3e7f9fc208a311dc33ca837eb0` |
-| `src/onvif_simple_server/crypt-1.18.2.tar.xz` | 2638064 | `96ad4c3b8336050993c5bc2cf6c057484f2b0f9f763448151567fbab5e767b84` |
-| `src/onvif_simple_server/mbedtls-3.6.5.tar.bz2` | 5367178 | `4a11f1777bb95bf4ad96721cac945a26e04bf19f57d905f241fe77ebeddf46d8` |
-| `src/onvif_simple_server/v5.9.2-stable.tar.gz` | 28078586 | `2f4ef3d4fd387a9b3191d36a6316d69116c46ff69bb9583b6c82b36d7b8ca114` |
-| `src/onvif_simple_server/zlib-1.3.2.tar.gz` | 1502830 | `bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16` |
-| `src/onvif_simple_server/json-c-0.18.tar.gz` | 401788 | `876ab046479166b869afc6896d288183bbc0e5843f141200c677b3e8dfb11724` |
-| `src/rRTSPServer/v2.0.1.tar.gz` | 2488373 | `a4142815d8d52d0e798212a5adea54ecf42bcd4eec8092b37a8cb615ace91dc6` |
-| `src/wireless_tools/wireless_tools.29.tar.gz` | 294417 | `6fb80935fe208538131ce2c4178221bab1078a1656306bce8909c19887e2e5a1` |
+Registry config digest: `sha256:f4a31709c79ea38eafccf1234211e87d36625b5f9752d3df28319b43b48c0f23`. Official amd64 manifest digest: `sha256:1475c4f5b6bcb7d35e57661d6f5d7429ec4041275633c15f2b49350ac898276d`. Docker 29 containerd imports use an imported manifest identity rather than the legacy config identity. The first config-ID lookup failed closed; before execution, the loaded image was exported again and its manifest/config/layer graph independently rehashed against the already authenticated contents. Verified native runtime ID: `sha256:fb5b23e71c65e126bb2dd9c8bdcf612d54ffff59767893cfad303a633446443f`. No newly observed ID was accepted merely because Docker printed it; no private builder lock was approved. This distinction must be reviewed when preparing the real builder. See [Docker's containerd image-store documentation](https://docs.docker.com/engine/storage/containerd/).
 
-Four public digests remain unresolved: Dropbear 2026.91, the candidate immutable mdnsd ZIP, live555 2023.01.19, and tinyalsa 1.0.0. Publisher/package metadata lookups did not establish independent hashes for these exact bytes; hashes from other versions were rejected as substitutes. mdnsd's historical equivalence to the official firmware build also remains unproved. No newly observed hash was automatically approved. Transitive prerequisites still need the actual approved builder and offline build to establish completeness.
+The probe uses the shared `fw008.docker_args` function, immutable image ID, `--pull=never`, no network, read-only root and inputs, task-owned writable workspace, dropped capabilities, no-new-privileges, 6 CPU affinity/quota and 8 GiB memory with no container swap. Actual in-container assertions passed:
 
-## Storage and resource measurements
+- Affinity: **6 logical CPUs**; cgroup CPU quota/period **600000/100000**.
+- cgroup memory maximum **8589934592 bytes**; swap maximum **0 bytes**.
+- `nproc=6`, `MAKEFLAGS=-j6`, and FW-008 job environment match the requested parallelism. Upstream compilation/make-wrapper behavior remains unexecuted.
+- Only loopback exists; an external TCP connection failed; the actual download guard rejected wget even when the caller ignored its failure.
+- Root and input writes failed with EROFS. No MTD devices were present. Seccomp filtering and no-new-privileges were active; effective capabilities were exactly `0xB` (CHOWN, DAC_OVERRIDE, FOWNER), matching FW-008's allowed set.
 
-During the final local check interval, free bytes on the data volume changed from **3350836621312** to **3350836621312**; the system volume changed from **81531367424** to **81530712064**. These are whole-volume snapshots and include unrelated host activity; they do not prove absence of system-disk writes. Task-owned file sizes changed from **45384113** to **45385027 bytes**. Test temporary files were **0 bytes before and 0 bytes after**; this is not a peak temporary-storage measurement. The measured footprint covers only completed local checks/public audit, not the future SDK, distro, Docker storage or builds. Retain the initial 40 GiB free-space budget.
+A real probe container was forcibly killed after reaching the running state: exit **137**, no completed output accepted, task workspace removed. The cold-start interruption race discovered during testing was fixed by timing from the observed running state. A subsequent fresh offline container used a new workspace and passed all checks. Both successful probe workspaces were cleaned, and the final native inventory found **zero task-owned probe containers remaining**. Retained images/cache were not pruned.
 
-CPU affinity/quota, 8 GiB memory and no container swap are configured and unit-tested as Docker arguments. Make/nproc wrappers are present; actual compilation parallelism and cgroup enforcement are **NOT VERIFIED**. No compiler or container ran, so peak build CPU, peak build/container RAM, peak temporary storage, ARM executable ABI/device compatibility and build stage timings are **unmeasured**. No GPU was requested. Whole-WSL RAM/CPU limits were not altered.
+| Actual probe | Wall seconds | Samples | Peak sampled CPU | Peak sampled RAM |
+| --- | ---: | ---: | ---: | ---: |
+| Forced interruption and cleanup | 17.236 | 2 | 597.37% | 159,383,552 bytes |
+| Fresh complete offline probe | 24.261 | 5 | 599.77% | 159,068,979 bytes |
 
-## Firmware artifacts and acceptance
+Sampling used `docker stats --no-stream` plus a 0.5-second wait. Docker CPU percentages count 100% per logical CPU, so roughly 600% means six busy CPUs; sampled percentages are accounting-window observations, not a separate quota test. The workload allocated 128 MiB and ran six CPU workers for eight seconds. It did not test allocation at the 8 GiB OOM threshold. These are sampled **probe** peaks; firmware build CPU/RAM peaks, build wall times and peak temporary storage remain unmeasured. Whole-WSL limits were not changed. No GPU was requested.
 
-**No `home_y203c`, `sys_y203c` or `y203c_0.5.8.tgz` firmware artifacts were generated. No firmware artifact hashes exist.** Public dependency hashes above are not firmware hashes.
+## Public dependency cache
 
-| Acceptance area | Actual result |
+The earlier run actually downloaded nine exact public archives (45,323,507 bytes), matched independent published candidate hashes and rehashed nine warm-cache hits with zero downloaded bytes. Their full SHA-256 values and timings remain in [historical local evidence](fw-001-local-evidence.json). Newly resolved pins were wolfSSL 5.9.2 from [Buildroot](https://github.com/buildroot/buildroot/blob/45a0ce557d9508f437dd196eb95107958283abf5/package/wolfssl/wolfssl.hash) and wireless-tools 29 from [OpenWrt](https://github.com/openwrt/openwrt/blob/d69b2830681fdaeb2b19b28231e9171684ead6d1/package/network/utils/wireless-tools/Makefile).
+
+Four exact public archive digests remain unresolved: Dropbear 2026.91, the candidate immutable mdnsd ZIP, live555 2023.01.19 and tinyalsa 1.0.0. mdnsd historical equivalence and transitive offline prerequisites remain unproved. No unresolved digest or private input was automatically approved.
+
+## Current blocker and acceptance
+
+The actual Windows build entrypoint was rerun with 6 CPUs / 8 GiB. It now passes distro/VHD and swap placement checks and fails closed at **`INDEPENDENT_INPUT_APPROVAL_REQUIRED`**. No licensed MSC3XX SDK/GCC 4.8.3 provenance, verified stock filesystem archives, SDK builder archive, complete approved private lock or trust-anchor digest has been supplied to the task. Public runtime/image verification does not satisfy these private firmware prerequisites.
+
+| Acceptance area | Current evidence |
 | --- | --- |
-| Operational isolated WSL2/native Docker | BLOCKED: dedicated distro absent; Desktop engine stopped and data placement unsuitable |
-| Licensed compatible SDK/toolchain and immutable builder | BLOCKED: no approved private inputs or license/provenance evidence |
-| ARM smoke/ABI test | NOT RUN |
-| Complete approved lock/all inputs/local private preflight | BLOCKED; four public hashes plus private inputs and review remain outstanding |
-| Actual Docker isolation/effective CPU/RAM and parallelism | NOT RUN; command construction and shell denial only tested |
-| Full offline compilation/three artifacts | NOT RUN |
-| JFFS2 integrity/partition limits/model/version/archive/official-release comparison | NOT RUN; full validation implementation still incomplete |
-| Independent fresh repeat/reproducibility analysis | NOT RUN; no reproducibility claim |
-| Windows one-command runner | Executed locally and failed closed at a measured prerequisite gate |
-| Checkpoint/cache/interruption recovery | Synthetic helper tests passed; public audit cache reused; real build interruption/repeat NOT RUN |
-| Alternate disk and cleanup | Public audit/tests executed there; task-owned test cleanup verified; distro/Docker/build placement not demonstrated |
-| Sanitized timing/storage evidence | This report and JSON; resource and scope limitations explicit |
-| Restricted input and camera safety | Only code, documentation and sanitized public evidence staged; no proprietary inputs committed, camera accessed or firmware flashed |
+| Operational WSL2/native Docker | PASS for the dedicated alternate-disk environment |
+| Actual Docker isolation and CPU/RAM kernel settings | PASS for the public probe using shared FW-008 flags; SDK builder not executed |
+| Linux regressions and task-owned cleanup | PASS; 19 tests without skips, actual interruption/fresh probe, zero probe containers left |
+| SDK/toolchain licensing, approved builder and complete private inputs/lock | BLOCKED; no supplied approved private inputs, four public digests unresolved |
+| ARM compiler/ABI smoke | NOT RUN |
+| Local private preflight and full offline firmware compilation | NOT RUN; actual Windows request rejected at input approval |
+| Three firmware artifacts and firmware SHA-256 values | NONE GENERATED |
+| JFFS2/partition/model/version/official-release validation | NOT RUN; validation implementation remains incomplete |
+| Independent fresh firmware repeat/reproducibility/build checkpoint recovery | NOT RUN; container probes and synthetic checkpoints are not firmware builds |
+| Firmware timing/peak CPU/RAM/peak temporary storage | Unmeasured; only prerequisite and probe observations recorded |
+| No proprietary inputs committed/no camera operations | Verified change scope contains code and sanitized public evidence; no flashing, camera access or merge performed |
 
-FW-008 remains the sole firmware build entrypoint. The full FW-001 runner intentionally continues to return nonzero even if two output sets are produced, until JFFS2/partition/model/release/isolation checks and reproducibility explanations are implemented and verified. This run does not close that implementation limitation or any unverified acceptance criterion.
+**No `home_y203c`, `sys_y203c` or `y203c_0.5.8.tgz` firmware artifacts exist from this execution. No firmware hashes or reproducibility claim can be made.** FW-008 remains the sole firmware build entrypoint. The full FW-001 runner still intentionally returns nonzero if outputs are produced but the remaining acceptance validation has not been completed.
 
-## Required unblock and decision
-
-Obtain the licensed MSC3XX SDK/GCC 4.8.3 inputs with trusted provenance and usage rights, verified stock filesystem archives for `4.5.0.0C_201910080934`, and a complete independently approved lock with its trust-anchor digest. Resolve the remaining public/transitive inputs without self-approving observed hashes. Approve a shared WSL swap placement beneath the selected data root (or disabled swap), plus a restart only if needed to apply it; the runner will not edit global settings. Then provision the dedicated ext4 distro/native Docker on the alternate disk, finish validation implementation and execute the real primary/repeat builds and container tests.
-
-Keep FW-001 **blocked** and PR #3 **draft**. No merge, release approval, camera modification or flashing is authorized by these local results.
+Keep FW-001 **blocked** and PR #3 **draft**. Continue once trusted licensed SDK/toolchain and stock inputs, remaining provenance and an independently approved lock/digest are available; then finish validation implementation and execute the primary/repeat firmware builds. The shared swap approval has already been applied and does not need to be requested again.

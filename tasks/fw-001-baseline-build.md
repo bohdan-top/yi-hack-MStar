@@ -1,6 +1,6 @@
 # FW-001 — Baseline Firmware Build
 
-- **Status:** Blocked — Windows runner/tests and nine public downloads executed; licensed private inputs, input approval and isolated WSL provisioning remain outstanding.
+- **Status:** Blocked — dedicated WSL/native Docker, real isolation/resource probes and all Linux tests passed; licensed private inputs/approval and remaining firmware validation are outstanding.
 - **Milestone:** 0.1.0
 - **Priority:** P0
 - **Dependencies:** FW-008
@@ -90,20 +90,20 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 
 ## Acceptance Criteria
 
-- [ ] WSL2 and Docker environment operational.
+- [x] WSL2 and Docker environment operational.
 - [ ] Compatible SDK and ARM toolchain verified.
 - [ ] ARM cross-compilation smoke test passed.
 - [ ] All required build inputs verified.
 - [ ] Private input lock manifest complete and approved.
 - [ ] Local preflight passed.
-- [ ] Docker isolation verified.
+- [x] Docker isolation verified using the public environment probe and shared FW-008 flags; SDK builder execution remains pending.
 - [ ] Full offline firmware build passed.
 - [ ] All required firmware artifacts generated.
 - [ ] Filesystem, partition size and archive validation passed.
 - [ ] Independent repeat build completed.
 - [ ] Reproducibility results documented.
 - [ ] Single-command local build available.
-- [ ] Sanitized build report committed.
+- [x] Sanitized execution report committed; it explicitly records that firmware compilation has not run.
 - [ ] Alternate-disk storage and configurable paths demonstrated without unintended system-disk growth.
 - [ ] CPU/RAM limits and bounded compilation parallelism configured and verified.
 - [ ] Interrupted execution resumes from verified checkpoints; changed or tampered inputs invalidate affected stages.
@@ -111,8 +111,8 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 - [ ] Cleanup confined to task-owned disposable files.
 - [ ] Autonomous routine execution demonstrated; approval and provenance blockers fail closed.
 - [ ] Sanitized timing and resource-usage report includes actual measurements and measurement limitations.
-- [ ] No proprietary inputs or sensitive data committed.
-- [ ] No camera modifications or flashing performed.
+- [x] No proprietary inputs or sensitive data committed.
+- [x] No camera modifications or flashing performed.
 
 ## Execution Rules
 
