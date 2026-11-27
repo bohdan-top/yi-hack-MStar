@@ -87,6 +87,11 @@ def validate_lock(lock, source):
     if source == BASE:
         inv = read_inventory()
         require({x["path"] for x in inv["files"]} <= seen, "Missing baseline archive")
+        approved_hashes = {x["path"]: x["sha256"] for x in inv["files"]
+                           if x["path"].startswith("src/") and x["sha256"]}
+        require(all(item["sha256"] == approved_hashes[item["path"]]
+                    for item in files if item["path"] in approved_hashes),
+                "Baseline archive digest differs from independent public provenance")
         mdnsd = next(x for x in files if x["path"] == "src/mdnsd/mdnsd-master.zip")
         require(SHA.fullmatch(mdnsd["version"]) and mdnsd["source"] ==
                 "https://github.com/troglobit/mdnsd/archive/" + mdnsd["version"] + ".zip",

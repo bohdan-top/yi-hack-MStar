@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 """FW-001 orchestration; FW-008 remains the sole firmware build entrypoint."""
 import argparse
-import fcntl
 import hashlib
 import importlib.util
 import json
 import os
 from pathlib import Path
-import resource
 import shutil
 import subprocess
 import sys
@@ -17,6 +15,12 @@ import time
 import urllib.parse
 import urllib.request
 import uuid
+
+if sys.platform.startswith("linux"):
+    import fcntl
+    import resource
+else:
+    fcntl = resource = None
 
 ROOT = Path(__file__).resolve().parents[2]
 ENTRY = ROOT / "ci/fw008/manual-build.py"
@@ -88,6 +92,25 @@ def verify_outputs(folder, key):
                 require(hashlib.file_digest(stream, "sha256").hexdigest() == hashes[member.name],
                         "Archive content mismatch")
     return hashes
+
+
+def resume_primary(checkpoint, output_root, key, report):
+    """A checkpoint never substitutes for provenance and byte verification."""
+    if not checkpoint.is_file() or checkpoint.is_symlink():
+        return None
+    try:
+        saved = json.loads(checkpoint.read_text())
+        name = saved["directory"]
+        require(saved["key"] == key and isinstance(name, str) and name.startswith("primary-")
+                and Path(name).name == name, "Checkpoint key/path mismatch")
+        out = output_root / name
+        hashes = verify_outputs(out, key)
+        require(hashes == saved["hashes"], "Checkpoint digest mismatch")
+        report["primary_resumed"] = True
+        return out, hashes
+    except (fw.Blocked, OSError, ValueError, TypeError, KeyError, tarfile.TarError):
+        report["checkpoint_invalidated"] = True
+    return None
 
 
 def approved_download(entry, dest, budget, paths, stats):
@@ -174,6 +197,9 @@ def run(args, report):
             and args.stage_root.stat().st_uid == os.getuid()
             and not (args.stage_root.stat().st_mode & 0o077),
             "Staging must be a private owner-only directory on dedicated distro ext4")
+    # All library/subprocess temporary files must use the validated ext4 staging root.
+    os.environ["TMPDIR"] = str(args.stage_root)
+    tempfile.tempdir = str(args.stage_root)
     args.output_root.mkdir(parents=True, exist_ok=True)
     cache = args.stage_root / "verified-downloads"
     cache.mkdir(mode=0o700, exist_ok=True)
@@ -228,26 +254,15 @@ def run(args, report):
                 subprocess.run(shared + ["--mode", "full", "--output", str(out)], check=True)
                 return out, verify_outputs(out, key)
 
-            first = None
-            if not args.clean and checkpoint.is_file() and not checkpoint.is_symlink():
-                try:
-                    saved = json.loads(checkpoint.read_text())
-                    name = saved["directory"]
-                    require(saved["key"] == key and name.startswith("primary-")
-                            and Path(name).name == name, "Checkpoint key/path mismatch")
-                    out = args.output_root / name
-                    hashes = verify_outputs(out, key)
-                    require(hashes == saved["hashes"], "Checkpoint digest mismatch")
-                    first = (out, hashes)
-                    report["primary_resumed"] = True
-                except (fw.Blocked, OSError, ValueError, TypeError, KeyError, tarfile.TarError):
-                    report["checkpoint_invalidated"] = True
+            first = None if args.clean else resume_primary(
+                checkpoint, args.output_root, key, report)
             if first is None:
                 first = stage("primary offline build", lambda: new_build("primary"))
                 atomic_json(checkpoint, {"key": key, "directory": first[0].name, "hashes": first[1]})
             # Always a new output directory and fresh FW-008 temp workspace.
             # No repeat checkpoint, compiled output, or shared writable build cache.
             second = stage("independent offline repeat build", lambda: new_build("repeat"))
+            report["artifact_sha256"] = {"primary": first[1], "repeat": second[1]}
             report["artifact_hash_matches"] = {n: first[1][n] == second[1][n] for n in NAMES}
             report["status"] = "BUILD OUTPUTS VERIFIED; full FW-001 acceptance BLOCKED"
             # Until trusted partition limits, JFFS2 integrity, release comparison, ARM
@@ -294,9 +309,10 @@ def main():
               file=sys.stderr)
     finally:
         report["elapsed_seconds"] = round(time.monotonic() - started, 3)
-        usage = resource.getrusage(resource.RUSAGE_CHILDREN)
-        report["client_children_cpu_seconds"] = usage.ru_utime + usage.ru_stime
-        report["client_children_max_rss_kib"] = usage.ru_maxrss
+        if resource is not None:
+            usage = resource.getrusage(resource.RUSAGE_CHILDREN)
+            report["client_children_cpu_seconds"] = usage.ru_utime + usage.ru_stime
+            report["client_children_max_rss_kib"] = usage.ru_maxrss
         report["resource_scope"] = "Linux child processes only; excludes Docker daemon/container"
         if "disk_free_before_bytes" in report:
             report["disk_free_after_bytes"] = [shutil.disk_usage(p).free for p in

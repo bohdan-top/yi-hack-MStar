@@ -16,79 +16,70 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
-$started = Get-Date
-$root = [IO.Path]::GetFullPath($DataRoot)
-$drive = [IO.Path]::GetPathRoot($root)
+. (Join-Path $PSScriptRoot '../ci/fw001/host-checks.ps1')
+$timer = [Diagnostics.Stopwatch]::StartNew()
 $repo = Split-Path -Parent $PSScriptRoot
-if ($drive -ieq [IO.Path]::GetPathRoot($env:SystemRoot)) { throw 'Choose a non-system data disk.' }
-if (-not (Test-Path -LiteralPath $drive)) { throw 'Data drive is unavailable.' }
+# Do not write a diagnostic to an unvalidated destination.
+$root = Assert-Fw001DataPath $DataRoot $DataRoot
+$drive = [IO.Path]::GetPathRoot($root)
+if ($drive -ieq [IO.Path]::GetPathRoot($env:SystemRoot)) { throw 'SYSTEM_DATA_DRIVE_REJECTED' }
+if (-not (Test-Path -LiteralPath $drive)) { throw 'DATA_DRIVE_UNAVAILABLE' }
+if ($root.TrimEnd('\') -ieq $drive.TrimEnd('\')) { throw 'DATA_ROOT_MUST_BE_A_DIRECTORY' }
 if (-not $Inputs) { $Inputs = Join-Path $root 'inputs' }
 if (-not $LockFile) { $LockFile = Join-Path $root 'lock.json' }
 if (-not $OutputRoot) { $OutputRoot = Join-Path $root 'outputs' }
-function Assert-DataPath([string]$Path) {
-    $full = [IO.Path]::GetFullPath($Path)
-    if ([IO.Path]::GetPathRoot($full) -ine $drive) { throw 'All private Windows paths must use the selected data drive.' }
-    $p = $full
-    while ($p -and (Test-Path -LiteralPath $p)) {
-        if ((Get-Item -LiteralPath $p -Force).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Reparse points in private paths are not supported.' }
-        $parent = Split-Path -Parent $p
-        if ($parent -eq $p) { break }
-        $p = $parent
-    }
-    # Check existing ancestors even for a new leaf.
-    $p = $full
-    while ($p) {
-        if ((Test-Path -LiteralPath $p) -and ((Get-Item -LiteralPath $p -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'Reparse points in private paths are not supported.' }
-        $parent = Split-Path -Parent $p
-        if ($parent -eq $p) { break }
-        $p = $parent
-    }
-    return $full
-}
-$root = Assert-DataPath $root
-$Inputs = Assert-DataPath $Inputs
-$LockFile = Assert-DataPath $LockFile
-$OutputRoot = Assert-DataPath $OutputRoot
-$reportDir = Join-Path $root 'reports'
-$null = Assert-DataPath $reportDir
-$free = [IO.DriveInfo]::new($drive).AvailableFreeSpace
-$system = [IO.DriveInfo]::new([IO.Path]::GetPathRoot($env:SystemRoot))
-$systemBefore = $system.AvailableFreeSpace
-if ($free -lt $MinimumFreeGB * 1GB) { throw 'Insufficient free space on data drive.' }
+$reportDir = Assert-Fw001DataPath (Join-Path $root 'reports') $root
 New-Item -ItemType Directory -Force -Path $reportDir | Out-Null
-$report = Join-Path $reportDir ("fw001-host-" + [Guid]::NewGuid().ToString('N') + '.json')
+$runId = [Guid]::NewGuid().ToString('N')
+$reportPath = Join-Path $reportDir ("fw001-host-$runId.json")
+$privateLog = Join-Path $reportDir ("private-fw001-host-$runId.log")
+$system = [IO.DriveInfo]::new([IO.Path]::GetPathRoot($env:SystemRoot))
+$free = [IO.DriveInfo]::new($drive).AvailableFreeSpace
+$systemBefore = $system.AvailableFreeSpace
+$savedTemp = @{ TEMP = $env:TEMP; TMP = $env:TMP; TMPDIR = $env:TMPDIR }
 $status = 'BLOCKED'
-$stage = 'Windows/WSL prerequisites'
+$stage = 'storage'
+$failureCode = $null
+$runnerCode = $null
 $exitCode = 1
-function Invoke-Wsl([string[]]$Arguments) {
-    & wsl.exe --distribution $Distro --exec @Arguments
-    if ($LASTEXITCODE -ne 0) { throw 'WSL stage failed; inspect private diagnostics and sanitized reports.' }
-}
+$swapPlacement = 'not checked'
 function Convert-WslPath([string]$Path) {
-    $converted = & wsl.exe --distribution $Distro --exec wslpath -a -u $Path
-    if ($LASTEXITCODE -ne 0 -or -not $converted) { throw 'WSL path translation failed.' }
+    $converted = & wsl.exe --distribution $Distro --exec wslpath -a -u $Path 2>> $privateLog
+    if ($LASTEXITCODE -ne 0 -or -not $converted) { throw 'WSL_PATH_TRANSLATION_FAILED' }
     return ($converted | Select-Object -Last 1).Trim()
 }
 try {
+    $Inputs = Assert-Fw001DataPath $Inputs $root
+    $LockFile = Assert-Fw001DataPath $LockFile $root
+    $OutputRoot = Assert-Fw001DataPath $OutputRoot $root
+    if ($free -lt $MinimumFreeGB * 1GB) { throw 'INSUFFICIENT_DATA_DISK_SPACE' }
+    $tempRoot = Assert-Fw001DataPath (Join-Path $root 'temp') $root
+    New-Item -ItemType Directory -Force -Path $tempRoot | Out-Null
+    $env:TEMP = $tempRoot; $env:TMP = $tempRoot; $env:TMPDIR = $tempRoot
+    $stage = 'WSL distribution'
     Write-Host '[FW-001] Checking dedicated WSL2 distribution placement.'
     $null = Get-Command wsl.exe -ErrorAction Stop
-    $distros = @(Get-ChildItem 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Lxss' |
+    $distros = @(Get-ChildItem 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Lxss' -ErrorAction SilentlyContinue |
         ForEach-Object { Get-ItemProperty $_.PSPath } |
         Where-Object { $_.DistributionName -eq $Distro })
-    if ($distros.Count -ne 1 -or $distros[0].Version -ne 2) { throw 'Provision the dedicated WSL2 distribution first; no automatic installation or relocation.' }
-    $base = $distros[0].BasePath -replace '^\\\\\?\\',''
-    $base = Assert-DataPath $base
-    $vhd = Join-Path $base 'ext4.vhdx'
-    $null = Assert-DataPath $vhd
-    if (-not (Test-Path -LiteralPath $vhd -PathType Leaf)) { throw 'Dedicated WSL2 ext4.vhdx not found on data disk.' }
-    $stage = 'Approval prerequisites'
+    if ($distros.Count -ne 1 -or $distros[0].Version -ne 2) { throw 'WSL_DISTRO_MISSING' }
+    $base = Assert-Fw001DataPath (ConvertFrom-Fw001WslBasePath $distros[0].BasePath) $root
+    $vhd = Assert-Fw001DataPath (Join-Path $base 'ext4.vhdx') $root
+    if (-not (Test-Path -LiteralPath $vhd -PathType Leaf)) { throw 'WSL_DATA_VHD_MISSING' }
+    $stage = 'WSL swap approval'
+    $swapPlacement = Assert-Fw001SwapPlacement (Join-Path $env:USERPROFILE '.wslconfig') $root
+    $stage = 'input approval'
     if ($ApprovedLockSha256 -cnotmatch '^[a-f0-9]{64}$' -or $ApprovedEntrypoint -cnotmatch '^[a-f0-9]{40}$') {
-        throw 'Supply independently approved lock SHA-256 and reviewed entrypoint commit. See docs/fw-001-local-build.md.'
+        throw 'INDEPENDENT_INPUT_APPROVAL_REQUIRED'
     }
     if (-not (Test-Path -LiteralPath $LockFile -PathType Leaf) -or -not (Test-Path -LiteralPath $Inputs -PathType Container)) {
-        throw 'Approved private lock and inputs are required.'
+        throw 'APPROVED_PRIVATE_INPUTS_MISSING'
+    }
+    if ((Get-FileHash -LiteralPath $LockFile -Algorithm SHA256).Hash.ToLowerInvariant() -cne $ApprovedLockSha256) {
+        throw 'INPUT_LOCK_DIGEST_MISMATCH'
     }
     $stage = 'Linux runner'
+    Write-Host '[FW-001] Starting the verified Linux runner; diagnostics remain private.'
     $entry = Convert-WslPath (Join-Path $repo 'ci/fw001/run.py')
     $argsList = @('python3','-B',$entry,
         '--inputs',(Convert-WslPath $Inputs),'--lock',(Convert-WslPath $LockFile),
@@ -98,19 +89,33 @@ try {
         '--approved-entrypoint',$ApprovedEntrypoint)
     if ($Clean) { $argsList += '--clean' }
     if ($PreflightOnly) { $argsList += '--preflight-only' }
-    Invoke-Wsl $argsList
-    $status = 'Runner completed; inspect Linux report for validation status'
+    & wsl.exe --distribution $Distro --exec @argsList 2>&1 | ForEach-Object {
+        $line = $_.ToString()
+        Add-Content -LiteralPath $privateLog -Value $line -Encoding utf8
+        $progress = Get-Fw001PublicProgress $line
+        if ($progress) { Write-Host $progress }
+    }
+    $runnerCode = $LASTEXITCODE
+    if ($runnerCode -ne 0) { throw 'LINUX_RUNNER_BLOCKED' }
+    $status = if ($PreflightOnly) { 'PREFLIGHT PASS; full build NOT RUN' } else { 'Runner completed; inspect Linux acceptance report' }
     $exitCode = 0
 } catch {
-    Write-Warning ("FW-001 blocked at " + $stage + '. ' + $_.Exception.Message)
+    # Arbitrary exception text can contain private paths, URLs or input data.
+    $_ | Out-String | Add-Content -LiteralPath $privateLog -Encoding utf8
+    $message = $_.Exception.Message
+    $failureCode = if ($message -cmatch '^[A-Z][A-Z0-9_]+$') { $message } else { 'HOST_PREREQUISITE_ERROR' }
+    Write-Warning ("FW-001 blocked at $stage ($failureCode). Inspect private diagnostics and docs/fw-001-local-build.md.")
 } finally {
+    foreach ($name in $savedTemp.Keys) { [Environment]::SetEnvironmentVariable($name, $savedTemp[$name], 'Process') }
     [ordered]@{
-        status = $status; stage = $stage; requested_cpu = $CpuLimit; requested_ram_gib = $MemoryGB
-        elapsed_seconds = [math]::Round(((Get-Date)-$started).TotalSeconds,2)
+        schema = 1; status = $status; stage = $stage; failure_code = $failureCode
+        runner_exit_code = $runnerCode; requested_cpu = $CpuLimit; requested_ram_gib = $MemoryGB
+        elapsed_seconds = [math]::Round($timer.Elapsed.TotalSeconds,3)
         data_free_before_bytes = $free; data_free_after_bytes = [IO.DriveInfo]::new($drive).AvailableFreeSpace
         system_free_before_bytes = $systemBefore; system_free_after_bytes = $system.AvailableFreeSpace
         storage_scope = 'whole Windows volumes; unrelated activity may affect values'
+        swap_placement = $swapPlacement; temporary_files = 'selected data root'
         peak_cpu_ram = 'not measured by Windows wrapper'; release_approved = $false
-    } | ConvertTo-Json | Set-Content -LiteralPath $report -Encoding UTF8
+    } | ConvertTo-Json | Set-Content -LiteralPath $reportPath -Encoding utf8
 }
 exit $exitCode

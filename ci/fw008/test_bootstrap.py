@@ -6,6 +6,9 @@ import importlib.util
 import pathlib
 import tempfile
 import subprocess
+import os
+import sys
+from unittest.mock import patch
 import unittest
 
 spec = importlib.util.spec_from_file_location("build", pathlib.Path(__file__).with_name("manual-build.py"))
@@ -26,6 +29,10 @@ class Bootstrap(unittest.TestCase):
             item["sha256"] = hashlib.sha256(p.read_bytes()).hexdigest()
             if item["path"] != "src/mdnsd/mdnsd-master.zip":
                 item["version"] = "synthetic-fixture"
+        # Synthetic archive digests have a separate synthetic trust inventory.
+        inventory_patch = patch.object(build, "read_inventory", return_value=copy.deepcopy(lock))
+        inventory_patch.start()
+        self.addCleanup(inventory_patch.stop)
         return lock
 
     def test_public_and_unapproved_ref(self):
@@ -46,6 +53,14 @@ class Bootstrap(unittest.TestCase):
             (inputs / "source.tar").write_bytes(b"tampered")
             with self.assertRaisesRegex(build.Blocked, "SHA-256 mismatch"):
                 build.stage_inputs(lock, build.BASE, inputs, pathlib.Path(d) / "new")
+
+    def test_lock_cannot_override_independently_pinned_public_digest(self):
+        with tempfile.TemporaryDirectory() as d:
+            lock = self.fixture(pathlib.Path(d))
+            public = next(x for x in lock["files"] if x["path"].startswith("src/"))
+            public["sha256"] = "0" * 64
+            with self.assertRaisesRegex(build.Blocked, "independent public provenance"):
+                build.validate_lock(lock, build.BASE)
 
     def test_missing_input_and_unapproved_lock(self):
         with tempfile.TemporaryDirectory() as d:
@@ -70,7 +85,7 @@ class Bootstrap(unittest.TestCase):
     def test_unexpected_download_even_if_upstream_ignores_failure(self):
         with tempfile.TemporaryDirectory() as d:
             script = pathlib.Path(__file__).with_name("download-guard.sh")
-            result = subprocess.run(["bash", "-c", 'set -e; source "$1"; install_download_guard "$2/guards" "$2/marker"; check_download "$2/marker"; wget https://example.invalid || true; check_download "$2/marker"', "bash", str(script), d], capture_output=True, text=True)
+            result = subprocess.run([os.environ.get("FW008_TEST_BASH", "bash"), "-c", 'set -e; script=$1; base=$2; if command -v cygpath >/dev/null; then script=$(cygpath -u "$script"); base=$(cygpath -u "$base"); fi; source "$script"; install_download_guard "$base/guards" "$base/marker"; check_download "$base/marker"; wget https://example.invalid || true; check_download "$base/marker"', "bash", script.as_posix(), pathlib.Path(d).as_posix()], capture_output=True, text=True, timeout=30)
             self.assertNotEqual(result.returncode, 0)
             self.assertTrue((pathlib.Path(d) / "marker").exists())
             self.assertIn("unexpected download", result.stderr)
@@ -101,11 +116,14 @@ class Bootstrap(unittest.TestCase):
             with self.assertRaisesRegex(build.Blocked, "archive members"):
                 build.verified_outputs(work)
             write_archive(images)
+            if sys.platform == "win32":
+                return  # The separate Linux directory-symlink test covers ancestry.
             (result / "home_y203c").unlink()
             (result / "home_y203c").symlink_to("sys_y203c")
             with self.assertRaisesRegex(build.Blocked, "Missing/empty"):
                 build.verified_outputs(work)
 
+    @unittest.skipIf(sys.platform == "win32", "Linux symlink fixture; run in WSL2")
     def test_output_directory_symlink_rejected(self):
         with tempfile.TemporaryDirectory() as d:
             work = pathlib.Path(d) / "work"
@@ -117,7 +135,9 @@ class Bootstrap(unittest.TestCase):
                 build.verified_outputs(work)
 
     def test_isolation_command(self):
-        args = build.docker_args("sha256:" + "a" * 64, "/private/inputs", "/private/work")
+        with patch.object(build.os, "getuid", return_value=1000, create=True), \
+                patch.object(build.os, "getgid", return_value=1000, create=True):
+            args = build.docker_args("sha256:" + "a" * 64, "/private/inputs", "/private/work")
         for token in ("--network=none", "--pull=never", "--read-only", "--cap-drop=ALL",
                       "--security-opt=no-new-privileges", "--log-driver=none"):
             self.assertIn(token, args)
