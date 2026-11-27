@@ -26,7 +26,7 @@ Use --source EXACT_40_HEX for an independently approved fork revision. The suppl
 
 ## Known blockers / NOT VERIFIED
 
-- Six candidate public archive SHA-256 values with provenance are populated (publisher release metadata or distro manifests). Remaining public archive digests, SDK/image and stock inputs need review. No downloaded bytes were checked here. The checked-in inventory is deliberately not approved.
+- Seven candidate public archive SHA-256 values with provenance are populated (publisher release metadata or distro manifests). Remaining public archive digests, SDK/image and stock inputs need review. No downloaded bytes were checked here. The checked-in inventory is deliberately not approved.
 - Baseline mbedTLS filename mismatch is handled by a symlink to the real verified archive; mdnsd immutable ZIP root is similarly aliased to mdnsd-master. No tracked firmware files are modified. The metadata records the compatibility staging; the historical mdnsd contents and actual compile remain NOT VERIFIED.
 - Nested dependency trees for mosquitto and mjpeg-avi could not be confirmed remotely; recursive local verification mandatory. Inventory includes direct upstream downloads and observed alternatives; transitive package/build-system provenance must be completed before approving lock.
 - No real Docker build, output size/layout checks, reproducibility or hardware tests claimed. No workflow dispatch on default branch before merge.

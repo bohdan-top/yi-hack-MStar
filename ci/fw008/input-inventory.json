@@ -11,7 +11,7 @@
     "src/minimp4/minimp4": "e407f02fdb9828fbf89ffa376e5be2699c3c2d5a",
     "src/sftp-server/openssh-portable": "2d98db98331803cbb820211b2fb0d31a6e71e58e",
     "src/onvif_simple_server/onvif_simple_server": "40ec59ead114872069d83e5023dd7e8b63dc834d",
-    "src/mjpeg-avi/mjpeg-avi": "948b169e9a8a917c8abe1066e9859bace4930"
+    "src/mjpeg-avi/mjpeg-avi": "948b169e9a8a917c8abe1066e9859bacebae4930"
   },
   "files": [
     {
@@ -96,7 +96,8 @@
       "path": "src/onvif_simple_server/json-c-0.18.tar.gz",
       "version": "0.18",
       "source": "https://s3.amazonaws.com/json-c_releases/releases/json-c-0.18.tar.gz",
-      "sha256": null
+      "sha256": "876ab046479166b869afc6896d288183bbc0e5843f141200c677b3e8dfb11724",
+      "checksum_source": "https://github.com/json-c/json-c/wiki/Old-Releases"
     },
     {
       "path": "src/rRTSPServer/v2.0.1.tar.gz",

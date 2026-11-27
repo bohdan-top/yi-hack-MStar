@@ -126,7 +126,16 @@ def docker_args(image, stage, work):
 
 def public_preflight(source, mode):
     require(source == BASE, "Hosted preflight accepts only the pinned baseline; use reviewed local lock for fork commits")
+    inventory = read_inventory()
+    require(inventory["target"] == "y203c" and inventory["source_sha"] == BASE,
+            "Public inventory target/source mismatch")
+    require(all(SHA.fullmatch(x) for x in inventory["submodules"].values()),
+            "Public inventory contains an invalid Git dependency")
+    require(all(x["sha256"] is None or DIGEST.fullmatch(x["sha256"]) for x in inventory["files"]),
+            "Public inventory contains an invalid SHA-256")
     print("Target: y203c; source: " + source)
+    print(f"Inventory: {len(inventory['files'])} inputs, "
+          f"{sum(x['sha256'] is not None for x in inventory['files'])} published candidate digests.")
     print("Public preflight: inventory present; private inputs NOT VERIFIED; full build NOT RUN.")
     require(mode != "full", "Hosted full build disabled: use trusted offline local build with approved inputs")
 
