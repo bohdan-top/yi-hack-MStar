@@ -1,0 +1,71 @@
+[
+  {
+    "name": "jpeg",
+    "source": "https://github.com/libjpeg-turbo/libjpeg-turbo.git",
+    "ref": "refs/tags/3.1.4.1",
+    "commit": "9217719d3a58633923b096af4c1d50d304768a64",
+    "tree": "b092c7dad52ddcc11512721b41da5aa8c73e7d59",
+    "archive_sha256": "a7da42b640377c2a9a9665e2c4b0ea60cd5599afb48c2521e6df0c9dc9d15a25",
+    "archive_files": 633,
+    "git_files": 641,
+    "missing": [],
+    "export_ignored": [
+      ".gitattributes",
+      ".github/CONTRIBUTING.md",
+      ".github/FUNDING.yml",
+      ".github/ISSUE_TEMPLATE/bug-report.md",
+      ".github/ISSUE_TEMPLATE/feature-request.md",
+      ".github/SECURITY.md",
+      ".github/pull_request_template.md",
+      ".github/workflows/build.yml"
+    ],
+    "extra": [],
+    "mismatches": [],
+    "content_verified": true
+  },
+  {
+    "name": "tinyalsa",
+    "source": "https://github.com/tinyalsa/tinyalsa.git",
+    "ref": "refs/tags/v1.0.0",
+    "commit": "a2c8dc2bf6108311746f1b3e3e8ac02a465d762f",
+    "tree": "57308ac73c045286f92f4007973841506fd2b63d",
+    "archive_sha256": "572ef56311869c286c463b00fcf8b8562367bd41efaf59823ec1c84bfeaf2ba6",
+    "archive_files": 30,
+    "git_files": 30,
+    "missing": [],
+    "export_ignored": [],
+    "extra": [],
+    "mismatches": [],
+    "content_verified": true
+  },
+  {
+    "name": "dropbear",
+    "source": "https://github.com/mkj/dropbear.git",
+    "ref": "refs/tags/DROPBEAR_2026.91",
+    "commit": "191cb1158f367fd3afa68922877bed5326c9abbf",
+    "tree": "bc5f1d79fb1582df7fb4b7963cf35d4994fda0c4",
+    "archive_sha256": "5cda1d012339950370e4d96105bf5b945542163486ec82d407bf4d24145510cb",
+    "archive_files": 964,
+    "git_files": 964,
+    "missing": [],
+    "export_ignored": [],
+    "extra": [],
+    "mismatches": [],
+    "content_verified": true
+  },
+  {
+    "name": "mdnsd",
+    "source": "https://github.com/troglobit/mdnsd.git",
+    "ref": "3b1ac21b9b3a9f672793fc34f6c292d528df8ff7",
+    "commit": "3b1ac21b9b3a9f672793fc34f6c292d528df8ff7",
+    "tree": "e738b54bdb505b33bb2bb76160d672408121dbca",
+    "archive_sha256": "aadd6bdf8e1cf13bcd4dbba2d7227a9f1cd80ce3976a75e7f2303d9d5cf6c657",
+    "archive_files": 76,
+    "git_files": 76,
+    "missing": [],
+    "export_ignored": [],
+    "extra": [],
+    "mismatches": [],
+    "content_verified": true
+  }
+]

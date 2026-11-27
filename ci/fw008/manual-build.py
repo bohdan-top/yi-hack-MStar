@@ -59,7 +59,7 @@ def validate_lock(lock, source):
         require(SHA.fullmatch(sha), "Unpinned submodule")
     provenance = lock.get("additional_inputs")
     require(isinstance(provenance, list) and bool(provenance),
-            "Missing reviewed SDK, base image and host package provenance")
+            "Missing reviewed toolchain/sysroot, base image and host package provenance")
     for entry in provenance:
         require(bool(entry.get("source")) and bool(entry.get("version")) and
                 "UNRESOLVED" not in entry["version"] and
@@ -83,7 +83,7 @@ def validate_lock(lock, source):
                     "Only explicit module archives are accepted")
     required = {"source.tar", "builder.tar", "stock_firmware/y203c/home_y203c.tgz",
                 "stock_firmware/y203c/sys_y203c.tgz"}
-    require(required <= seen, "Missing SDK/builder/source/stock image inputs")
+    require(required <= seen, "Missing builder/source/stock image inputs")
     if source == BASE:
         inv = read_inventory()
         require({x["path"] for x in inv["files"]} <= seen, "Missing baseline archive")
@@ -150,7 +150,7 @@ def public_preflight(source, mode):
             "Public inventory contains an invalid SHA-256")
     print("Target: y203c; source: " + source)
     print(f"Inventory: {len(inventory['files'])} inputs, "
-          f"{sum(x['sha256'] is not None for x in inventory['files'])} published candidate digests.")
+          f"{sum(x['sha256'] is not None for x in inventory['files'])} provenance-backed candidate digests.")
     print("Public preflight: inventory present; private inputs NOT VERIFIED; full build NOT RUN.")
     require(mode != "full", "Hosted full build disabled: use trusted offline local build with approved inputs")
 

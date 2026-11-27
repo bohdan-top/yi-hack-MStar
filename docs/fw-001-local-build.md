@@ -66,3 +66,8 @@ python3 -B ci/fw001/probe-environment.py --image VERIFIED_SHA256_IMAGE_ID --stag
 The first invocation checks actual interruption cleanup; the second always uses a fresh workspace and checks cgroups, affinity, seccomp, no-new-privileges, capabilities, read-only mounts, network denial, download rejection and nproc/make environment. Sampled CPU/RAM observations describe this probe only. It does not test the 8 GiB OOM threshold, ARM GCC, upstream compilation, firmware checkpoints or artifact acceptance. No broad Docker/cache cleanup is performed.
 
 On Docker 29 with the containerd store, runtime image identity can be a manifest digest rather than the registry's image-config digest. Verify the imported manifest/config/layer graph against authenticated original contents before recording the runtime ID in a reviewed lock. Do not replace an expected digest with an observed value merely to proceed. The execution report records the public probe's verified graph; it is not approval of an SDK builder.
+
+
+## Minimum-input continuation (2026-11-27)
+
+See [minimum dependency audit and candidate provenance](fw-001-minimum-dependencies.md). All 15 public module archives now have verification evidence, including the two snapshot downloads omitted by the earlier inventory. Earlier counts and blockers above are historical. Private lock and entrypoint approval remain mandatory; no automatic approval is introduced. The semantic validator now decompresses supported JFFS2 payloads and checks model/base/hack versions for both build outputs, but actual compilation, repeat and release comparison are still pending.
