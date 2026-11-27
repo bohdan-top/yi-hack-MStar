@@ -170,12 +170,15 @@ def run(args, report):
     require(docker_root.is_absolute() and docker_root.is_dir() and
             docker_root.stat().st_dev == rootdev, "Docker data must be on dedicated distro ext4")
     args.stage_root.mkdir(parents=True, exist_ok=True, mode=0o700)
-    require(not args.stage_root.is_symlink() and args.stage_root.stat().st_dev == rootdev,
-            "Staging must be on dedicated distro ext4")
+    require(not args.stage_root.is_symlink() and args.stage_root.stat().st_dev == rootdev
+            and args.stage_root.stat().st_uid == os.getuid()
+            and not (args.stage_root.stat().st_mode & 0o077),
+            "Staging must be a private owner-only directory on dedicated distro ext4")
     args.output_root.mkdir(parents=True, exist_ok=True)
     cache = args.stage_root / "verified-downloads"
     cache.mkdir(mode=0o700, exist_ok=True)
-    require(not cache.is_symlink(), "Unsafe cache directory")
+    require(not cache.is_symlink() and cache.stat().st_uid == os.getuid()
+            and not (cache.stat().st_mode & 0o077), "Unsafe cache directory")
     budget = args.min_free_gib * GIB
     volumes = (args.stage_root, args.output_root, args.inputs)
     report["disk_free_before_bytes"] = [shutil.disk_usage(p).free for p in volumes]
