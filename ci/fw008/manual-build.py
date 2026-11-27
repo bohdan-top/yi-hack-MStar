@@ -255,7 +255,8 @@ def local(args):
             "submodules": lock["submodules"], "builder_image": lock["image_id"],
             "output_sha256": checksums, "release_approved": False,
             "baseline_archive_aliases": args.source == BASE,
-            "requested_cpus": args.cpus, "requested_memory_gib": args.memory_gib, "compilation_jobs": 1
+            "requested_cpus": args.cpus, "requested_memory_gib": args.memory_gib, "compilation_jobs": 1,
+            "observation_id": getattr(args, "observation_id", None)
         }, indent=2) + "\n")
         print("Full local build produced private outputs; NOT release-approved.")
 

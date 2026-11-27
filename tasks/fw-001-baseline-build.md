@@ -1,6 +1,6 @@
 # FW-001 — Baseline Firmware Build
 
-- **Status:** Blocked — dedicated WSL/native Docker, real isolation/resource probes and all Linux tests passed; licensed private inputs/approval and remaining firmware validation are outstanding.
+- **Status:** In progress — approved derived builder and all 19 inputs retained; actual private preflight and prior public probes passed. Review hardening implemented; new runner approval, full primary/repeat compilation and actual artifact validation pending.
 - **Milestone:** 0.1.0
 - **Priority:** P0
 - **Dependencies:** FW-008
@@ -103,7 +103,7 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 - [ ] Filesystem, partition size and archive validation passed.
 - [ ] Independent repeat build completed.
 - [ ] Reproducibility results documented.
-- [ ] Single-command local build available.
+- [x] Single-command local build available; full successful build remains pending.
 - [x] Sanitized execution report committed; actual failed compilations and remaining acceptance work are explicit.
 - [ ] Alternate-disk storage and configurable paths demonstrated without unintended system-disk growth.
 - [ ] CPU/RAM limits and bounded compilation parallelism configured and verified.
@@ -137,3 +137,16 @@ Successful compilation does not authorize flashing. Security hardening and relea
 ## Minimum-input preparation continuation (2026-11-27)
 
 See the appended [execution report](../docs/fw-001-execution-report.md) and [minimum-input evidence](../docs/fw-001-minimum-input-evidence.json). The full SDK acquisition blocker is superseded. The owner subsequently approved the complete derived-builder inputs. See the later runtime execution section; full/repeat/new-artifact acceptance boxes remain open.
+
+
+## Independent review follow-up (2026-11-27)
+
+The FW-001 review fixes strengthen static ARM ABI/provider resolution, require
+both builds to match the pinned official reference, restrict normalization to
+validated GNU build-id descriptors, and require complete matching isolation
+evidence when restoring a primary checkpoint. The stricter validator is not yet
+verified on real images. The prior approved lock and builder/cache inputs are
+unchanged. No acceptance box for successful compilation, repeat, reproducibility,
+real artifact validation or release approval is closed by these changes.
+See the [execution report](../docs/fw-001-execution-report.md) for focused test
+results and limitations.

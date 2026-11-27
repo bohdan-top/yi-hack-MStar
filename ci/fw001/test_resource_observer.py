@@ -19,6 +19,13 @@ class ObserverTests(unittest.TestCase):
             self.assertFalse(observer.valid_runtime(changed, 6, 8), key)
         self.assertFalse(observer.valid_runtime({**row, 'samples': 0}, 6, 8))
 
+    def test_malformed_saved_evidence_fails_closed(self):
+        for row in (None, [], {}, {"runtime": None}, {"runtime": {}, "samples": "1"}):
+            self.assertFalse(observer.valid_runtime(row, 6, 8))
+        key = {"cpus": 6, "memory_gib": 8, "image": "image"}
+        for rows in (None, {}, [], [None], [{}, {}]):
+            self.assertFalse(observer.valid_observations(rows, key, "a"*32))
+
     def test_docker_units(self):
         self.assertEqual(observer.memory_bytes('2 MiB'), 2 * 1024**2)
         self.assertEqual(observer.memory_bytes('2MB'), 2000000)

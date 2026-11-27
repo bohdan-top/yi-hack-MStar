@@ -1,6 +1,6 @@
-# FW-001 — sanitized execution report
+# FW-001 â€” sanitized execution report
 
-Date: 2026-11-27. Status: **BLOCKED — native WSL/Docker, Linux regressions and real constrained-container probes passed; firmware compilation NOT RUN.**
+Date: 2026-11-27. Status: **BLOCKED â€” native WSL/Docker, Linux regressions and real constrained-container probes passed; firmware compilation NOT RUN.**
 
 ## Revisions and evidence scope
 
@@ -139,7 +139,7 @@ the earlier evidence remains historical. Use an independently reviewed new
 entrypoint SHA when eventually executing the runner.
 
 
-## Minimum-input continuation � 2026-11-27
+## Minimum-input continuation — 2026-11-27
 
 **Current outcome: candidate inputs and an authenticated minimal amd64 builder
 are prepared; FW-001 is awaiting independent approval. Firmware compilation,
@@ -244,7 +244,7 @@ Actual pristine-source compilation exposed these runtime issues:
   source and its intended dependency order. Container CPU quota/affinity remain
   independently configurable; the updated wrapper uses one compiler job.
 - A subsequent serial attempt reached rRTSPServer but Autoconf rejected newly
-  created files 8�9 seconds in the future. New WSL connections also failed with
+  created files 8–9 seconds in the future. New WSL connections also failed with
   E_UNEXPECTED. The owner explicitly approved one WslService restart; standard
   Windows UAC elevation performed it. Docker Desktop was stopped. No shared
   configuration or protection policy was changed. New connections recovered.
@@ -316,3 +316,54 @@ new firmware build or independent repeat. Actual firmware validation remains
 pending. Independent review of the published follow-up entrypoint is required
 before the private build gate accepts its new revision; the approved lock and
 all 19 input bytes remain unchanged.
+
+
+## Independent P1/P2 review and remediation (2026-11-27)
+
+Reviewed PR #3 at `af4abae998bbb0efce5294c96007854e4786fa87`.
+The five requested findings were confirmed in the runner, artifact validator and
+execution documentation. Changes are confined to CI/build tooling, regression
+tests and documentation; the upstream firmware source, approved builder image,
+lock, private inputs, public dependencies and cache locations are unchanged.
+
+| Finding | Remediation |
+| --- | --- |
+| P1 ARM ABI and library paths | Require ELF32 little-endian ARM EABI5 hard-float, loadable segments and matching loader-backed dynamic/version tables; verify the target interpreter, selected library provider, image-local symlinks and transitive dependencies. Do not union versions from unrelated files sharing a basename. |
+| P1 official equivalence | Gate primary and repeat individually against the verified official 0.5.8 image trees, including path, mode, uid/gid and file content; report and reject unexplained differences even when the two new builds agree. |
+| P1 checkpoint evidence | Revalidate output bytes, metadata digest, builder/observation identity, exactly one complete sampled container observation and current approved limits before reuse. Missing or inconsistent evidence invalidates the checkpoint. |
+| P2 normalization | Only a structurally valid GNU build-id descriptor can be masked; arbitrary timestamp-like bytes are not normalized. File mode/type and other content changes remain visible. |
+| P2 execution status | Update approved-input/preflight history, checkpoint behavior, remaining acceptance gates and report status. A blocked artifact validator leaves the corresponding stage BLOCKED. Diagnostic-only validation is UNVERIFIED/nonzero. |
+
+Focused local Linux tests (not firmware compilation): 6 artifact-validator tests,
+3 resource-observer tests and 1 isolated checkpoint regression method passed
+(10 total, zero failures/skips). The artifact and observer modules and their
+complete focused test files were reconstructed from the prepared Git blobs and
+verified by Git blob SHA. The artifact tests use synthetic ELF fixtures and
+mocked filesystem inspection; the checkpoint test uses the copied runner
+checkpoint/output/atomic-write functions with a minimal FW-008 import stand-in
+and real temporary archives/hash checks. Cases include wrong architecture/flags,
+missing interpreter, decoy dynamic tables, basename shadowing, path restriction,
+symlink loops, missing transitive libraries, arbitrary timestamp changes,
+non-equivalent repeat/official contents and invalid checkpoint observations.
+
+A full native checkout was unavailable (GitHub DNS failed in the test runtime),
+so the entire FW-001/FW-008 test suite, PowerShell host tests, actual builder
+runtime, and the official-release fixture under the stricter validator were not
+run in this review. Prior successful test counts above describe the prior code,
+not this review revision. Full suite execution remains a local verification step.
+No complete firmware compilation, second build, camera execution or flash was
+attempted. The strict policy may identify legitimate historical toolchain or
+compression metadata differences; they are intentionally not auto-approved.
+The static path model does not prove actual runtime loader state, SD-card
+contents or dynamically loaded modules; inherited DT_RPATH is blocked pending
+proof. Checkpoint validation is local consistency checking, not a signature or
+attestation against arbitrary rewriting of the trusted local staging directory.
+
+Approved execution lock remains
+`15bfcc1a2bea6e1ec502bc37c895bf9f2d83f14d11221d0f5c276b89178d47e8`.
+The next run needs explicit approval of the new final HEAD. Continue with the
+existing inputs-v2/lock-v2.json, dedicated distro and six CPUs/eight GiB; do not
+clear caches. Revision-specific checkpoints cannot cross the new entrypoint SHA;
+mid-compile resume is not supported. All verified dependencies are retained.
+FW-001 remains incomplete until actual primary/repeat builds and artifact gates
+pass. This review does not approve release, flashing or merging PR #3.

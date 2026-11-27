@@ -112,7 +112,13 @@ def resume_primary(checkpoint, output_root, key, report):
         out = output_root / name
         hashes = verify_outputs(out, key)
         require(hashes == saved["hashes"], "Checkpoint digest mismatch")
-        report["container_observations"] = saved.get("container_observations", [])
+        metadata = out / "metadata.json"
+        require(fw.digest(metadata) == saved["metadata_sha256"], "Checkpoint metadata digest mismatch")
+        observations = saved["container_observations"]
+        token = json.loads(metadata.read_text())["observation_id"]
+        require(resource_observer.valid_observations(observations, key, token),
+                "Checkpoint container isolation/resource evidence incomplete")
+        report["container_observations"] = observations
         report["primary_resumed"] = True
         return out, hashes
     except (fw.Blocked, OSError, ValueError, TypeError, KeyError, tarfile.TarError):
@@ -271,9 +277,11 @@ def run(args, report):
                 finally:
                     observations = observer.finish()
                     report.setdefault("container_observations", []).extend(observations)
-                require(observations and all(resource_observer.valid_runtime(row, args.cpus, args.memory_gib)
-                                             for row in observations), "Actual container isolation/resource evidence incomplete")
-                return out, verify_outputs(out, key)
+                hashes = verify_outputs(out, key)
+                require(json.loads((out / "metadata.json").read_text())["observation_id"] == token
+                        and resource_observer.valid_observations(observations, key, token),
+                        "Actual container isolation/resource evidence incomplete")
+                return out, hashes
 
             first = None if args.clean else resume_primary(
                 checkpoint, args.output_root, key, report)
@@ -283,6 +291,7 @@ def run(args, report):
                 lambda: image_filesystem.inspect_firmware_pair(first[0]))
             if not report["primary_resumed"]:
                 atomic_json(checkpoint, {"key": key, "directory": first[0].name, "hashes": first[1],
+                                         "metadata_sha256": fw.digest(first[0] / "metadata.json"),
                                          "container_observations": report.get("container_observations", [])})
             # Always a new output directory and fresh FW-008 temp workspace.
             # No repeat checkpoint, compiled output, or shared writable build cache.
@@ -294,9 +303,12 @@ def run(args, report):
             report["artifact_hash_matches"] = {n: first[1][n] == second[1][n] for n in NAMES}
             report["artifact_content_matches"] = {n: report["primary_image_structure"][n]["content_manifest_sha256"] ==
                 report["repeat_image_structure"][n]["content_manifest_sha256"] for n in image_structure.CANDIDATE_LIMITS}
-            report["artifact_validation"] = stage("firmware artifact validation", lambda:
-                artifact_validation.validate_archive_pair(first[0], second[0], args.reference_archive, args.stage_root))
-            require(report["artifact_validation"]["status"] == "PASS", "Artifact validation incomplete")
+            def validate_artifacts():
+                report["artifact_validation"] = artifact_validation.validate_archive_pair(
+                    first[0], second[0], args.reference_archive, args.stage_root)
+                require(report["artifact_validation"]["status"] == "PASS", "Artifact validation incomplete")
+
+            stage("firmware artifact validation", validate_artifacts)
             report["validator_sha256"] = fw.digest(Path(artifact_validation.__file__))
             report["status"] = "PASS"
             report["remaining_validation"] = []

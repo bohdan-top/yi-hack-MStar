@@ -1,5 +1,6 @@
 """Observe only a uniquely labelled FW-008 build; never execute target code."""
 import json
+import math
 from pathlib import Path
 import re
 import subprocess
@@ -32,7 +33,11 @@ print(json.dumps(dict(cpu_max=(c/'cpu.max').read_text().strip(),affinity_cpu_cou
 
 
 def valid_runtime(row, cpus, memory_gib):
-    runtime = row.get('runtime', {})
+    if not isinstance(row, dict) or not isinstance(row.get('runtime'), dict):
+        return False
+    runtime = row['runtime']
+    if any(type(runtime.get(k)) is not int for k in ('affinity_cpu_count','memory_max','memory_swap_max')):
+        return False
     return (row.get('network') == 'none' and row.get('readonly_root') is True
             and row.get('readonly_inputs') is True
             and runtime.get('cpu_max') == f'{cpus * 100000} 100000'
@@ -46,7 +51,26 @@ def valid_runtime(row, cpus, memory_gib):
             and runtime.get('nproc') == '1' and runtime.get('makeflags') == '-j1'
             and runtime.get('download_guard_rejected') is True
             and runtime.get('real_unexpected_download_marker_absent') is True
-            and runtime.get('mtd_devices_absent') is True and row.get('samples', 0) > 0)
+            and runtime.get('mtd_devices_absent') is True
+            and type(row.get('samples')) is int and row['samples'] > 0)
+
+
+def valid_observations(rows, key, token):
+    """Exactly one sampled build container, tied to the output's observation ID."""
+    if (not isinstance(rows, list) or len(rows)!=1 or not isinstance(token, str)
+            or not re.fullmatch(r'[0-9a-f]{32}', token)):
+        return False
+    row = rows[0]
+    if not valid_runtime(row, key['cpus'], key['memory_gib']):
+        return False
+    if row.get('observation_id') != token or row.get('image') != key['image']:
+        return False
+    for name in ('peak_cpu_percent','peak_memory_bytes','peak_workspace_apparent_bytes'):
+        value = row.get(name)
+        if (type(value) not in (int,float) or (type(value) is float and not math.isfinite(value))
+                or not 0<=value<=2**63-1):
+            return False
+    return True
 
 
 class Observer:
@@ -76,21 +100,28 @@ class Observer:
                         info = json.loads(call('docker', 'inspect', cid))[0]
                         work = next(m['Source'] for m in info['Mounts'] if m['Destination'] == '/work')
                         if (info['Config']['Image'] != self.image
+                                or info['Config'].get('Labels', {}).get('local.fw001.observation') != self.token
                                 or not work.startswith(str(self.stage_root) + '/fw008-')):
                             continue
                         self.paths[cid] = work
-                        self.rows[cid] = dict(samples=0, peak_cpu_percent=0, peak_memory_bytes=0,
+                        input_mounts = [m for m in info['Mounts'] if m['Destination'] == '/inputs']
+                        self.rows[cid] = dict(observation_id=self.token, image=self.image,
+                            samples=0, peak_cpu_percent=0, peak_memory_bytes=0,
                             peak_workspace_apparent_bytes=0, network=info['HostConfig']['NetworkMode'],
                             readonly_root=info['HostConfig']['ReadonlyRootfs'],
-                            readonly_inputs=all(not m['RW'] for m in info['Mounts'] if m['Destination'] == '/inputs'),
+                            readonly_inputs=len(input_mounts)==1 and input_mounts[0]['RW'] is False,
                             runtime=json.loads(call('docker', 'exec', cid, 'python3', '-c', INSIDE)))
                     row = self.rows[cid]
                     sample = json.loads(call('docker', 'stats', '--no-stream', '--format', '{{json .}}', cid))
+                    cpu = float(sample['CPUPerc'].rstrip('%'))
+                    memory = memory_bytes(sample['MemUsage'].split('/')[0])
+                    workspace = int(call('du', '-sb', self.paths[cid]).split()[0])
+                    if not math.isfinite(cpu) or min(cpu, memory, workspace)<0:
+                        continue
                     row['samples'] += 1
-                    row['peak_cpu_percent'] = max(row['peak_cpu_percent'], float(sample['CPUPerc'].rstrip('%')))
-                    row['peak_memory_bytes'] = max(row['peak_memory_bytes'], memory_bytes(sample['MemUsage'].split('/')[0]))
-                    row['peak_workspace_apparent_bytes'] = max(row['peak_workspace_apparent_bytes'],
-                        int(call('du', '-sb', self.paths[cid]).split()[0]))
+                    row['peak_cpu_percent'] = max(row['peak_cpu_percent'], cpu)
+                    row['peak_memory_bytes'] = max(row['peak_memory_bytes'], memory)
+                    row['peak_workspace_apparent_bytes'] = max(row['peak_workspace_apparent_bytes'], workspace)
             except (subprocess.SubprocessError, OSError, ValueError, KeyError, StopIteration):
                 pass
             self.stop.wait(2)

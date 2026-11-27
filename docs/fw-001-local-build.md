@@ -1,4 +1,4 @@
-# FW-001 — Windows local baseline runner (partial)
+# FW-001 — Windows local baseline runner (full build acceptance pending)
 
 ## Preconditions
 
@@ -18,13 +18,13 @@ Remove -PreflightOnly to attempt the full build and repeat. The default data pat
 
 ## Resume and limits
 
-The runner revalidates the lock and every input on each invocation, including SHA-256 of cache hits. Missing or corrupted public dependencies can be downloaded into the digest-addressed cache only from the approved baseline inventory with reviewed digests. Missing private archives stop execution. No private input is overwritten. The primary successful build checkpoint includes source/entrypoint, lock digest, builder image and requested resource limits; output metadata, hashes and archive members are rechecked before reuse. A changed key triggers a new build. -Clean ignores a prior checkpoint without deleting retained files. The independent repeat always uses a new output and FW-008 workspace, and never resumes compiled outputs. Mid-compile resume is not supported. Temporary task-owned snapshot/staging directories are removed on normal process unwinding; retained logs, outputs and cache are not pruned. Abrupt termination can leave orphaned private temporary directories.
+The runner revalidates the lock and every input on each invocation, including SHA-256 of cache hits. Missing or corrupted public dependencies can be downloaded into the digest-addressed cache only from the approved baseline inventory with reviewed digests. Missing private archives stop execution. No private input is overwritten. The primary successful build checkpoint includes source/entrypoint, lock digest, builder image and requested resource limits; output metadata digest, hashes and archive members are rechecked before reuse, together with exactly one complete saved isolation/resource observation matching the build metadata observation ID, builder identity and approved limits. Missing, malformed or mismatched evidence invalidates the checkpoint. A changed key (including entrypoint revision) triggers a new build without deleting the retained output or the digest-addressed input cache. -Clean ignores a prior checkpoint without deleting retained files. The independent repeat always uses a new output and FW-008 workspace, and never resumes compiled outputs. Mid-compile resume is not supported. Temporary task-owned snapshot/staging directories are removed on normal process unwinding; retained logs, outputs and cache are not pruned. Abrupt termination can leave orphaned private temporary directories.
 
 Docker receives explicit CPU affinity, CPU quota, RAM and memory+swap limits. MAKEFLAGS and common make/nproc overrides are bounded in the shared build wrapper; unusual invocations and actual cgroup enforcement still need runtime validation. These are container limits, not global WSL VM limits. The ARM compiler version and ELF header/ABI smoke checks run inside the limited container before firmware compilation. Device ABI compatibility remains subject to validation. FW-008 continues to enforce offline isolation, verified inputs and source checks.
 
 ## Evidence and remaining gates
 
-Preflight-only exit 0 means input preflight only. A full build producing two sets of valid update archives still returns nonzero until FW-001 validation is complete. JFFS2 integrity, partition limits, model/version, official-release comparison, actual isolation, peak container resource use and reproducibility analysis remain pending. The report records requested limits, observed stage elapsed time, disk free-space snapshots, child-process CPU/RSS (excludes Docker), bytes downloaded and cache/resume outcomes; unavailable measurements are explicit. Reports now include both output hash sets when builds execute. No firmware hashes are available until a real build succeeds. Do not commit raw logs, private manifests or build outputs.
+Preflight-only exit 0 means input preflight only. A full build producing two sets of valid update archives still returns nonzero until FW-001 validation is complete. JFFS2 integrity, partition limits, model/version, official-release comparison, actual isolation, peak container resource use and reproducibility analysis are implemented gates; successful real primary and repeat builds and their passing evidence remain pending. The report records requested limits, observed stage elapsed time, disk free-space snapshots, child-process CPU/RSS (excludes Docker), bytes downloaded and cache/resume outcomes; unavailable measurements are explicit. Reports now include both output hash sets when builds execute. No firmware hashes are available until a real build succeeds. Do not commit raw logs, private manifests or build outputs.
 
 Run these synthetic tests in trusted Linux before private execution (Windows host-side execution does not replace Linux/container verification):
 
@@ -47,7 +47,7 @@ python -B -m unittest discover -s ci/fw008 -p 'test_*.py'
 
 Git Bash is used only for shell guard tests and syntax checks. It does not run firmware compilation. Two symlink fixture tests are explicitly skipped on Windows; the output-archive test still checks members and bytes there. On Linux the full symlink checks execute. Infrastructure shell files have LF enforced by .gitattributes; prepare source.tar from a pristine Linux checkout with Linux modes and LF source bytes, not a Windows checkout converted by core.autocrlf. Only CI shell scripts are normalized by this PR; upstream firmware files are untouched.
 
-The public inventory is still unapproved. Nine exact public archives have now been downloaded and checked against independently sourced candidate digests; four public digests and private prerequisites remain unresolved. An approved lock cannot override an independently pinned baseline public digest. Warm-cache results in the execution report cover the separate public provenance audit; production FW-001 cache/recovery checks are synthetic until approved inputs and native Docker are available.
+Historical inventory blockers have been superseded: all 19 input files (15 public module archives plus four private inputs) have an approved derived-builder lock; actual private preflight and production cache verification passed. An approved lock still cannot override an independently pinned baseline public digest. See the execution report for provenance limitations and observed cache results.
 
 See [execution evidence](fw-001-execution-report.md). This is not release or flash approval.
 
@@ -101,10 +101,47 @@ counters are reported separately and exclude the Docker processes.
 
 After both clean builds, the runner verifies all JFFS2 payloads and identities,
 documented size ceilings, archive hashes, installed ARM library/version needs,
-the pinned official reference and normalized repeat contents. Unexplained
-differences return nonzero. Bit reproducibility and hardware execution are
+the pinned official reference and normalized repeat contents. Both primary and repeat must independently match the reference under the same conservative comparison. Unexplained content, path, type, ownership or permission differences return nonzero. Bit reproducibility and hardware execution are
 separate claims. Successful compilation does not approve release or flashing.
 For read-only revalidation of retained outputs, -ValidateOnly additionally takes
 -PrimaryOutput, -RepeatOutput and -ReferenceDirectory, all inside DataRoot.
 It rechecks the approved lock, original build metadata, artifact bytes and the
 official reference; it does not compile or reuse a repeat checkpoint.
+
+
+## Independent review hardening (2026-11-27)
+
+The static ABI gate requires ARM little-endian ELF32, EABI5 hard-float flags,
+loadable segments, a valid target interpreter where applicable, and a consistent
+loader-backed dynamic/version table. It resolves the installed /home mount and
+library paths from the pinned startup script plus target standard/multiarch
+locations, follows image-local symlinks, and checks the selected provider's
+versions and transitive dependencies rather than unioning basename matches.
+Unverified search paths and inherited DT_RPATH block acceptance; approved
+DT_RUNPATH directories can include $ORIGIN. This is an intentionally static
+model of the installed image, not proof of runtime linker state, dynamic dlopen,
+SD-card content, hardware instruction compatibility or camera execution.
+
+Only filesystem mtime differences and a structurally validated GNU build-id
+descriptor are automatically explained; no generic date/time substitution or
+archive-content exception is allowed. Legitimate compile-time strings or
+compressed archive metadata differences must first be evidenced and reviewed.
+Both new builds must independently match the digest-pinned official 0.5.8
+reference under this policy. The official reference itself and actual outputs
+have not yet been retested with the strengthened gate. Diagnostic-only
+validation without approved build provenance cannot return an acceptance PASS.
+
+The primary checkpoint records and revalidates the metadata hash and the
+observation ID bound to one actual container's sampled isolation evidence.
+This protects against missing, stale, malformed or inconsistent local evidence;
+it is not a signed attestation against an attacker with write access to the
+entire trusted local staging/output environment. A new runner SHA requires new
+entrypoint approval. Old successful checkpoints are revision-specific and are
+not reused; no verified input, lock, builder, cache or existing output is deleted.
+Mid-compilation resume remains unsupported.
+
+Before authorizing a new private run, execute the existing Linux FW-001/FW-008
+unit-test commands above in the dedicated WSL distro. The review's focused
+synthetic tests and limitations are recorded in the execution report. The
+approved lock and existing one-command invocation are unchanged except for the
+new approved runner HEAD. Do not use -Clean for normal cache-preserving runs.

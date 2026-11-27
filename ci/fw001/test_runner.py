@@ -47,7 +47,7 @@ class RunnerTests(unittest.TestCase):
                 "entrypoint_sha": key["entrypoint"], "lock_sha256": key["lock"],
                 "builder_image": key["image"], "requested_cpus": 6,
                 "requested_memory_gib": 8, "output_sha256": hashes,
-                "release_approved": False})
+                "release_approved": False, "observation_id": "d" * 32})
             self.assertEqual(runner.verify_outputs(root, key), hashes)
             with self.assertRaises(runner.fw.Blocked):
                 runner.verify_outputs(root, {**key, "cpus": 4})
@@ -59,10 +59,40 @@ class RunnerTests(unittest.TestCase):
                 primary.mkdir()
                 for name in (*runner.NAMES, "metadata.json"):
                     (primary / name).write_bytes((root / name).read_bytes())
-                runner.atomic_json(checkpoint, {"key": key, "directory": primary.name, "hashes": hashes})
+                row = dict(network="none", readonly_root=True, readonly_inputs=True, samples=1,
+                           observation_id="d" * 32, image=key["image"], peak_cpu_percent=1.0,
+                           peak_memory_bytes=10, peak_workspace_apparent_bytes=20,
+                           runtime=dict(cpu_max="600000 100000", affinity_cpu_count=6,
+                               memory_max=8*1024**3, memory_swap_max=0, interfaces=["lo"],
+                               external_connection_blocked=True, no_new_privileges="1",
+                               seccomp="2", cap_eff="000000000000000b", nproc="1",
+                               makeflags="-j1", download_guard_rejected=True,
+                               real_unexpected_download_marker_absent=True, mtd_devices_absent=True))
+                saved = {"key": key, "directory": primary.name, "hashes": hashes,
+                         "metadata_sha256": runner.fw.digest(primary / "metadata.json"),
+                         "container_observations": [row]}
+                for bad in (None, [], [None], [{"runtime": None}], [row, row],
+                            [{**row, "readonly_inputs": False}],
+                            [{**row, "observation_id": "e" * 32}],
+                            [{**row, "peak_cpu_percent": "not numeric"}],
+                            [{**row, "peak_cpu_percent": 10**400}],
+                            [{**row, "peak_cpu_percent": float("nan")}]):
+                    runner.atomic_json(checkpoint, {**saved, "container_observations": bad})
+                    report = {}
+                    self.assertIsNone(runner.resume_primary(checkpoint, root, key, report))
+                    self.assertTrue(report["checkpoint_invalidated"])
+                    self.assertNotIn("container_observations", report)
+                runner.atomic_json(checkpoint, saved)
                 report = {}
                 self.assertEqual(runner.resume_primary(checkpoint, root, key, report), (primary, hashes))
                 self.assertTrue(report["primary_resumed"])
+                self.assertEqual(report["container_observations"], [row])
+                # A changed metadata digest invalidates the checkpoint before reuse.
+                runner.atomic_json(checkpoint, {**saved, "metadata_sha256": "0" * 64})
+                report = {}
+                self.assertIsNone(runner.resume_primary(checkpoint, root, key, report))
+                self.assertTrue(report["checkpoint_invalidated"])
+                runner.atomic_json(checkpoint, saved)
                 report = {}
                 self.assertIsNone(runner.resume_primary(checkpoint, root, {**key, "cpus": 4}, report))
                 self.assertTrue(report["checkpoint_invalidated"])
