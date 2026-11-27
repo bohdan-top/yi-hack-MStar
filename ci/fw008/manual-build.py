@@ -86,6 +86,10 @@ def validate_lock(lock, source):
     if source == BASE:
         inv = read_inventory()
         require({x["path"] for x in inv["files"]} <= seen, "Missing baseline archive")
+        mdnsd = next(x for x in files if x["path"] == "src/mdnsd/mdnsd-master.zip")
+        require(SHA.fullmatch(mdnsd["version"]) and mdnsd["source"] ==
+                "https://github.com/troglobit/mdnsd/archive/" + mdnsd["version"] + ".zip",
+                "Use a reviewed immutable mdnsd ZIP")
         require(all(lock["submodules"].get(k) == v for k, v in inv["submodules"].items()),
                 "Baseline Git dependency mismatch")
     return files
@@ -172,6 +176,7 @@ def local(args):
         shutil.copyfile(ROOT / "ci/fw008/build-offline.sh", stage / "build-offline.sh")
         shutil.copyfile(ROOT / "ci/fw008/verify-source.py", stage / "verify-source.py")
         shutil.copyfile(ROOT / "ci/fw008/download-guard.sh", stage / "download-guard.sh")
+        shutil.copyfile(ROOT / "ci/fw008/baseline_aliases.py", stage / "baseline_aliases.py")
         with (output / "private-build.log").open("wb") as log:
             command(["docker", "load", "--input", str(stage / "builder.tar")],
                     stdout=log, stderr=subprocess.STDOUT)
@@ -198,7 +203,8 @@ def local(args):
             "target": "y203c", "source_sha": args.source, "entrypoint_sha": entrypoint,
             "workflow_sha": None, "lock_sha256": args.approved_lock_sha256,
             "submodules": lock["submodules"], "builder_image": lock["image_id"],
-            "output_sha256": checksums, "release_approved": False
+            "output_sha256": checksums, "release_approved": False,
+            "baseline_archive_aliases": args.source == BASE
         }, indent=2) + "\n")
         print("Full local build produced private outputs; NOT release-approved.")
 

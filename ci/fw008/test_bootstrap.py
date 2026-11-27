@@ -22,7 +22,8 @@ class Bootstrap(unittest.TestCase):
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_bytes(item["path"].encode())
             item["sha256"] = hashlib.sha256(p.read_bytes()).hexdigest()
-            item["version"] = "synthetic-fixture"
+            if item["path"] != "src/mdnsd/mdnsd-master.zip":
+                item["version"] = "synthetic-fixture"
         return lock
 
     def test_public_and_unapproved_ref(self):

@@ -19,12 +19,14 @@ tar -xf /inputs/source.tar -C /work/source
 python3 /inputs/verify-source.py
 cd /work/source
 # Stage only verified files; reject collisions and symlink destinations.
-python3 - <<'PY'
+PYTHONPATH=/inputs python3 -B - <<'PY'
 import json
 from pathlib import Path
 import shutil
+from baseline_aliases import apply_baseline_aliases
 root = Path.cwd()
-for entry in json.loads(Path("/inputs/lock.json").read_text())["files"]:
+lock = json.loads(Path("/inputs/lock.json").read_text())
+for entry in lock["files"]:
     rel = entry["path"]
     if rel in ("source.tar", "builder.tar"):
         continue
@@ -33,6 +35,7 @@ for entry in json.loads(Path("/inputs/lock.json").read_text())["files"]:
         raise RuntimeError("Unexpected archive destination")
     dest.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(Path("/inputs") / rel, dest)
+apply_baseline_aliases(root, lock)
 PY
 # No mtd devices, mounts, sudo, camera or network are available. Stock tgz only.
 bash scripts/init_sysroot.sh y203c
