@@ -27,6 +27,9 @@ ENTRY = ROOT / "ci/fw008/manual-build.py"
 spec = importlib.util.spec_from_file_location("fw008", ENTRY)
 fw = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(fw)
+image_spec = importlib.util.spec_from_file_location("image_structure", Path(__file__).with_name("image_structure.py"))
+image_structure = importlib.util.module_from_spec(image_spec)
+image_spec.loader.exec_module(image_structure)
 NAMES = ("home_y203c", "sys_y203c", "y203c_0.5.8.tgz")
 GIB = 1024 ** 3
 
@@ -258,17 +261,22 @@ def run(args, report):
                 checkpoint, args.output_root, key, report)
             if first is None:
                 first = stage("primary offline build", lambda: new_build("primary"))
+            report["primary_image_structure"] = stage("primary JFFS2 structural validation",
+                lambda: image_structure.inspect_pair(first[0]))
+            if not report["primary_resumed"]:
                 atomic_json(checkpoint, {"key": key, "directory": first[0].name, "hashes": first[1]})
             # Always a new output directory and fresh FW-008 temp workspace.
             # No repeat checkpoint, compiled output, or shared writable build cache.
             second = stage("independent offline repeat build", lambda: new_build("repeat"))
+            report["repeat_image_structure"] = stage("repeat JFFS2 structural validation",
+                lambda: image_structure.inspect_pair(second[0]))
             report["artifact_sha256"] = {"primary": first[1], "repeat": second[1]}
             report["artifact_hash_matches"] = {n: first[1][n] == second[1][n] for n in NAMES}
             report["status"] = "BUILD OUTPUTS VERIFIED; full FW-001 acceptance BLOCKED"
             # Until trusted partition limits, JFFS2 integrity, release comparison, ARM
             # ABI and actual isolation evidence are available, never return full success.
             report["remaining_validation"] = [
-                "JFFS2 integrity, target/version and partition limits",
+                "JFFS2 decompression/filesystem semantics, target/version and confirmed hardware partition limits",
                 "comparison against independently verified official release",
                 "ARM smoke test and SDK/license provenance evidence",
                 "actual network isolation and effective resource-limit evidence",
