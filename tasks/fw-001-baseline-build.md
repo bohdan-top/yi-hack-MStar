@@ -77,6 +77,17 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 - Document all prerequisites, commands, environment versions, input provenance, execution results and remaining limitations.
 - Record the firmware source, build entrypoint and workflow revisions separately.
 
+## 6. Resource Management and Autonomous Execution
+
+- Provide configurable Windows/WSL2 storage locations for the SDK, private inputs, verified dependency cache, builder archives, staging/temp directories and outputs. Support an alternate local disk to avoid filling the system SSD. Keep Linux build workspaces on a Linux-compatible filesystem; document supported WSL2 distribution and Docker data-disk placement. Do not silently relocate existing distributions, Docker data or user files.
+- Check free disk space on all affected volumes before downloads, staging and builds; report estimated and actual storage needs. Recommend an initial 40 GB free-space budget, adjustable to measured requirements.
+- Expose configurable build CPU and memory limits, initially 4–6 logical CPUs and 8 GB RAM. Bound parallel compilation (including upstream make/nproc usage) and container resources. Do not require GPU resources. Document effective limits and distinguish container limits from whole-WSL usage. Do not silently edit global .wslconfig, change shared Docker settings or restart existing services; request approval if such changes are necessary.
+- Make the one-command runner non-interactive for routine stages, with clear per-stage progress, exit codes and actionable failure summaries. Stop at genuine blockers such as missing trusted SDK provenance, required license acceptance, administrator approval, or approval of private inputs; never automatically bypass these gates.
+- Persist stage checkpoints outside Git, keyed by source/entrypoint revisions, input-lock digest, builder identity and relevant settings. Resume from the last verified successful stage after interruption or failure. Revalidate cached artifacts and invalidate dependent stages when inputs change. Provide an explicit clean/rebuild option. The independent repeat-build validation must use a fresh build workspace and must not reuse compiled outputs or skip compilation through checkpoints.
+- Reuse only digest-verified cached downloads and approved builder inputs. Download again if verification fails; do not bless newly observed hashes. Preserve approved private inputs and successful outputs.
+- Clean up only task-owned disposable files, with explicit opt-in for deleting retained cache data. Do not run broad Docker prune commands, delete unrelated files or remove existing WSL distributions. Retain useful private failure logs for diagnosis.
+- Include measured wall-clock time per stage and total, peak observed CPU/RAM usage, disk usage before/after and peak temporary storage where measurable, downloaded bytes and cache-hit/resume results in the sanitized report. Identify measurement scope, sampling method and unmeasured values; distinguish estimates from observed results. Do not publish private paths, credentials or restricted artifacts.
+
 ## Acceptance Criteria
 
 - [ ] WSL2 and Docker environment operational.
@@ -93,6 +104,13 @@ Do not claim bit-for-bit reproducibility unless demonstrated.
 - [ ] Reproducibility results documented.
 - [ ] Single-command local build available.
 - [ ] Sanitized build report committed.
+- [ ] Alternate-disk storage and configurable paths demonstrated without unintended system-disk growth.
+- [ ] CPU/RAM limits and bounded compilation parallelism configured and verified.
+- [ ] Interrupted execution resumes from verified checkpoints; changed or tampered inputs invalidate affected stages.
+- [ ] Verified dependency cache reused; independent repeat build does not reuse compiled outputs.
+- [ ] Cleanup confined to task-owned disposable files.
+- [ ] Autonomous routine execution demonstrated; approval and provenance blockers fail closed.
+- [ ] Sanitized timing and resource-usage report includes actual measurements and measurement limitations.
 - [ ] No proprietary inputs or sensitive data committed.
 - [ ] No camera modifications or flashing performed.
 
