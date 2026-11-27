@@ -113,8 +113,17 @@ def command(args, **kwargs):
     return subprocess.run(args, check=True, **kwargs)
 
 
-def docker_args(image, stage, work):
-    return ["docker", "run", "--rm", "--pull=never", "--network=none",
+def docker_args(image, stage, work, cpus=None, memory_gib=None):
+    limits = []
+    if cpus is not None:
+        available = sorted(os.sched_getaffinity(0))
+        require(1 <= cpus <= len(available), "CPU limit exceeds available logical processors")
+        limits += ["--cpuset-cpus", ",".join(map(str, available[:cpus])), "--cpus", str(cpus),
+                   "--env", f"MAKEFLAGS=-j{cpus}", "--env", f"FW008_JOBS={cpus}"]
+    if memory_gib is not None:
+        require(memory_gib >= 1, "Invalid memory limit")
+        limits += ["--memory", f"{memory_gib}g", "--memory-swap", f"{memory_gib}g"]
+    return ["docker", "run", "--rm", *limits, "--pull=never", "--network=none",
             "--cap-drop=ALL", "--cap-add=CHOWN", "--cap-add=DAC_OVERRIDE",
             "--cap-add=FOWNER", "--security-opt=no-new-privileges",
             "--log-driver=none", "--read-only", "--tmpfs", "/tmp:rw,nosuid,nodev",
@@ -189,7 +198,7 @@ def local(args):
     require(hashlib.sha256(raw).hexdigest() == args.approved_lock_sha256, "Lock digest mismatch")
     lock = json.loads(raw)
     validate_lock(lock, args.source)
-    with tempfile.TemporaryDirectory(prefix="fw008-") as temp:
+    with tempfile.TemporaryDirectory(prefix="fw008-", dir=args.temp_root) as temp:
         stage = Path(temp) / "inputs"
         stage.mkdir()
         stage_inputs(lock, args.source, inputs, stage)
@@ -222,7 +231,7 @@ def local(args):
             require(info["Id"] == lock["image_id"] and info["Architecture"] == "amd64" and
                     not info["Config"].get("Volumes") and info["Os"] == "linux",
                     "Unexpected builder identity/platform/volumes")
-            command(docker_args(lock["image_id"], stage, work), stdout=log, stderr=subprocess.STDOUT)
+            command(docker_args(lock["image_id"], stage, work, args.cpus, args.memory_gib), stdout=log, stderr=subprocess.STDOUT)
         expected = verified_outputs(work)
         checksums = {}
         for p in expected:
@@ -235,7 +244,8 @@ def local(args):
             "workflow_sha": None, "lock_sha256": args.approved_lock_sha256,
             "submodules": lock["submodules"], "builder_image": lock["image_id"],
             "output_sha256": checksums, "release_approved": False,
-            "baseline_archive_aliases": args.source == BASE
+            "baseline_archive_aliases": args.source == BASE,
+            "requested_cpus": args.cpus, "requested_memory_gib": args.memory_gib
         }, indent=2) + "\n")
         print("Full local build produced private outputs; NOT release-approved.")
 
@@ -250,6 +260,9 @@ def main():
     parser.add_argument("--approved-lock-sha256")
     parser.add_argument("--approved-entrypoint")
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--temp-root", type=Path)
+    parser.add_argument("--cpus", type=int)
+    parser.add_argument("--memory-gib", type=int)
     args = parser.parse_args()
     try:
         if args.public:
