@@ -1,0 +1,615 @@
+{
+  "releases": [
+    {
+      "suite": "bookworm",
+      "inrelease_sha256": "77737fa4b34f2693e982cc9ee35736816c35a7778fc2d326cc1bbf5b301fe1aa",
+      "packages_sha256": "515e692f2c4121c6fcec444ef100cc18f79a991910615f3a88c8b7becfc94d2f"
+    },
+    {
+      "suite": "bookworm-updates",
+      "inrelease_sha256": "6fcbf5f27d21d8e40fca4f573fab170a0f20929dad724e05e29e74ec5496065c",
+      "packages_sha256": "80a1f6ee524222c49f230fc5700d00f946d0a47eb5258180106dd03df126e16a"
+    },
+    {
+      "suite": "bookworm-security",
+      "inrelease_sha256": "d5fe8b30dd59b9e363f0665d1cf99d1224bcc240ea02b6402eea5e7550650053",
+      "packages_sha256": "10937de8611ae6a5f8e4a088bfb17d140569911ffb1bc499d230a29e864a9b46"
+    }
+  ],
+  "packages": [
+    {
+      "package": "autoconf",
+      "version": "2.71-3",
+      "architecture": "all",
+      "sha256": "7d798ed8c21fc7387127de1dfdb4640003d8ba033ae5a1ff29559610cbd0c323"
+    },
+    {
+      "package": "automake",
+      "version": "1:1.16.5-1.3",
+      "architecture": "all",
+      "sha256": "f9a5758d87b5389bf2dbb00cc9c48e0cf59bb0ac842c5ce25d41e4bfa3f2f962"
+    },
+    {
+      "package": "autotools-dev",
+      "version": "20220109.1",
+      "architecture": "all",
+      "sha256": "4d66dcb9c312566f1ca8d46ef0fb06fa4d4786c20b072c81f9d313b64ef981d0"
+    },
+    {
+      "package": "bc",
+      "version": "1.07.1-3+b1",
+      "architecture": "amd64",
+      "sha256": "baaa4e935c5e3bcd57d4f2f4e7a1ddc67bd4eb8629d98f97a696548849ae01ac"
+    },
+    {
+      "package": "binutils-common",
+      "version": "2.40-2",
+      "architecture": "amd64",
+      "sha256": "ab314134f43a0891a48f69a9bc33d825da748fa5e0ba2bebb7a5c491b026f1a0"
+    },
+    {
+      "package": "binutils-x86-64-linux-gnu",
+      "version": "2.40-2",
+      "architecture": "amd64",
+      "sha256": "2d7ea8a570d768224d7f2424abbe6f373d2154865a1fa7f56c80d43ecf492521"
+    },
+    {
+      "package": "binutils",
+      "version": "2.40-2",
+      "architecture": "amd64",
+      "sha256": "83c3e20b53e1fbd84d764c3ba27d26a0376e361ae5d7fb37120196934dd87424"
+    },
+    {
+      "package": "bison",
+      "version": "2:3.8.2+dfsg-1+b1",
+      "architecture": "amd64",
+      "sha256": "a414afd7519c53bfa33415ba5b951bc8b4906877004c49723ffda50a6033c3e8"
+    },
+    {
+      "package": "build-essential",
+      "version": "12.9",
+      "architecture": "amd64",
+      "sha256": "bbfd38de41898a06326f2a6ce4cc43e8e399f5566381231065b01d70499d5ba5"
+    },
+    {
+      "package": "bzip2",
+      "version": "1.0.8-5+b1",
+      "architecture": "amd64",
+      "sha256": "438871b3f5c5c7a357a9840951dab9dab8db7eb1ff760a563226fafa111b99e5"
+    },
+    {
+      "package": "cmake-data",
+      "version": "3.25.1-1",
+      "architecture": "all",
+      "sha256": "8371f9694da94fd551a3ea653e2e25d99747471ca0b48cc029bf5c792ea590a3"
+    },
+    {
+      "package": "cmake",
+      "version": "3.25.1-1",
+      "architecture": "amd64",
+      "sha256": "257a11063855f09e48696057fdb1ba2bcf1069502e0302576831dc2fb1571d7f"
+    },
+    {
+      "package": "cpp-12",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "fedbb98e877adde83c983c6071537ea25ac52b277ac6e4637d85025949ca1454"
+    },
+    {
+      "package": "cpp",
+      "version": "4:12.2.0-3",
+      "architecture": "amd64",
+      "sha256": "a63db920f7aa1857a57beab185423deffb6111fa09437a99bbb4ef724fb7ba78"
+    },
+    {
+      "package": "dpkg-dev",
+      "version": "1.21.23",
+      "architecture": "all",
+      "sha256": "43547075395dbe9290e6a5f34e9ba93aa5dcf7dfc5698c3d30cc3c85e5f7e3de"
+    },
+    {
+      "package": "file",
+      "version": "1:5.44-3",
+      "architecture": "amd64",
+      "sha256": "2c57221bf8cc0ff5d2295ececb9215cc1b9ff9040dacb152c385bba3087ab1df"
+    },
+    {
+      "package": "flex",
+      "version": "2.6.4-8.2",
+      "architecture": "amd64",
+      "sha256": "da3fd55dbb6aff4f7b3187580813e0ef707d0c596402e37c8fd144df60003636"
+    },
+    {
+      "package": "g++-12",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "68b182badae4ace7d472f1393c559d3532a95a2d70817498b10bb481d2627251"
+    },
+    {
+      "package": "g++",
+      "version": "4:12.2.0-3",
+      "architecture": "amd64",
+      "sha256": "26c451a660728cf7c15548a281e17eef2f36fab28499371e83fc2d3accb499d7"
+    },
+    {
+      "package": "gawk",
+      "version": "1:5.2.1-2",
+      "architecture": "amd64",
+      "sha256": "9cd63c1b35ff082092c221a23dcb167f72c4d1c3de3a42e11f16181f42ab3b55"
+    },
+    {
+      "package": "gcc-12",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "b46f33cc2ec245e435e043807038cecf4b201ef004800e9dfc1455240360e49d"
+    },
+    {
+      "package": "gcc",
+      "version": "4:12.2.0-3",
+      "architecture": "amd64",
+      "sha256": "bb63b0fb2797e2a3a294dab8a02614930c557ec1f4ea96637c244b8b5f87e630"
+    },
+    {
+      "package": "git-man",
+      "version": "1:2.39.5-0+deb12u3",
+      "architecture": "all",
+      "sha256": "904dbd8dbc3db34c6780fb0abfe35816d4a90a490126ef0a055a77a0c5dcab82"
+    },
+    {
+      "package": "git",
+      "version": "1:2.39.5-0+deb12u3",
+      "architecture": "amd64",
+      "sha256": "637a85ddd6247fab13bdd0592f2f39aff04ce4dbf0655d3ab553ac359a38ce6f"
+    },
+    {
+      "package": "lib32gcc-s1",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "444f5cfe376116b029bcdb768290b8f7b934970f17c4a3ec85a46073413b2588"
+    },
+    {
+      "package": "lib32stdc++6",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "166e95ede55760377aeff52aece71d18bd1fc319df1642d6746c5b55ad89dfaa"
+    },
+    {
+      "package": "lib32z1",
+      "version": "1:1.2.13.dfsg-1",
+      "architecture": "amd64",
+      "sha256": "9e1040f57ad4756609fa13f58272b7fe5463ba1d8bf7996fe891ddacac807a40"
+    },
+    {
+      "package": "libarchive13",
+      "version": "3.6.2-1+deb12u5",
+      "architecture": "amd64",
+      "sha256": "45419b8c7646c1af12783ae31906ce2da4c465c1a948b01f8f44152d8269f403"
+    },
+    {
+      "package": "libasan8",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "e7ac5d797d7d438a130674a8e463530f06aa02ecf919ca054d75eaa2f7849ec7"
+    },
+    {
+      "package": "libatomic1",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "fbd4e154a6b444229ea002cc209df099209c0adc09102e5fd21239a3d2b55e2d"
+    },
+    {
+      "package": "libbinutils",
+      "version": "2.40-2",
+      "architecture": "amd64",
+      "sha256": "fcf55b99e5f8a78f3c8ce9b6957f1024f394cf20c196b100d308a57e43547710"
+    },
+    {
+      "package": "libbrotli1",
+      "version": "1.0.9-2+deb12u1",
+      "architecture": "amd64",
+      "sha256": "e27b3d655fa6fadd7a56f706687e94573c0af68b7d6df394a32a381a3a6c6d8b"
+    },
+    {
+      "package": "libc-dev-bin",
+      "version": "2.36-9+deb12u14",
+      "architecture": "amd64",
+      "sha256": "f61d923b703401023bec2ac3d9d1c9ad7341930fbe11736f7f5ef64b489d03c4"
+    },
+    {
+      "package": "libc6-dev",
+      "version": "2.36-9+deb12u14",
+      "architecture": "amd64",
+      "sha256": "0218fc2befcd784c1b0c6292c0a137ce89fad054efaa579ad083bee0f2c01aae"
+    },
+    {
+      "package": "libc6-i386",
+      "version": "2.36-9+deb12u14",
+      "architecture": "amd64",
+      "sha256": "2af9a760c2b3dce0a432d78076ca98d3ba8f8070cadb3e5898aa0368ba1fceef"
+    },
+    {
+      "package": "libcc1-0",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "4ee6009633003f47de98333ea7f7d8835ec563ae2ac4f30251dbfee04d75d46b"
+    },
+    {
+      "package": "libcrypt-dev",
+      "version": "1:4.4.33-2",
+      "architecture": "amd64",
+      "sha256": "81ccd29130f75a9e3adabc80e61921abff42f76761e1f792fa2d1bb69af7f52f"
+    },
+    {
+      "package": "libctf-nobfd0",
+      "version": "2.40-2",
+      "architecture": "amd64",
+      "sha256": "ef1dfcf22de41ea90ebd3d505447ccccd999e96b85aa777a1d7d981dc3b347aa"
+    },
+    {
+      "package": "libctf0",
+      "version": "2.40-2",
+      "architecture": "amd64",
+      "sha256": "3fb7b6f326be3fae4a87a3d33b9269bd06c1e4346a24bd737f265067e3b7427f"
+    },
+    {
+      "package": "libcurl3-gnutls",
+      "version": "7.88.1-10+deb12u15",
+      "architecture": "amd64",
+      "sha256": "bf430ecf80f7808704e0187cddc582fd57fc98789ea356d4797651edad387ef3"
+    },
+    {
+      "package": "libcurl4",
+      "version": "7.88.1-10+deb12u15",
+      "architecture": "amd64",
+      "sha256": "3042904de01f9c4fbdcf1452b8f81abedcf2b015f9b9deba109063322b5bd68b"
+    },
+    {
+      "package": "libdpkg-perl",
+      "version": "1.21.23",
+      "architecture": "all",
+      "sha256": "3f817fd9266ce2638c64b5df77da11f98f5df4f3301e1c04140be16790f72112"
+    },
+    {
+      "package": "liberror-perl",
+      "version": "0.17029-2",
+      "architecture": "all",
+      "sha256": "5a466348531b9c38c8e5ccb18c231f27a98b9fdab61b37ea22592553de5d2ced"
+    },
+    {
+      "package": "libexpat1",
+      "version": "2.5.0-1+deb12u5",
+      "architecture": "amd64",
+      "sha256": "cae5ded666d8573dd33060bc66fbac21eea8b101a6b56e2af8bd590fcfa65d79"
+    },
+    {
+      "package": "libgcc-12-dev",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "d720259380a84f2ffc6fe516eff5cbe9c8a005138e8d6a5748747ba4b3404a82"
+    },
+    {
+      "package": "libgdbm-compat4",
+      "version": "1.23-3",
+      "architecture": "amd64",
+      "sha256": "4af36a590b68d415a78d9238b932b6a4579f515ec8a8016597498acff5b515a4"
+    },
+    {
+      "package": "libgomp1",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "48fec46bda7f5b1638b9e959889bfbc20491247d402d120bb152687eb48143d7"
+    },
+    {
+      "package": "libgprofng0",
+      "version": "2.40-2",
+      "architecture": "amd64",
+      "sha256": "a3c4092d84f19d13caf90f3c96eec53db8819f0e3a5247434944d71ed75fa53d"
+    },
+    {
+      "package": "libicu72",
+      "version": "72.1-3+deb12u1",
+      "architecture": "amd64",
+      "sha256": "f7f6f99c6d7b025914df2447fc93e11d22c44c0c8bdd8b6f36691c9e7ddcef88"
+    },
+    {
+      "package": "libiniparser1",
+      "version": "4.1-6",
+      "architecture": "amd64",
+      "sha256": "785a3055109fafa84e5c68f0c825a1c52d97e25aa6a14d4edf9c84dd57681877"
+    },
+    {
+      "package": "libisl23",
+      "version": "0.25-1.1",
+      "architecture": "amd64",
+      "sha256": "ebff0b2f8b220c74224197523019366e97ee4770d464bebc48e4865114e4da0e"
+    },
+    {
+      "package": "libitm1",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "0ed5b35dfd1346cccbf065408ec789db6c44c1d0a16ae84533411dea09632979"
+    },
+    {
+      "package": "libjansson4",
+      "version": "2.14-2",
+      "architecture": "amd64",
+      "sha256": "3fc9742f9f1a37bcb9931df6074b4d1483419ef832ad5349f47323e75fc27864"
+    },
+    {
+      "package": "libjsoncpp25",
+      "version": "1.9.5-4",
+      "architecture": "amd64",
+      "sha256": "4ab06b9ce67470579be3112bf2b6b314012f93bfff619580b93a902d6b1221c5"
+    },
+    {
+      "package": "libldap-2.5-0",
+      "version": "2.5.13+dfsg-5",
+      "architecture": "amd64",
+      "sha256": "4b6c30f6554149c594628d945edc6003f0eea8d0cc1341638c0e71375db147ed"
+    },
+    {
+      "package": "liblsan0",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "d234ab339c0ba31a4fb44e2334cf5a8d15b87f2c2f9e74fadfaa877f92dcf22a"
+    },
+    {
+      "package": "liblzo2-2",
+      "version": "2.10-2",
+      "architecture": "amd64",
+      "sha256": "4f08e092c76e425295a498cd547dc9b8f6a595473f3020ab8c96309b29872636"
+    },
+    {
+      "package": "libmagic-mgc",
+      "version": "1:5.44-3",
+      "architecture": "amd64",
+      "sha256": "bad01673ba5dfb9b5db4f3ae6a71f18d492cb6801eab45ad3c7d483c0a1f6ad2"
+    },
+    {
+      "package": "libmagic1",
+      "version": "1:5.44-3",
+      "architecture": "amd64",
+      "sha256": "a241c2adc7438a7e217f32544028489981768a349d3e48673392703255c7b88e"
+    },
+    {
+      "package": "libmpc3",
+      "version": "1.3.1-1",
+      "architecture": "amd64",
+      "sha256": "d7f79544790e44f9b0c8cb9034a18c58d37f8702a15f32539050718679e52f80"
+    },
+    {
+      "package": "libmpfr6",
+      "version": "4.2.0-1",
+      "architecture": "amd64",
+      "sha256": "37b7a2b4e78890b6a074777f27b96c84f58e81558ba08410c2b6c0ca4a4ad77b"
+    },
+    {
+      "package": "libnghttp2-14",
+      "version": "1.52.0-1+deb12u3",
+      "architecture": "amd64",
+      "sha256": "5a5736cee57e51c1baed869979e6ecdbc6495e939e33203d6cfe3b6e5a149e3f"
+    },
+    {
+      "package": "libnsl-dev",
+      "version": "1.3.0-2",
+      "architecture": "amd64",
+      "sha256": "bb81a188c119cd7fdebae723cbc95887b6c549b2fe4fb7e268a9c8846444da99"
+    },
+    {
+      "package": "libperl5.36",
+      "version": "5.36.0-7+deb12u4",
+      "architecture": "amd64",
+      "sha256": "ed8480b621ad574c25aea30d36194d0133ea74093756ecbe3dff157d0510ef7f"
+    },
+    {
+      "package": "libpkgconf3",
+      "version": "1.8.1-1",
+      "architecture": "amd64",
+      "sha256": "da01fb901123ae498c36387a32240e09e1f2866810146c5a574273f7eaf31093"
+    },
+    {
+      "package": "libpopt0",
+      "version": "1.19+dfsg-1",
+      "architecture": "amd64",
+      "sha256": "6f94b488255acd996254f775c77ff3956557c61f860a3c9caeaf65457554194f"
+    },
+    {
+      "package": "libproc2-0",
+      "version": "2:4.0.2-3",
+      "architecture": "amd64",
+      "sha256": "e82ba5d01929eafb8b9954606a3c38b0332a987c2b3432388b4ee7365e54deae"
+    },
+    {
+      "package": "libpsl5",
+      "version": "0.21.2-1",
+      "architecture": "amd64",
+      "sha256": "4f0d35610204e4e754b057748719744114621f2f6f4202d846c314860a981afb"
+    },
+    {
+      "package": "libquadmath0",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "3f0c9a4c730da2fdab001cae596625438598fd2996d29d888feeb4c1cdc9011f"
+    },
+    {
+      "package": "librhash0",
+      "version": "1.4.3-3",
+      "architecture": "amd64",
+      "sha256": "d9ba48a51fd4734aaaf3a75fd94b6352a02f9eaa88d3bec84cd0b5d3090f9d2a"
+    },
+    {
+      "package": "librtmp1",
+      "version": "2.4+20151223.gitfa8646d.1-2+b2",
+      "architecture": "amd64",
+      "sha256": "e1f69020dc2c466e421ec6a58406b643be8b5c382abf0f8989011c1d3df91c87"
+    },
+    {
+      "package": "libsasl2-2",
+      "version": "2.1.28+dfsg-10+deb12u1",
+      "architecture": "amd64",
+      "sha256": "d6f20408e2be92ebd9f5e3b1c1935b075efb3f03abb5f48f7b991a0ad3e2d6a5"
+    },
+    {
+      "package": "libsasl2-modules-db",
+      "version": "2.1.28+dfsg-10+deb12u1",
+      "architecture": "amd64",
+      "sha256": "6c86ca8fe9a7d652e618874b8753b4b6ec6b42ed7649b3f388e38d0a99047ba5"
+    },
+    {
+      "package": "libsigsegv2",
+      "version": "2.14-1",
+      "architecture": "amd64",
+      "sha256": "92336a5c47989b82ba4c778adc0ea22fc84450773f2d8428fca4448b0789cfe6"
+    },
+    {
+      "package": "libssh2-1",
+      "version": "1.10.0-3+deb12u1",
+      "architecture": "amd64",
+      "sha256": "fff72a194e493f88e100a2567e22472bb4ab828d429c2956965c6f2f134f1b3a"
+    },
+    {
+      "package": "libstdc++-12-dev",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "d28def6c23630432b57cb38a4c2fd67a79d4e0484027386ca6e8d6005c3d7a73"
+    },
+    {
+      "package": "libtirpc-dev",
+      "version": "1.3.3+ds-1",
+      "architecture": "amd64",
+      "sha256": "03326473eed54ffa27efae19aa5d6aeb402930968f869f318445513093691d55"
+    },
+    {
+      "package": "libtool",
+      "version": "2.4.7-7~deb12u1",
+      "architecture": "all",
+      "sha256": "1c2e74f06b1d5d9a2c75e04ce87a99a8633058684439504ae8d715a4a088926c"
+    },
+    {
+      "package": "libtsan2",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "06906663d644a75a1a836382ecd80b61461129c06f02935ce408b25809f6c958"
+    },
+    {
+      "package": "libubsan1",
+      "version": "12.2.0-14+deb12u1",
+      "architecture": "amd64",
+      "sha256": "744f52adf00ffd45d44806b1c7e802a36bd27e479c9bc8457128fde357faa530"
+    },
+    {
+      "package": "libuv1",
+      "version": "1.44.2-1+deb12u1",
+      "architecture": "amd64",
+      "sha256": "204f0e13354b44e6d19317887a53dab6f26696e8d95838db970b81f2a393f7fd"
+    },
+    {
+      "package": "libxml2",
+      "version": "2.9.14+dfsg-1.3~deb12u6",
+      "architecture": "amd64",
+      "sha256": "4460e39dda10a815881374217cde08474747cfa018358cd8612c14b390eff53b"
+    },
+    {
+      "package": "linux-libc-dev",
+      "version": "6.1.192-3",
+      "architecture": "amd64",
+      "sha256": "1b699a9cf27fd36f295b8f7615b73cea8d2d11d43c275c2aca1f4a7a7d14c4ea"
+    },
+    {
+      "package": "m4",
+      "version": "1.4.19-3",
+      "architecture": "amd64",
+      "sha256": "b2dd7bfca426712416e651bb5ff6dabe7d05e4caebbac61d714dbe261b31e4c3"
+    },
+    {
+      "package": "make",
+      "version": "4.3-4.1",
+      "architecture": "amd64",
+      "sha256": "a1a83af8cbd854af887b72ad196b1f4af58387815e21ced1000253a116a46e2a"
+    },
+    {
+      "package": "mtd-utils",
+      "version": "1:2.1.5-1",
+      "architecture": "amd64",
+      "sha256": "81257a4ac76777300da15e43c701df8395b79ca9a9a29936c80f7da5cdb4ef3a"
+    },
+    {
+      "package": "p7zip-full",
+      "version": "16.02+really26.02+dfsg-0+deb12u1",
+      "architecture": "amd64",
+      "sha256": "b81a1722f23d4cd56ae611b5bb46604c51f6110e55bded6e36e7cafd79599d00"
+    },
+    {
+      "package": "p7zip",
+      "version": "16.02+really26.02+dfsg-0+deb12u1",
+      "architecture": "amd64",
+      "sha256": "04aa58044a6134e1881fe6e6c5cffe368aad1f1323499094d66a6c8ade27a2e6"
+    },
+    {
+      "package": "patch",
+      "version": "2.7.6-7",
+      "architecture": "amd64",
+      "sha256": "8c6d49b771530dbe26d7bd060582dc7d2b4eeb603a20789debc1ef4bbbc4ef67"
+    },
+    {
+      "package": "perl-modules-5.36",
+      "version": "5.36.0-7+deb12u4",
+      "architecture": "all",
+      "sha256": "3ed38ffa8320e9bf7597cefa01b6a6ace4a08ccc77cdfd15ef7d8b711dea7166"
+    },
+    {
+      "package": "perl",
+      "version": "5.36.0-7+deb12u4",
+      "architecture": "amd64",
+      "sha256": "67e7a883c5d835939638f89a750799282df243ac1446281aa92ef9e19300940b"
+    },
+    {
+      "package": "pkg-config",
+      "version": "1.8.1-1",
+      "architecture": "amd64",
+      "sha256": "312b2bdeff4671f8e0d589c124554890e944dd083061e9ad6f129bc76a970765"
+    },
+    {
+      "package": "pkgconf-bin",
+      "version": "1.8.1-1",
+      "architecture": "amd64",
+      "sha256": "8fb5a8f83e46ad04b4cf02651ceec56c0611a335cf0d30780d859a95d0400174"
+    },
+    {
+      "package": "pkgconf",
+      "version": "1.8.1-1",
+      "architecture": "amd64",
+      "sha256": "4e3ce982b5fedc6c6119268435504a64f5ffcc6d93aaecaea902d816eba1215f"
+    },
+    {
+      "package": "procps",
+      "version": "2:4.0.2-3",
+      "architecture": "amd64",
+      "sha256": "d9d0e75779cb79af869181f17b93c5c263a2b89cac6a0193c436160a4483ddc1"
+    },
+    {
+      "package": "rpcsvc-proto",
+      "version": "1.4.3-1",
+      "architecture": "amd64",
+      "sha256": "32ac0692694f8a34cc90c895f4fc739680fb2ef0e2d4870a68833682bf1c81a3"
+    },
+    {
+      "package": "rsync",
+      "version": "3.5.0+ds1-0+deb12u1",
+      "architecture": "amd64",
+      "sha256": "26ea59ef1c3d05595e9637002ace6f4e00181638b438ecad0f1cf1659ebb67ed"
+    },
+    {
+      "package": "unzip",
+      "version": "6.0-28+deb12u1",
+      "architecture": "amd64",
+      "sha256": "1c27c879f4f7f056499c5393d422fd6c77ff6fbfa450c3f91f2f205ca788cc36"
+    },
+    {
+      "package": "xz-utils",
+      "version": "5.4.1-1+deb12u2",
+      "architecture": "amd64",
+      "sha256": "f99fc3fe4b4e5baecf5fd8b53853a82e1e71cb5ec187b36b0ddcf227a8961c8f"
+    }
+  ]
+}

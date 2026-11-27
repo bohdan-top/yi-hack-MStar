@@ -11,5 +11,3 @@ RUN cd /opt/fw001 && sha256sum -c hashes.txt \
     && mv /opt/yi/gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux /opt/yi/arm-linux-gnueabihf-4.8.3-201404 \
     && dpkg-query -W > /opt/fw001/installed-packages.tsv \
     && rm -rf /opt/fw001/debs /opt/fw001/linaro.tar.xz /var/lib/apt/lists/* /var/cache/apt/archives/*
-ENV PATH=/opt/yi/arm-linux-gnueabihf-4.8.3-201404/bin:/usr/local/bin:/usr/bin:/bin
-WORKDIR /work

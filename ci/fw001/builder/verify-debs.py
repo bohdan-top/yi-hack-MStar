@@ -30,5 +30,8 @@ for path in sorted((root/'debs').glob('*.deb')):
     require(sha in packages[(name,version,arch)], 'Package differs from signed metadata')
     verified.append(dict(package=name,version=version,architecture=arch,sha256=sha))
 require(verified, 'No package archives verified')
+expected=json.loads((root/'packages.lock.json').read_text())
+require(releases==expected['releases'], 'Signed release identities differ from the reviewed package lock')
+require(verified==expected['packages'], 'Package closure differs from the reviewed package lock')
 (root/'provenance'/'verified-debs.json').write_text(json.dumps(dict(releases=releases,packages=verified),indent=2)+'\n')
 print('Independently verified signed metadata and',len(verified),'package archives.')
