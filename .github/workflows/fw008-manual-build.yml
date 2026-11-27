@@ -1,0 +1,44 @@
+name: FW-008 Manual firmware build
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Public preflight or full (full requires private local fallback)"
+        type: choice
+        options: [preflight, full]
+        default: preflight
+      source_sha:
+        description: "Immutable firmware source commit"
+        type: string
+        default: "c8582405b2c3c0e3b80219b0e71e21785a482867"
+permissions:
+  contents: read
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Test bootstrap
+        run: |
+          python3 -m unittest discover -s ci/fw008 -p 'test_*.py'
+          bash -n ci/fw008/build-offline.sh
+      - name: Manual build request
+        env:
+          MODE: ${{ inputs.mode }}
+          SOURCE: ${{ inputs.source_sha }}
+        run: |
+          mkdir -p public-diagnostics
+          printf 'workflow_sha=%s\n' "$GITHUB_SHA" > public-diagnostics/workflow.txt
+          set -o pipefail
+          python3 ci/fw008/manual-build.py --public --mode "$MODE" --source "$SOURCE" | tee public-diagnostics/preflight.txt
+      - name: Upload public diagnostics only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fw008-public-diagnostics
+          path: public-diagnostics/
+          retention-days: 7
+          if-no-files-found: ignore

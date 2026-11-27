@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "target": "y203c",
+  "source_sha": "c8582405b2c3c0e3b80219b0e71e21785a482867",
+  "submodules": {
+    "src/ftpd/pure-ftpd": "f169d2016707e7991d4c85be92afcf26d84a0135",
+    "src/mosquitto/mosquitto": "ae309b331cf79663d6a0f2df9a976c6511c552fa",
+    "src/proxychains-ng/proxychains-ng": "b8fa2a7405e4e4ddeb35e9f6cf298944680fc52f",
+    "src/mqtt/mqttv4": "48cf94fa69d65ad009c6bec1de9319ca5de77ccf",
+    "src/rtsp_server_yi/RtspServer": "3c642bc9e5de0473cd9a0ad0fd459dfc4b16cdeb",
+    "src/minimp4/minimp4": "e407f02fdb9828fbf89ffa376e5be2699c3c2d5a",
+    "src/sftp-server/openssh-portable": "2d98db98331803cbb820211b2fb0d31a6e71e58e",
+    "src/onvif_simple_server/onvif_simple_server": "40ec59ead114872069d83e5023dd7e8b63dc834d",
+    "src/mjpeg-avi/mjpeg-avi": "948b169e9a8a917c8abe1066e9859bace4930"
+  },
+  "files": [
+    {
+      "path": "source.tar",
+      "version": "c8582405b2c3c0e3b80219b0e71e21785a482867",
+      "source": "Reviewed offline Git checkout including recursive submodules",
+      "sha256": null
+    },
+    {
+      "path": "builder.tar",
+      "version": "UNRESOLVED",
+      "source": "Reviewed Linux amd64 OCI/Docker image, including MStar MSC3XX SDK and ARM 4.8.3 toolchain",
+      "sha256": null
+    },
+    {
+      "path": "stock_firmware/y203c/home_y203c.tgz",
+      "version": "4.5.0.0C_201910080934",
+      "source": "Private verified stock filesystem",
+      "sha256": null
+    },
+    {
+      "path": "stock_firmware/y203c/sys_y203c.tgz",
+      "version": "4.5.0.0C_201910080934",
+      "source": "Private verified stock filesystem",
+      "sha256": null
+    },
+    {
+      "path": "src/busybox/busybox-1.36.1.tar.bz2",
+      "version": "1.36.1",
+      "source": "https://busybox.net/downloads/busybox-1.36.1.tar.bz2",
+      "sha256": null
+    },
+    {
+      "path": "src/dropbear/DROPBEAR_2026.91.tar.gz",
+      "version": "2026.91",
+      "source": "https://github.com/mkj/dropbear/archive/refs/tags/DROPBEAR_2026.91.tar.gz",
+      "sha256": null
+    },
+    {
+      "path": "src/jq/jq-1.8.1.tar.gz",
+      "version": "1.8.1",
+      "source": "https://github.com/stedolan/jq/releases/download/jq-1.8.1/jq-1.8.1.tar.gz",
+      "sha256": null
+    },
+    {
+      "path": "src/mdnsd/mdnsd-master.zip",
+      "version": "UNRESOLVED immutable commit",
+      "source": "https://github.com/troglobit/mdnsd/archive/refs/heads/master.zip",
+      "sha256": null
+    },
+    {
+      "path": "src/onvif_simple_server/crypt-1.18.2.tar.xz",
+      "version": "1.18.2",
+      "source": "https://github.com/libtom/libtomcrypt/releases/download/v1.18.2/crypt-1.18.2.tar.xz",
+      "sha256": null
+    },
+    {
+      "path": "src/onvif_simple_server/mbedtls-3.6.5.tar.bz2",
+      "version": "3.6.5",
+      "source": "https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-3.6.5/mbedtls-3.6.5.tar.bz2",
+      "sha256": null
+    },
+    {
+      "path": "src/onvif_simple_server/v5.9.2-stable.tar.gz",
+      "version": "5.9.2",
+      "source": "https://github.com/wolfSSL/wolfssl/archive/refs/tags/v5.9.2-stable.tar.gz",
+      "sha256": null
+    },
+    {
+      "path": "src/onvif_simple_server/zlib-1.3.2.tar.gz",
+      "version": "1.3.2",
+      "source": "https://www.zlib.net/zlib-1.3.2.tar.gz",
+      "sha256": null
+    },
+    {
+      "path": "src/onvif_simple_server/json-c-0.18.tar.gz",
+      "version": "0.18",
+      "source": "https://s3.amazonaws.com/json-c_releases/releases/json-c-0.18.tar.gz",
+      "sha256": null
+    },
+    {
+      "path": "src/rRTSPServer/v2.0.1.tar.gz",
+      "version": "2.0.1",
+      "source": "https://github.com/mstorsjo/fdk-aac/archive/v2.0.1.tar.gz",
+      "sha256": null
+    },
+    {
+      "path": "src/rRTSPServer/live.2023.01.19.tar.gz",
+      "version": "2023.01.19",
+      "source": "https://download.videolan.org/pub/contrib/live555/live.2023.01.19.tar.gz",
+      "sha256": null
+    },
+    {
+      "path": "src/tinyalsa/v1.0.0.tar.gz",
+      "version": "1.0.0",
+      "source": "https://github.com/tinyalsa/tinyalsa/archive/v1.0.0.tar.gz",
+      "sha256": null
+    },
+    {
+      "path": "src/wireless_tools/wireless_tools.29.tar.gz",
+      "version": "29",
+      "source": "https://hewlettpackard.github.io/wireless-tools/wireless_tools.29.tar.gz",
+      "sha256": null
+    }
+  ],
+  "image_id": null,
+  "additional_inputs": [],
+  "fallbacks": [
+    "https://github.com/mirror/busybox/archive/refs/tags/1.36.1.tar.gz",
+    "https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.gz"
+  ],
+  "review_status": "UNREVIEWED: inventory only; not an approved lock"
+}
